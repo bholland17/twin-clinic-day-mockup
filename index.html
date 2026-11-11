@@ -138,15 +138,27 @@ svg{max-width:100%;height:auto}
   <div class="card">
     <h3>Problem list</h3>
     <div class="prob"><div class="ttl">1. Coronary artery disease <span class="tag low">Stable</span></div>
-      <ul><li>Anterior heart attack 2019. Two stents to the LAD.</li><li>Exertional angina 2021. One stent to the RCA.</li><li>Echo Oct 2024, EF 50 percent.</li><li>No chest pain and no hospital stays since 2021.</li><li>Aspirin 81, atorvastatin 40, metoprolol succinate 50.</li></ul></div>
+      <ul><li>3/4/2019 anterior STEMI, cath/PCI: 100% proximal LAD, 50% mid RCA -> 3.0 x 28 mm and 3.0 x 16 mm DES to LAD (pd 3.5)</li>
+      <li>3/6/2019 echo: EF 40 to 45%, anterior hypokinesis, no significant valve dysfunction</li>
+      <li>3/16/2021 NST: moderate, reversible inferior defect, EF 48%</li>
+      <li>3/22/2021 cath/PCI: 85% mid RCA, patent LAD stents -> 3.5 x 18 mm DES (pd 4.0)</li>
+      <li>10/9/2024 echo: EF 50%, mild anterior hypokinesis, RV/atria normal, no significant valve dysfunction</li></ul></div>
     <div class="prob"><div class="ttl">2. Chronic kidney disease, stage 3b <span class="tag high">Worse</span></div>
-      <ul><li>eGFR 62 in 2022, 38 on Oct 28, 2026. Two values under 45 more than 3 months apart.</li><li>Urine protein mildly elevated Sep 2025. Not repeated.</li><li>Cause not stated in the record. Never seen by nephrology.</li><li>Naproxen started by urgent care Oct 20.</li></ul></div>
-    <div class="prob"><div class="ttl">3. Type 2 diabetes <span class="tag mid">Dose problem</span></div>
-      <ul><li>Diagnosed 2016. A1c 7.4 on Oct 28.</li><li>Metformin 1000 mg twice a day, too high for eGFR 38.</li></ul></div>
-    <div class="prob"><div class="ttl">4. Hypertension <span class="tag mid">Not at goal</span></div>
-      <ul><li>Diagnosed 2016. Home average 146 over 86, 22 readings in 30 days.</li><li>Lisinopril 20, amlodipine 5 added Mar 2025.</li></ul></div>
-    <div class="prob"><div class="ttl">5. Hyperlipidemia <span class="tag mid">Not at goal</span></div>
-      <ul><li>LDL 92 on atorvastatin 40.</li></ul></div>
+      <ul><li>eGFR: 62 (2022), 55 (2023), 49 (2024), 44 (8/12/2026)</li>
+      <li>9/15/2025 urine albumin/creatinine: 68 mg/g</li>
+      <li>No renal imaging, never seen by nephrology</li>
+      <li>10/20/2026 urgent care: naproxen 500 mg BID for knee pain <span class="tag high">New</span></li>
+      <li>10/28/2026 eGFR 38, K 4.8 <span class="tag high">New</span></li></ul></div>
+    <div class="prob"><div class="ttl">3. Type 2 diabetes, dx 2016 <span class="tag mid">Dose problem</span></div>
+      <ul><li>10/28/2026 A1c 7.4 <span class="tag info">New</span></li>
+      <li>Metformin 1000 mg BID, above the limit for eGFR 38</li></ul></div>
+    <div class="prob"><div class="ttl">4. Essential hypertension, dx 2016 <span class="tag mid">Not at goal</span></div>
+      <ul><li>Home log, last 30 days: average 146/86, 22 readings <span class="tag mid">New</span></li></ul></div>
+    <div class="prob"><div class="ttl">5. Dyslipidemia <span class="tag mid">Not at goal</span></div>
+      <ul><li>10/28/2026 LDL 92 on atorvastatin 40 <span class="tag info">New</span></li></ul></div>
+    <div class="prob"><div class="ttl">6. Family history of premature coronary artery disease, brother MI at 52</div></div>
+    <div class="prob"><div class="ttl">7. Osteoarthritis, right knee</div></div>
+    <div class="prob"><div class="ttl">8. Retired diesel mechanic; lives with his wife, walks 2 miles most days, never smoked</div></div>
     <button class="link" onclick="tog('srcp')">Where did this come from</button>
     <div class="more" id="srcp">Each bullet links to its source. Cath reports 2019 and 2021, echo report Oct 2024, 9 kidney lab results 2022 to 2026, outside pharmacy fill Oct 20, 2026, active medication list.</div>
   </div>
@@ -345,7 +357,8 @@ svg{max-width:100%;height:auto}
     <h3>The rules behind every screen</h3>
     <ol class="rules">
       <li>The short story is three or four plain sentences, like a colleague telling you about the patient. It sits under the problem list.</li>
-      <li>Each problem shows only the facts that establish the diagnosis and the significant events. No duplicate codes.</li>
+      <li>The problem list follows the clinician's own format. Numbered problems. Under each, one line per test or event that establishes the diagnosis, written as date, test, finding, oldest first. Stents carry size, type and post dilation. Problems with nothing to add stay as one line. Family history and a line on how the patient lives go at the end. No duplicate codes.</li>
+      <li>The Twin adds only two things to that list. A status tag on each problem, and a "New" tag on any line added since the last visit.</li>
       <li>Detail is one click down, never on the first view.</li>
       <li>Every statement can show where it came from.</li>
       <li>Say what changed since the last visit. Do not repeat what is the same.</li>
