@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twin clinic day mockup</title>
+<style>
+:root{
+  --bg:#f4f6f8; --card:#ffffff; --ink:#1c2733; --soft:#5b6b7b; --line:#dde3e9;
+  --brand:#1f5f8b; --brandsoft:#e6f0f7; --high:#b3261e; --highsoft:#fbe9e7;
+  --mid:#9a6700; --midsoft:#fff4d6; --low:#1a7f4b; --lowsoft:#e3f5ea;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+header{background:var(--brand);color:#fff;padding:12px 16px}
+header .t{font-size:17px;font-weight:600}
+header .s{font-size:13px;opacity:.85}
+nav{display:flex;gap:6px;overflow-x:auto;background:#fff;border-bottom:1px solid var(--line);padding:8px 12px;position:sticky;top:0;z-index:5}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--soft);padding:8px 12px;border-radius:18px;font-size:14px;cursor:pointer}
+nav button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+main{max-width:860px;margin:0 auto;padding:16px}
+.screen{display:none}
+.screen.on{display:block}
+h2{font-size:19px;margin:6px 0 4px}
+.when{color:var(--soft);font-size:14px;margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 0 12px}
+.card h3{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--soft);margin:0 0 8px;font-weight:600}
+.story{font-size:17px;line-height:1.55}
+.story p{margin:0 0 8px}
+.banner{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;color:var(--soft);margin-bottom:12px}
+.banner b{color:var(--ink)}
+.row{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row .main{flex:1;min-width:0}
+.row .ttl{font-weight:600}
+.row .sub{color:var(--soft);font-size:14px}
+.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:10px;font-weight:600;white-space:nowrap}
+.tag.high{background:var(--highsoft);color:var(--high)}
+.tag.mid{background:var(--midsoft);color:var(--mid)}
+.tag.low{background:var(--lowsoft);color:var(--low)}
+.tag.info{background:var(--brandsoft);color:var(--brand)}
+.link{background:none;border:0;color:var(--brand);padding:0;font-size:14px;cursor:pointer;text-decoration:underline}
+.more{display:none;background:var(--bg);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:14px}
+.more.on{display:block}
+.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;font-size:14px;cursor:pointer;color:var(--ink)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.sel{background:var(--low);border-color:var(--low);color:#fff}
+.btn.skip.sel{background:var(--soft);border-color:var(--soft)}
+.sched .row{cursor:pointer}
+.sched .time{width:54px;color:var(--soft);font-size:14px;flex:0 0 auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.score .name{font-weight:600}
+.score .why{font-size:14px;color:var(--soft);margin-top:4px}
+.conf{font-size:13px;color:var(--soft);margin-top:6px}
+.zoom{display:flex;gap:6px;margin-bottom:8px}
+.zoom button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer}
+.zoom button.on{background:var(--brandsoft);border-color:var(--brand);color:var(--brand)}
+.tl{display:none}
+.tl.on{display:block}
+.tl div{padding:6px 0 6px 12px;border-left:3px solid var(--line);font-size:15px}
+.tl div b{display:inline-block;min-width:92px;color:var(--soft);font-weight:600}
+.note{font-size:13px;color:var(--soft);margin-top:10px}
+.done{display:none;background:var(--lowsoft);color:var(--low);border-radius:8px;padding:10px 12px;margin-top:10px;font-weight:600}
+.done.on{display:block}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{text-align:left;padding:8px 6px;border-top:1px solid var(--line);vertical-align:top}
+th{color:var(--soft);font-weight:600;border-top:0}
+.rules li{margin-bottom:6px}
+svg{max-width:100%;height:auto}
+</style>
+</head>
+<body>
+<header>
+  <div class="t">Twin, a clinic day</div>
+  <div class="s">Clickable mockup for Reza. Made up patient, made up numbers. No back end.</div>
+</header>
+<nav id="nav">
+  <button data-s="s1" class="on">1 Schedule</button>
+  <button data-s="s2">2 Before the visit</button>
+  <button data-s="s3">3 End of visit</button>
+  <button data-s="s4">4 Between visits</button>
+  <button data-s="s5">5 Population</button>
+  <button data-s="s6">For Reza</button>
+</nav>
+<main>
+
+<!-- 1 SCHEDULE -->
+<section class="screen on" id="s1">
+  <h2>Today's clinic</h2>
+  <p class="when">The Twin read every chart overnight. One line per patient. Tap Mr. A.</p>
+  <div class="card sched">
+    <div class="row" onclick="go('s2')">
+      <div class="time">8:00</div>
+      <div class="main"><div class="ttl">Mr. A, 62</div>
+      <div class="sub">3 month follow up. Kidneys are getting worse and three things need a decision today.</div></div>
+      <span class="tag high">3 to decide</span>
+    </div>
+    <div class="row">
+      <div class="time">8:20</div>
+      <div class="main"><div class="ttl">Mrs. B, 84</div>
+      <div class="sub">Aortic stenosis. Echo is 14 months old. Outside hospital stay in September, records pulled in.</div></div>
+      <span class="tag mid">1 to decide</span>
+    </div>
+    <div class="row">
+      <div class="time">8:40</div>
+      <div class="main"><div class="ttl">Mr. C, 71</div>
+      <div class="sub">Atrial fibrillation. Nothing has changed since June. Doing well.</div></div>
+      <span class="tag low">Nothing new</span>
+    </div>
+    <div class="row">
+      <div class="time">9:00</div>
+      <div class="main"><div class="ttl">Ms. D, 58</div>
+      <div class="sub">New patient, chest pain. Records from two hospitals. Thin data, read with caution.</div></div>
+      <span class="tag info">New</span>
+    </div>
+  </div>
+  <p class="note">What this screen is for. In ten seconds the clinician knows who needs thought and who does not.</p>
+</section>
+
+<!-- 2 BEFORE THE VISIT -->
+<section class="screen" id="s2">
+  <h2>Mr. A, before the visit</h2>
+  <div class="banner"><span><b>62 M</b></span><span>Heart attack 2019, 3 stents</span><span>Diabetes</span><span>High blood pressure</span><span>Kidney disease stage 3b</span></div>
+
+  <div class="card">
+    <h3>The short story</h3>
+    <div class="story">
+      <p>Mr. A is here for his 3 month follow up. His heart has been quiet since the last stent in 2021, with no chest pain and no hospital stays.</p>
+      <p>His kidneys are the story today. Kidney function has dropped from 62 to 38 over four years, and the last drop was the fastest.</p>
+      <p>Three things need a decision before he leaves. His metformin dose is too high for his kidneys now. An urgent care started naproxen three weeks ago. He is not on a kidney and heart protecting drug that he qualifies for.</p>
+    </div>
+    <button class="link" onclick="tog('src1')">Where did this come from</button>
+    <div class="more" id="src1">eGFR values from 9 lab results, 2022 to Oct 2026. Naproxen from an outside pharmacy fill on Oct 20, 2026, not in this hospital's chart. Metformin 1000 mg twice a day from the active medication list. Last stent from the cath report of Mar 2021.</div>
+  </div>
+
+  <div class="card">
+    <h3>What changed since his last visit, Aug 2026</h3>
+    <div class="row"><div class="main"><div class="ttl">Kidney function 44 down to 38</div><div class="sub">eGFR, Oct 28. Dropping about 6 points a year.</div>
+      <svg viewBox="0 0 300 70" width="300" role="img" aria-label="eGFR trend 2022 to 2026">
+        <polyline fill="none" stroke="#b3261e" stroke-width="2.5" points="15,14 80,24 145,33 210,41 285,50"/>
+        <g fill="#b3261e"><circle cx="15" cy="14" r="3"/><circle cx="80" cy="24" r="3"/><circle cx="145" cy="33" r="3"/><circle cx="210" cy="41" r="3"/><circle cx="285" cy="50" r="3"/></g>
+        <g font-size="11" fill="#5b6b7b"><text x="6" y="66">2022, 62</text><text x="66" y="66">55</text><text x="134" y="66">49</text><text x="200" y="66">44</text><text x="244" y="66">2026, 38</text></g>
+      </svg></div><span class="tag high">Worse</span></div>
+    <div class="row"><div class="main"><div class="ttl">Naproxen started by urgent care</div><div class="sub">Knee pain, Oct 20. From an outside pharmacy record.</div></div><span class="tag high">New</span></div>
+    <div class="row"><div class="main"><div class="ttl">Home blood pressure average 146 over 86</div><div class="sub">22 readings in the last 30 days. Was 138 over 82.</div></div><span class="tag mid">Higher</span></div>
+    <div class="row"><div class="main"><div class="ttl">A1c 7.4, LDL 92</div><div class="sub">Both about the same as last time.</div></div><span class="tag low">Same</span></div>
+  </div>
+
+  <div class="card">
+    <h3>Organ health</h3>
+    <div class="grid">
+      <div class="score"><div class="name">Kidney <span class="tag high">High risk, getting worse</span></div><div class="why">Steady drop in function, blood pressure not controlled, a pain reliever that harms kidneys.</div><div class="conf">Confidence high. 9 lab values in 5 years.</div></div>
+      <div class="score"><div class="name">Heart <span class="tag high">High risk, stable</span></div><div class="why">Prior heart attack. LDL above goal. No symptoms.</div><div class="conf">Confidence moderate. Last echo is 2 years old.</div></div>
+      <div class="score"><div class="name">Metabolic <span class="tag mid">Intermediate</span></div><div class="why">A1c steady at 7.4.</div><div class="conf">Confidence high.</div></div>
+    </div>
+    <p class="note">Kidney and heart are linked here. The same blood pressure is driving both.</p>
+  </div>
+
+  <div class="card">
+    <h3>His course</h3>
+    <div class="zoom"><button class="on" onclick="zoom(this,'z1')">10 years</button><button onclick="zoom(this,'z2')">2 years</button><button onclick="zoom(this,'z3')">6 months</button></div>
+    <div class="tl on" id="z1">
+      <div><b>2016</b>Diabetes and high blood pressure diagnosed.</div>
+      <div><b>2019</b>Heart attack. Two stents to the front artery.</div>
+      <div><b>2021</b>Chest pain with exertion. One stent to the right artery.</div>
+      <div><b>2022 to 2026</b>Kidney function falls from 62 to 38.</div>
+    </div>
+    <div class="tl" id="z2">
+      <div><b>Oct 2024</b>Echo. Pumping function 50 percent.</div>
+      <div><b>Mar 2025</b>Amlodipine added for blood pressure.</div>
+      <div><b>Sep 2025</b>Last urine protein test. Mildly elevated.</div>
+      <div><b>Aug 2026</b>Clinic visit. eGFR 44. No changes made.</div>
+      <div><b>Oct 2026</b>Urgent care for knee pain. eGFR 38.</div>
+    </div>
+    <div class="tl" id="z3">
+      <div><b>Aug 12</b>Clinic visit. Blood pressure 142 over 84. No changes.</div>
+      <div><b>Oct 20</b>Urgent care, knee pain. Naproxen 500 mg twice a day.</div>
+      <div><b>Oct 28</b>Labs. eGFR 38, potassium 4.8, A1c 7.4, LDL 92.</div>
+      <div><b>Nov 11</b>Today's visit.</div>
+    </div>
+  </div>
+  <div class="btns"><button class="btn pri" onclick="go('s3')">Visit is done, go to end of visit</button></div>
+  <p class="note">Nothing chimes or talks during the visit. The clinician turns the chair and talks to the patient.</p>
+</section>
+
+<!-- 3 END OF VISIT -->
+<section class="screen" id="s3">
+  <h2>Mr. A, end of visit</h2>
+  <p class="when">Back at the computer, before he leaves the office. The Twin listened and lines up what to do. Nothing happens until you sign.</p>
+  <div class="card" id="orders">
+    <h3>Proposed, check off or change</h3>
+
+    <div class="row"><div class="main"><div class="ttl">Stop naproxen, use acetaminophen</div><div class="sub">You told him this in the room.</div>
+      <button class="link" onclick="tog('w1')">Why</button><div class="more" id="w1">This type of pain reliever lowers kidney blood flow and raises blood pressure. He has an eGFR of 38 and is on lisinopril.</div>
+      <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button><button class="btn skip" onclick="pick(this)">Skip</button></div></div><span class="tag high">Safety</span></div>
+
+    <div class="row"><div class="main"><div class="ttl">Lower metformin to 500 mg twice a day</div><div class="sub">Now 1000 mg twice a day.</div>
+      <button class="link" onclick="tog('w2')">Why</button><div class="more" id="w2">With eGFR between 30 and 44 the usual top dose is 1000 mg a day. Source, metformin labeling. At his rate of decline he may cross 30 in about a year, when it should stop.</div>
+      <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button><button class="btn skip" onclick="pick(this)">Skip</button></div></div><span class="tag high">Safety</span></div>
+
+    <div class="row"><div class="main"><div class="ttl">Start empagliflozin 10 mg daily</div><div class="sub">You discussed it. He agreed.</div>
+      <button class="link" onclick="tog('w3')">Why</button><div class="more" id="w3">Diabetes with kidney disease and prior heart attack. This class slows kidney decline and lowers heart failure risk. Expect a small early dip in eGFR. Patients like him in the model who started it lost kidney function more slowly over 3 years.</div>
+      <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button><button class="btn skip" onclick="pick(this)">Skip</button></div></div><span class="tag mid">Care gap</span></div>
+
+    <div class="row"><div class="main"><div class="ttl">Urine protein test today</div><div class="sub">Last one was 14 months ago.</div>
+      <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button><button class="btn skip" onclick="pick(this)">Skip</button></div></div><span class="tag mid">Care gap</span></div>
+
+    <div class="row"><div class="main"><div class="ttl">Atorvastatin 40 up to 80 mg</div><div class="sub">LDL 92, above goal after a heart attack. You did not discuss this.</div>
+      <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button><button class="btn skip" onclick="pick(this)">Skip</button></div></div><span class="tag mid">Not discussed</span></div>
+
+    <div class="row"><div class="main"><div class="ttl">Kidney labs in 2 weeks, visit in 3 months</div><div class="sub">Lab check after the medication changes.</div>
+      <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button><button class="btn skip" onclick="pick(this)">Skip</button></div></div><span class="tag info">Follow up</span></div>
+
+    <div class="btns"><button class="btn pri" onclick="document.getElementById('signed').classList.add('on')">Sign what I accepted</button></div>
+    <div class="done" id="signed">Signed. Orders sent, his Twin is updated, the visit note is drafted for your review.</div>
+  </div>
+  <p class="note">The "not discussed" label matters. It is something the Twin found that never came up in the room, so it can be raised before he walks out.</p>
+</section>
+
+<!-- 4 BETWEEN VISITS -->
+<section class="screen" id="s4">
+  <h2>Between visits</h2>
+  <p class="when">Two weeks later. What came in, what the Twin proposes, and who owns it.</p>
+  <div class="card">
+    <h3>Needs you</h3>
+    <div class="row"><div class="main"><div class="ttl">Mr. A, kidney labs back</div><div class="sub">eGFR 35, was 38. Potassium 4.6.</div>
+      <div class="more on">Twin's read. This small dip is expected two weeks after starting empagliflozin. Proposed, continue, recheck in 3 months, send him the message below.<br><br><i>Your kidney test looks the way we expected after the new medicine. Keep taking it. We will check again in 3 months.</i></div>
+      <div class="btns"><button class="btn" onclick="pick(this)">Agree and send</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag mid">Result</span></div>
+    <div class="row"><div class="main"><div class="ttl">Mr. A, message, dizzy when standing up</div><div class="sub">Sent 7:40 this morning.</div>
+      <div class="more on">Twin's read. Home blood pressure this week averages 118 over 70, down from 146 over 86, after stopping naproxen and starting empagliflozin. A nurse call was offered to him for today, already done since it speeds up care. Proposed for you, lower amlodipine or hold it.</div>
+      <div class="btns"><button class="btn" onclick="pick(this)">Hold amlodipine</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag high">Today</span></div>
+  </div>
+  <div class="card">
+    <h3>Low risk, sign as a group</h3>
+    <div class="row"><div class="main"><div class="ttl">Mr. A, atorvastatin refill</div><div class="sub">Same dose, labs current. Owner, you.</div></div><span class="tag low">Routine</span></div>
+    <div class="row"><div class="main"><div class="ttl">Mr. C, apixaban refill</div><div class="sub">Dose still right for age, weight and kidney function. Owner, you.</div></div><span class="tag low">Routine</span></div>
+    <div class="btns"><button class="btn pri" onclick="pick(this)">Sign both</button></div>
+  </div>
+  <div class="card">
+    <h3>Handled, nothing for you to do</h3>
+    <div class="row"><div class="main"><div class="ttl">Mrs. B asked when her echo is</div><div class="sub">Answered by the Twin. Thursday at 10.</div></div><span class="tag info">Done</span></div>
+  </div>
+  <p class="note">Rule on this screen. Speeding up care needs no sign off. Slowing or changing care needs the clinician. Every item has an owner.</p>
+</section>
+
+<!-- 5 POPULATION -->
+<section class="screen" id="s5">
+  <h2>Population view</h2>
+  <p class="when">Zoom out. Rough sketch only. This screen should be shaped by what risk bearing groups say they need.</p>
+  <div class="card">
+    <h3>1,240 patients in the panel. 38 need attention this month.</h3>
+    <table>
+      <tr><th>Patient</th><th>Why now</th><th>What would help</th><th>Owner</th></tr>
+      <tr><td>Mr. A, 62</td><td>Kidney function falling fast</td><td>Medication changes at next visit</td><td>Clinician</td></tr>
+      <tr><td>Mrs. E, 77</td><td>Heart failure, weight up 6 lb in 5 days</td><td>Call today, adjust water pill</td><td>Nurse</td></tr>
+      <tr><td>Mr. F, 69</td><td>Home from hospital 3 days, no visit booked</td><td>Visit within 7 days</td><td>Care manager</td></tr>
+      <tr><td>Ms. G, 55</td><td>Heart attack in May, no statin filled</td><td>Outreach and prescription</td><td>Pharmacist</td></tr>
+      <tr><td>Mr. H, 66</td><td>Two high blood pressures, no diagnosis</td><td>Recheck visit</td><td>Clinician</td></tr>
+    </table>
+    <p class="note">The last two rows are the same findings as the validation studies, statin after an event and unrecognized hypertension.</p>
+  </div>
+</section>
+
+<!-- 6 FOR REZA -->
+<section class="screen" id="s6">
+  <h2>Notes for Reza</h2>
+  <p class="when">What the clinician is asking for, and what each screen needs from the back end.</p>
+  <div class="card">
+    <h3>The rules behind every screen</h3>
+    <ol class="rules">
+      <li>Short story first. Three or four plain sentences, like a colleague telling you about the patient. No lists of codes, dates or drug names on top.</li>
+      <li>Detail is one click down, never on the first view.</li>
+      <li>Every statement can show where it came from.</li>
+      <li>Say what changed since the last visit. Do not repeat what is the same.</li>
+      <li>Each finding appears once, on one screen.</li>
+      <li>Show confidence, and say so when data is thin.</li>
+      <li>Nothing is ordered or sent without a clinician signing, unless it only speeds up care.</li>
+      <li>Every item has an owner.</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>What each screen needs</h3>
+    <table>
+      <tr><th>Screen</th><th>Needs from the back end</th></tr>
+      <tr><td>Schedule</td><td>Tomorrow's schedule. Overnight run on each patient. One sentence per patient and a count of items to decide.</td></tr>
+      <tr><td>Before the visit</td><td>Trajectory text per index condition, shortened to the short story. Change since last visit. Organ scores with confidence. Timeline at three zoom levels. Source for each statement.</td></tr>
+      <tr><td>End of visit</td><td>Care gaps and drug checks as proposed orders with a reason. Later, visit listening to mark what was discussed.</td></tr>
+      <tr><td>Between visits</td><td>New results, messages and refills read against the Twin. A proposed action and a draft patient message.</td></tr>
+      <tr><td>Population</td><td>Ranking across all Twins with the reason and the owner.</td></tr>
+    </table>
+  </div>
+</section>
+
+</main>
+<script>
+function go(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.toggle('on',s.id===id)});
+  document.querySelectorAll('#nav button').forEach(function(b){b.classList.toggle('on',b.dataset.s===id)});
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('#nav button').forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
+function tog(id){document.getElementById(id).classList.toggle('on')}
+function pick(b){
+  b.parentNode.querySelectorAll('.btn').forEach(function(x){x.classList.remove('sel')});
+  b.classList.add('sel');
+}
+function zoom(b,id){
+  b.parentNode.querySelectorAll('button').forEach(function(x){x.classList.remove('on')});
+  b.classList.add('on');
+  document.querySelectorAll('.tl').forEach(function(t){t.classList.toggle('on',t.id===id)});
+}
+</script>
+</body>
+</html>
