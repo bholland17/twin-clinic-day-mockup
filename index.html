@@ -76,8 +76,12 @@ th{color:var(--soft);font-weight:600;border-top:0}
 .labt .grp td{background:var(--bg);font-weight:600;color:var(--soft);text-align:left}
 .labt .ab{color:var(--high);font-weight:600}
 .labt .rng{color:var(--soft)}
-details.rpt{border-top:1px solid var(--line);padding:10px 0}
-details.rpt:first-of-type{border-top:0}
+.tdiv{font-size:13px;color:var(--soft);font-weight:600;border-bottom:1px solid var(--line);padding:12px 0 4px}
+.filt{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.filt button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer}
+.filt button.on{background:var(--brandsoft);border-color:var(--brand);color:var(--brand)}
+.labt th .tag{display:block;margin-top:2px;font-size:10px;padding:1px 5px}
+details.rpt{border-bottom:1px solid var(--line);padding:10px 0}
 details.rpt summary{cursor:pointer;font-weight:600}
 details.rpt summary span{font-weight:400;color:var(--soft);font-size:14px}
 .rbody{font-size:15px;margin-top:8px}
@@ -166,7 +170,7 @@ svg{max-width:100%;height:auto}
       <ul><li><a class="ref" data-t="lab" data-id="egfr" data-line="">eGFR</a>: 62 (2022), 55 (2023), 49 (2024), 44 (8/12/2026)</li>
       <li><a class="ref" data-t="lab" data-id="uacr" data-line="3">9/15/2025 urine albumin/creatinine</a>: 68 mg/g</li>
       <li>No renal imaging, never seen by nephrology</li>
-      <li>10/20/2026 urgent care: naproxen 500 mg BID for knee pain <span class="tag high">New</span></li>
+      <li>10/20/2026 urgent care: naproxen 500 mg BID for knee pain <span class="tag info">Outside</span> <span class="tag high">New</span></li>
       <li><a class="ref" data-t="lab" data-id="egfr" data-line="0">10/28/2026 eGFR 38</a>, <a class="ref" data-t="lab" data-id="k" data-line="0">K 4.8</a> <span class="tag high">New</span></li></ul></div>
     <div class="prob"><div class="ttl">3. Type 2 diabetes, dx 2016 <span class="tag mid">Dose problem</span></div>
       <ul><li><a class="ref" data-t="lab" data-id="a1c" data-line="0">10/28/2026 A1c 7.4</a> <span class="tag info">New</span></li>
@@ -176,7 +180,8 @@ svg{max-width:100%;height:auto}
     <div class="prob"><div class="ttl">5. Dyslipidemia <span class="tag mid">Not at goal</span></div>
       <ul><li><a class="ref" data-t="lab" data-id="ldl" data-line="0">10/28/2026 LDL 92</a> on atorvastatin 40 <span class="tag info">New</span></li></ul></div>
     <div class="prob"><div class="ttl">6. Family history of premature coronary artery disease, brother MI at 52</div></div>
-    <div class="prob"><div class="ttl">7. Osteoarthritis, right knee</div></div>
+    <div class="prob"><div class="ttl">7. Osteoarthritis, right knee</div>
+      <ul><li><a class="ref" data-t="img" data-id="knee2026" data-line="imp">10/20/2026 XR right knee</a>: moderate medial compartment osteoarthritis <span class="tag info">Outside</span> <span class="tag info">New</span></li></ul></div>
     <div class="prob"><div class="ttl">8. Retired diesel mechanic; lives with his wife, walks 2 miles most days, never smoked</div></div>
   </div>
 
@@ -355,16 +360,26 @@ svg{max-width:100%;height:auto}
 <!-- LABS -->
 <section class="screen" id="labs">
   <h2>Mr. A, labs</h2>
-  <p class="when">Newest on the left. Out of range values in red.</p>
+  <p class="when">Newest on the left. Out of range values in red. Draws marked Outside came from another health system.</p>
   <div class="card"><div class="scroll"><table class="labt" id="labt"></table></div></div>
 </section>
 
 <!-- IMAGING -->
 <section class="screen" id="img">
   <h2>Mr. A, imaging and procedures</h2>
-  <p class="when">Newest first. Tap a study to open the report.</p>
-  <div class="card">
-    <details class="rpt" id="echo2024"><summary>10/9/2024 Transthoracic echocardiogram <span>EF 50%</span></summary><div class="rbody">
+  <p class="when">Everything, in date order, newest first. Tap a study to open the report.</p>
+  <div class="card" id="imgcard">
+    <div class="filt"><button class="on" onclick="filt(this,'all')">All</button><button onclick="filt(this,'heart')">Heart and vascular</button><button onclick="filt(this,'other')">Other</button><button onclick="filt(this,'out')">Outside records</button></div>
+    <div class="tdiv">This year</div>
+    <details class="rpt" id="knee2026" data-cat="other"><summary>10/20/2026 XR knee right 3 views <span>Moderate osteoarthritis</span> <span class="tag info">Outside</span></summary><div class="rbody">
+      <p class="h">Source</p><p>Outside record. Urgent care visit, not part of this health system.</p>
+      <p class="h">Indication</p><p>Right knee pain for 3 weeks, no injury.</p>
+      <p class="h">Findings</p><p>Moderate medial compartment joint space narrowing with marginal osteophytes. Small joint effusion. No fracture or dislocation.</p>
+      <p class="h">Impression</p><p data-line="imp">Moderate medial compartment osteoarthritis. No acute fracture.</p></div></details>
+
+    <div class="tdiv">2 years ago</div>
+
+    <details class="rpt" id="echo2024" data-cat="heart"><summary>10/9/2024 Transthoracic echocardiogram <span>EF 50%</span></summary><div class="rbody">
       <p class="h">Indication</p><p>Coronary artery disease, prior anterior myocardial infarction. Surveillance of LV function.</p>
       <p class="h">Findings</p>
       <p data-line="ef">Left ventricle: normal cavity size. Mild hypokinesis of the mid to apical anterior wall. LVEF 50% by biplane Simpson's.</p>
@@ -376,7 +391,21 @@ svg{max-width:100%;height:auto}
       <p class="h">Impression</p>
       <p>1. Low normal LV systolic function, EF 50%, improved from 40 to 45% in 2019.</p><p>2. Mild anterior wall hypokinesis, unchanged.</p><p>3. No significant valve dysfunction.</p></div></details>
 
-    <details class="rpt" id="cath2021"><summary>3/22/2021 Left heart cath and PCI <span>DES to mid RCA</span></summary><div class="rbody">
+    <div class="tdiv">3 years ago</div>
+    <details class="rpt" id="lspine2023" data-cat="other"><summary>6/18/2023 XR lumbar spine 2 views <span>Degenerative changes</span> <span class="tag info">Outside</span></summary><div class="rbody">
+      <p class="h">Source</p><p>Outside record. Primary care office in another health system.</p>
+      <p class="h">Indication</p><p>Low back pain.</p>
+      <p class="h">Findings</p><p>Mild disc space narrowing at L4 to L5 and L5 to S1. Facet arthropathy. No compression fracture. Aortic calcification noted.</p>
+      <p class="h">Impression</p><p data-line="imp">Mild lower lumbar degenerative disc disease.</p></div></details>
+
+    <div class="tdiv">4 years ago</div>
+    <details class="rpt" id="carotid2022" data-cat="heart"><summary>11/3/2022 Carotid duplex bilateral <span>Under 50% both sides</span></summary><div class="rbody">
+      <p class="h">Indication</p><p>Right carotid bruit. Coronary artery disease.</p>
+      <p class="h">Findings</p><p>Right ICA: heterogeneous plaque, peak systolic velocity 98 cm/s, under 50% stenosis.</p><p>Left ICA: mild plaque, peak systolic velocity 84 cm/s, under 50% stenosis.</p><p>Vertebral arteries: antegrade flow on both sides.</p>
+      <p class="h">Impression</p><p data-line="imp">Under 50% stenosis of both internal carotid arteries.</p></div></details>
+
+    <div class="tdiv">5 years ago</div>
+    <details class="rpt" id="cath2021" data-cat="heart"><summary>3/22/2021 Left heart cath and PCI <span>DES to mid RCA</span></summary><div class="rbody">
       <p class="h">Indication</p><p>Exertional angina, CCS class II. Abnormal nuclear stress test with inferior ischemia.</p>
       <p class="h">Findings</p>
       <p>Access: right radial, 6 Fr.</p>
@@ -390,7 +419,7 @@ svg{max-width:100%;height:auto}
       <p class="h">Impression</p>
       <p data-line="imp">1. Single vessel PCI of the mid RCA with one drug eluting stent.</p><p>2. Patent LAD stents.</p></div></details>
 
-    <details class="rpt" id="nst2021"><summary>3/16/2021 Nuclear stress test <span>Inferior ischemia</span></summary><div class="rbody">
+    <details class="rpt" id="nst2021" data-cat="heart"><summary>3/16/2021 Nuclear stress test <span>Inferior ischemia</span></summary><div class="rbody">
       <p class="h">Indication</p><p>Exertional chest pressure, known coronary artery disease.</p>
       <p class="h">Findings</p>
       <p>Exercise: Bruce protocol, 6:10, 7.0 METs, 88% of predicted maximum heart rate. Chest pressure at peak exercise. 1 mm horizontal ST depression in II, III, aVF.</p>
@@ -399,7 +428,8 @@ svg{max-width:100%;height:auto}
       <p class="h">Impression</p>
       <p data-line="imp">1. Moderate inferior ischemia in the RCA territory.</p><p>2. Small prior anterior infarct.</p><p>3. EF 48%.</p></div></details>
 
-    <details class="rpt" id="echo2019"><summary>3/6/2019 Transthoracic echocardiogram <span>EF 40 to 45%</span></summary><div class="rbody">
+    <div class="tdiv">7 years ago</div>
+    <details class="rpt" id="echo2019" data-cat="heart"><summary>3/6/2019 Transthoracic echocardiogram <span>EF 40 to 45%</span></summary><div class="rbody">
       <p class="h">Indication</p><p>Anterior STEMI, status post PCI to the LAD.</p>
       <p class="h">Findings</p>
       <p data-line="ef">Left ventricle: normal cavity size. Hypokinesis of the mid to apical anterior and anteroseptal walls. LVEF 40 to 45%.</p>
@@ -409,7 +439,12 @@ svg{max-width:100%;height:auto}
       <p class="h">Impression</p>
       <p>1. Mildly to moderately reduced LV systolic function, EF 40 to 45%, with anterior wall motion abnormality.</p><p>2. No LV thrombus.</p></div></details>
 
-    <details class="rpt" id="cath2019"><summary>3/4/2019 Emergent left heart cath and PCI <span>Two DES to LAD</span></summary><div class="rbody">
+    <details class="rpt" id="cxr2019" data-cat="other"><summary>3/4/2019 XR chest portable <span>No acute process</span></summary><div class="rbody">
+      <p class="h">Indication</p><p>Chest pain, ST elevation myocardial infarction.</p>
+      <p class="h">Findings</p><p>Heart size normal. Lungs clear. No pulmonary edema, effusion, or pneumothorax.</p>
+      <p class="h">Impression</p><p data-line="imp">No acute cardiopulmonary process.</p></div></details>
+
+    <details class="rpt" id="cath2019" data-cat="heart"><summary>3/4/2019 Emergent left heart cath and PCI <span>Two DES to LAD</span></summary><div class="rbody">
       <p class="h">Indication</p><p>Anterior ST elevation myocardial infarction. Door to balloon 41 minutes.</p>
       <p class="h">Findings</p>
       <p>Access: right radial, 6 Fr.</p>
@@ -473,7 +508,7 @@ svg{max-width:100%;height:auto}
       <tr><td>After the visit</td><td>Care gaps and drug checks as proposed orders with a reason, marked discussed or not discussed. Follow up items with a due date, an owner, and what happens if they are missed.</td></tr>
       <tr><td>Between visits</td><td>New results, messages and refills read against the Twin. A proposed action and a draft patient message.</td></tr>
       <tr><td>Population</td><td>Ranking across all Twins with the reason and the owner.</td></tr>
-      <tr><td>Labs and imaging</td><td>Results in a grid by date, reports as text. Each statement the Twin writes keeps a pointer to the exact value or report line it used.</td></tr>
+      <tr><td>Labs and imaging</td><td>Results in a grid by date, reports as text. Each statement the Twin writes keeps a pointer to the exact value or report line it used. Every result keeps where it came from, this health system or an outside record. The imaging list holds everything in date order with time dividers. Filters narrow the list. Nothing is reordered.</td></tr>
     </table>
   </div>
 </section>
@@ -490,6 +525,7 @@ function go(id){
 }
 document.querySelectorAll('#nav button').forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
 var LD=['10/28/26','8/12/26','2/10/26','9/15/25','3/11/25','9/9/24','9/12/23','9/14/22'];
+var LO=[0,0,1,0,0,0,1,0];
 var LABS=[
  ['Kidney'],
  ['egfr','eGFR','over 60',[38,44,46,47,48,49,55,62],function(v){return v<60}],
@@ -510,12 +546,24 @@ var LABS=[
  ['Blood count'],
  ['hgb','Hemoglobin','13.5 to 17.5',[12.9,'',13.1,13.4,'',13.8,14.2,14.6],function(v){return v<13.5}]
 ];
-(function(){var t='<tr><th>Test</th>'+LD.map(function(d){return '<th>'+d+'</th>'}).join('')+'<th>Range</th></tr>';
+(function(){var t='<tr><th>Test</th>'+LD.map(function(d,i){return '<th>'+d+(LO[i]?'<span class="tag info">Outside</span>':'')+'</th>'}).join('')+'<th>Range</th></tr>';
  LABS.forEach(function(r){
   if(r.length==1){t+='<tr class="grp"><td colspan="'+(LD.length+2)+'">'+r[0]+'</td></tr>';return}
   t+='<tr id="lab-'+r[0]+'"><td>'+r[1]+'</td>'+r[3].map(function(v,i){return '<td id="lab-'+r[0]+'-'+i+'"'+(v!==''&&r[4](v)?' class="ab"':'')+'>'+v+'</td>'}).join('')+'<td class="rng">'+r[2]+'</td></tr>';
  });
  document.getElementById('labt').innerHTML=t;})();
+function filt(b,c){
+  if(b){b.parentNode.querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on')}
+  var kids=[].slice.call(document.getElementById('imgcard').children), last=null, any=false;
+  function close(){if(last) last.style.display=any?'':'none'}
+  kids.forEach(function(k){
+    if(k.classList.contains('tdiv')){close();last=k;any=false}
+    else if(k.classList.contains('rpt')){
+      var show=c=='all'||(c=='out'?!!k.querySelector('summary .tag'):k.dataset.cat==c);
+      k.style.display=show?'':'none'; if(show) any=true;
+    }
+  }); close();
+}
 var backTo=null;
 function cur(){return document.querySelector('.screen.on').id}
 document.addEventListener('click',function(e){
@@ -528,7 +576,7 @@ document.addEventListener('click',function(e){
     el=document.getElementById('lab-'+a.dataset.id+(a.dataset.line!==''?'-'+a.dataset.line:''));
     if(a.dataset.line==='') el.querySelectorAll('td').forEach(function(x){x.classList.add('hit')}); else el.classList.add('hit');
   } else {
-    go('img');
+    go('img'); filt(document.querySelector('.filt button'),'all');
     var d=document.getElementById(a.dataset.id); d.open=true;
     el=d.querySelector('[data-line="'+a.dataset.line+'"]')||d; el.classList.add('hit');
   }
