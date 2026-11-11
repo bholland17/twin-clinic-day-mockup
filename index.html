@@ -18,7 +18,7 @@ header .s{font-size:13px;opacity:.85}
 nav{display:flex;gap:6px;overflow-x:auto;background:#fff;border-bottom:1px solid var(--line);padding:8px 12px;position:sticky;top:0;z-index:5}
 nav button{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--soft);padding:8px 12px;border-radius:18px;font-size:14px;cursor:pointer}
 nav button.on{background:var(--brand);border-color:var(--brand);color:#fff}
-main{max-width:860px;margin:0 auto;padding:16px}
+main{max-width:860px;margin:0 auto;padding:16px 16px 80px}
 .screen{display:none}
 .screen.on{display:block}
 h2{font-size:19px;margin:6px 0 4px}
@@ -67,6 +67,24 @@ table{width:100%;border-collapse:collapse;font-size:14px}
 td,th{text-align:left;padding:8px 6px;border-top:1px solid var(--line);vertical-align:top}
 th{color:var(--soft);font-weight:600;border-top:0}
 .rules li{margin-bottom:6px}
+.ref{color:var(--brand);text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer}
+.hit{background:#fff1a8 !important;outline:2px solid #e0b400;border-radius:3px}
+.scroll{overflow-x:auto}
+.labt{min-width:640px;font-size:14px}
+.labt th,.labt td{white-space:nowrap;text-align:right}
+.labt th:first-child,.labt td:first-child{text-align:left;position:sticky;left:0;background:var(--card)}
+.labt .grp td{background:var(--bg);font-weight:600;color:var(--soft);text-align:left}
+.labt .ab{color:var(--high);font-weight:600}
+.labt .rng{color:var(--soft)}
+details.rpt{border-top:1px solid var(--line);padding:10px 0}
+details.rpt:first-of-type{border-top:0}
+details.rpt summary{cursor:pointer;font-weight:600}
+details.rpt summary span{font-weight:400;color:var(--soft);font-size:14px}
+.rbody{font-size:15px;margin-top:8px}
+.rbody p{margin:0 0 6px}
+.rbody .h{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--soft);font-weight:600;margin-top:10px}
+#back{display:none;position:fixed;left:0;right:0;bottom:0;background:var(--brand);color:#fff;border:0;padding:14px;font-size:15px;font-weight:600;cursor:pointer;z-index:9}
+#back.on{display:block}
 .prob{padding:10px 0;border-top:1px solid var(--line)}
 .prob:first-of-type{border-top:0}
 .prob .ttl{font-weight:600}
@@ -90,6 +108,8 @@ svg{max-width:100%;height:auto}
   <button data-s="s3">4 After, the APP</button>
   <button data-s="s4">5 Between visits</button>
   <button data-s="s5">6 Population</button>
+  <button data-s="labs">Labs</button>
+  <button data-s="img">Imaging</button>
   <button data-s="s6">For Reza</button>
 </nav>
 <main>
@@ -137,45 +157,42 @@ svg{max-width:100%;height:auto}
   <div class="card">
     <h3>Problem list</h3>
     <div class="prob"><div class="ttl">1. Coronary artery disease <span class="tag low">Stable</span></div>
-      <ul><li>3/4/2019 anterior STEMI, cath/PCI: 100% proximal LAD, 50% mid RCA -> 3.0 x 28 mm and 3.0 x 16 mm DES to LAD (pd 3.5)</li>
-      <li>3/6/2019 echo: EF 40 to 45%, anterior hypokinesis, no significant valve dysfunction</li>
-      <li>3/16/2021 NST: moderate, reversible inferior defect, EF 48%</li>
-      <li>3/22/2021 cath/PCI: 85% mid RCA, patent LAD stents -> 3.5 x 18 mm DES (pd 4.0)</li>
-      <li>10/9/2024 echo: EF 50%, mild anterior hypokinesis, RV/atria normal, no significant valve dysfunction</li></ul></div>
+      <ul><li><a class="ref" data-t="img" data-id="cath2019" data-line="imp">3/4/2019 anterior STEMI, cath/PCI</a>: 100% proximal LAD, 50% mid RCA -> 3.0 x 28 mm and 3.0 x 16 mm DES to LAD (pd 3.5)</li>
+      <li><a class="ref" data-t="img" data-id="echo2019" data-line="ef">3/6/2019 echo</a>: EF 40 to 45%, anterior hypokinesis, no significant valve dysfunction</li>
+      <li><a class="ref" data-t="img" data-id="nst2021" data-line="imp">3/16/2021 NST</a>: moderate, reversible inferior defect, EF 48%</li>
+      <li><a class="ref" data-t="img" data-id="cath2021" data-line="imp">3/22/2021 cath/PCI</a>: 85% mid RCA, patent LAD stents -> 3.5 x 18 mm DES (pd 4.0)</li>
+      <li><a class="ref" data-t="img" data-id="echo2024" data-line="ef">10/9/2024 echo</a>: EF 50%, mild anterior hypokinesis, RV/atria normal, no significant valve dysfunction</li></ul></div>
     <div class="prob"><div class="ttl">2. Chronic kidney disease, stage 3b <span class="tag high">Worse</span></div>
-      <ul><li>eGFR: 62 (2022), 55 (2023), 49 (2024), 44 (8/12/2026)</li>
-      <li>9/15/2025 urine albumin/creatinine: 68 mg/g</li>
+      <ul><li><a class="ref" data-t="lab" data-id="egfr" data-line="">eGFR</a>: 62 (2022), 55 (2023), 49 (2024), 44 (8/12/2026)</li>
+      <li><a class="ref" data-t="lab" data-id="uacr" data-line="3">9/15/2025 urine albumin/creatinine</a>: 68 mg/g</li>
       <li>No renal imaging, never seen by nephrology</li>
       <li>10/20/2026 urgent care: naproxen 500 mg BID for knee pain <span class="tag high">New</span></li>
-      <li>10/28/2026 eGFR 38, K 4.8 <span class="tag high">New</span></li></ul></div>
+      <li><a class="ref" data-t="lab" data-id="egfr" data-line="0">10/28/2026 eGFR 38</a>, <a class="ref" data-t="lab" data-id="k" data-line="0">K 4.8</a> <span class="tag high">New</span></li></ul></div>
     <div class="prob"><div class="ttl">3. Type 2 diabetes, dx 2016 <span class="tag mid">Dose problem</span></div>
-      <ul><li>10/28/2026 A1c 7.4 <span class="tag info">New</span></li>
+      <ul><li><a class="ref" data-t="lab" data-id="a1c" data-line="0">10/28/2026 A1c 7.4</a> <span class="tag info">New</span></li>
       <li>Metformin 1000 mg BID, above the limit for eGFR 38</li></ul></div>
     <div class="prob"><div class="ttl">4. Essential hypertension, dx 2016 <span class="tag mid">Not at goal</span></div>
       <ul><li>Home log, last 30 days: average 146/86, 22 readings <span class="tag mid">New</span></li></ul></div>
     <div class="prob"><div class="ttl">5. Dyslipidemia <span class="tag mid">Not at goal</span></div>
-      <ul><li>10/28/2026 LDL 92 on atorvastatin 40 <span class="tag info">New</span></li></ul></div>
+      <ul><li><a class="ref" data-t="lab" data-id="ldl" data-line="0">10/28/2026 LDL 92</a> on atorvastatin 40 <span class="tag info">New</span></li></ul></div>
     <div class="prob"><div class="ttl">6. Family history of premature coronary artery disease, brother MI at 52</div></div>
     <div class="prob"><div class="ttl">7. Osteoarthritis, right knee</div></div>
     <div class="prob"><div class="ttl">8. Retired diesel mechanic; lives with his wife, walks 2 miles most days, never smoked</div></div>
-    <button class="link" onclick="tog('srcp')">Where did this come from</button>
-    <div class="more" id="srcp">Each bullet links to its source. Cath reports 2019 and 2021, echo report Oct 2024, 9 kidney lab results 2022 to 2026, outside pharmacy fill Oct 20, 2026, active medication list.</div>
   </div>
 
   <div class="card">
     <h3>The short story</h3>
     <div class="story">
-      <p>Mr. A is here for his 3 month follow up. His heart has been quiet since the last stent in 2021, with no chest pain and no hospital stays.</p>
-      <p>His kidneys are the story today. Kidney function has dropped from 62 to 38 over four years, and the last drop was the fastest.</p>
+      <p>Mr. A is here for his 3 month follow up. His heart has been quiet since the <a class="ref" data-t="img" data-id="cath2021" data-line="imp">last stent in 2021</a>, with no chest pain and no hospital stays.</p>
+      <p>His kidneys are the story today. Kidney function has <a class="ref" data-t="lab" data-id="egfr" data-line="">dropped from 62 to 38</a> over four years, and the last drop was the fastest.</p>
       <p>Three things need a decision before he leaves. His metformin dose is too high for his kidneys now. An urgent care started naproxen three weeks ago. He is not on a kidney and heart protecting drug that he qualifies for.</p>
     </div>
-    <button class="link" onclick="tog('src1')">Where did this come from</button>
-    <div class="more" id="src1">eGFR values from 9 lab results, 2022 to Oct 2026. Naproxen from an outside pharmacy fill on Oct 20, 2026, not in this hospital's chart. Metformin 1000 mg twice a day from the active medication list. Last stent from the cath report of Mar 2021.</div>
+    <p class="note">Tap any underlined result to open the lab or report it came from.</p>
   </div>
 
   <div class="card">
     <h3>What changed since his last visit, Aug 2026</h3>
-    <div class="row"><div class="main"><div class="ttl">Kidney function 44 down to 38</div><div class="sub">eGFR, Oct 28. Dropping about 6 points a year.</div>
+    <div class="row"><div class="main"><div class="ttl"><a class="ref" data-t="lab" data-id="egfr" data-line="0">Kidney function 44 down to 38</a></div><div class="sub">eGFR, Oct 28. Dropping about 6 points a year.</div>
       <svg viewBox="0 0 300 70" width="300" role="img" aria-label="eGFR trend 2022 to 2026">
         <polyline fill="none" stroke="#b3261e" stroke-width="2.5" points="15,14 80,24 145,33 210,41 285,50"/>
         <g fill="#b3261e"><circle cx="15" cy="14" r="3"/><circle cx="80" cy="24" r="3"/><circle cx="145" cy="33" r="3"/><circle cx="210" cy="41" r="3"/><circle cx="285" cy="50" r="3"/></g>
@@ -183,14 +200,14 @@ svg{max-width:100%;height:auto}
       </svg></div><span class="tag high">Worse</span></div>
     <div class="row"><div class="main"><div class="ttl">Naproxen started by urgent care</div><div class="sub">Knee pain, Oct 20. From an outside pharmacy record.</div></div><span class="tag high">New</span></div>
     <div class="row"><div class="main"><div class="ttl">Home blood pressure average 146 over 86</div><div class="sub">22 readings in the last 30 days. Was 138 over 82.</div></div><span class="tag mid">Higher</span></div>
-    <div class="row"><div class="main"><div class="ttl">A1c 7.4, LDL 92</div><div class="sub">Both about the same as last time.</div></div><span class="tag low">Same</span></div>
+    <div class="row"><div class="main"><div class="ttl"><a class="ref" data-t="lab" data-id="a1c" data-line="0">A1c 7.4</a>, <a class="ref" data-t="lab" data-id="ldl" data-line="0">LDL 92</a></div><div class="sub">Both about the same as last time.</div></div><span class="tag low">Same</span></div>
   </div>
 
   <div class="card">
     <h3>Organ health</h3>
     <div class="grid">
-      <div class="score"><div class="name">Kidney <span class="tag high">High risk, getting worse</span></div><div class="why">Steady drop in function, blood pressure not controlled, a pain reliever that harms kidneys.</div><div class="conf">Confidence high. 9 lab values in 5 years.</div></div>
-      <div class="score"><div class="name">Heart <span class="tag high">High risk, stable</span></div><div class="why">Prior heart attack. LDL above goal. No symptoms.</div><div class="conf">Confidence moderate. Last echo is 2 years old.</div></div>
+      <div class="score"><div class="name">Kidney <span class="tag high">High risk, getting worse</span></div><div class="why">Steady drop in function, blood pressure not controlled, a pain reliever that harms kidneys.</div><div class="conf">Confidence high. <a class="ref" data-t="lab" data-id="egfr" data-line="">8 lab values in 5 years</a>.</div></div>
+      <div class="score"><div class="name">Heart <span class="tag high">High risk, stable</span></div><div class="why">Prior heart attack. LDL above goal. No symptoms.</div><div class="conf">Confidence moderate. <a class="ref" data-t="img" data-id="echo2024" data-line="ef">Last echo</a> is 2 years old.</div></div>
       <div class="score"><div class="name">Metabolic <span class="tag mid">Intermediate</span></div><div class="why">A1c steady at 7.4.</div><div class="conf">Confidence high.</div></div>
     </div>
     <p class="note">Kidney and heart are linked here. The same blood pressure is driving both.</p>
@@ -238,9 +255,9 @@ svg{max-width:100%;height:auto}
     <h3>Draft note, by problem</h3>
     <div class="notebox">
       <p><b>Interval history.</b> Doing well from a cardiac standpoint. No angina, walks 2 miles most days. Knee pain since October, taking naproxen twice a day and ibuprofen at night. Ankle swelling by evening for one month.</p>
-      <p><b>1. Coronary artery disease.</b> Stable, no angina. Continue aspirin and metoprolol. LDL 92, above goal.</p>
-      <p><b>2. Chronic kidney disease stage 3b.</b> eGFR 44 to 38 in two months while taking two NSAIDs. Stop both, acetaminophen for knee pain. Start empagliflozin 10 mg. Urine protein today.</p>
-      <p><b>3. Type 2 diabetes.</b> A1c 7.4. Lower metformin to 500 mg twice a day for eGFR 38.</p>
+      <p><b>1. Coronary artery disease.</b> Stable, no angina. Continue aspirin and metoprolol. <a class="ref" data-t="lab" data-id="ldl" data-line="0">LDL 92</a>, above goal.</p>
+      <p><b>2. Chronic kidney disease stage 3b.</b> <a class="ref" data-t="lab" data-id="egfr" data-line="0">eGFR 44 to 38</a> in two months while taking two NSAIDs. Stop both, acetaminophen for knee pain. Start empagliflozin 10 mg. Urine protein today.</p>
+      <p><b>3. Type 2 diabetes.</b> <a class="ref" data-t="lab" data-id="a1c" data-line="0">A1c 7.4</a>. Lower metformin to 500 mg twice a day for eGFR 38.</p>
       <p><b>4. Hypertension.</b> 148 over 86 in clinic, home average 146 over 86. Expect improvement off NSAIDs. Recheck home readings in 2 weeks.</p>
     </div>
     <p class="note">Written from the conversation plus what his Twin already knows, in the same problem order as before the visit. You edit and sign.</p>
@@ -335,6 +352,78 @@ svg{max-width:100%;height:auto}
   </div>
 </section>
 
+<!-- LABS -->
+<section class="screen" id="labs">
+  <h2>Mr. A, labs</h2>
+  <p class="when">Newest on the left. Out of range values in red.</p>
+  <div class="card"><div class="scroll"><table class="labt" id="labt"></table></div></div>
+</section>
+
+<!-- IMAGING -->
+<section class="screen" id="img">
+  <h2>Mr. A, imaging and procedures</h2>
+  <p class="when">Newest first. Tap a study to open the report.</p>
+  <div class="card">
+    <details class="rpt" id="echo2024"><summary>10/9/2024 Transthoracic echocardiogram <span>EF 50%</span></summary><div class="rbody">
+      <p class="h">Indication</p><p>Coronary artery disease, prior anterior myocardial infarction. Surveillance of LV function.</p>
+      <p class="h">Findings</p>
+      <p data-line="ef">Left ventricle: normal cavity size. Mild hypokinesis of the mid to apical anterior wall. LVEF 50% by biplane Simpson's.</p>
+      <p>Diastolic function: grade I diastolic dysfunction. E/e' 9.</p>
+      <p>Right ventricle: normal size and systolic function. TAPSE 2.1 cm.</p>
+      <p>Atria: normal size. LA volume index 30 mL/m2.</p>
+      <p>Valves: trace mitral regurgitation. Trileaflet aortic valve, no stenosis. Trace tricuspid regurgitation, RVSP 28 mmHg.</p>
+      <p>Pericardium: no effusion. IVC normal size with normal collapse.</p>
+      <p class="h">Impression</p>
+      <p>1. Low normal LV systolic function, EF 50%, improved from 40 to 45% in 2019.</p><p>2. Mild anterior wall hypokinesis, unchanged.</p><p>3. No significant valve dysfunction.</p></div></details>
+
+    <details class="rpt" id="cath2021"><summary>3/22/2021 Left heart cath and PCI <span>DES to mid RCA</span></summary><div class="rbody">
+      <p class="h">Indication</p><p>Exertional angina, CCS class II. Abnormal nuclear stress test with inferior ischemia.</p>
+      <p class="h">Findings</p>
+      <p>Access: right radial, 6 Fr.</p>
+      <p>Left main: no significant disease.</p>
+      <p>LAD: widely patent proximal and mid stents. 30% distal disease.</p>
+      <p>Circumflex: 30% mid.</p>
+      <p>RCA: dominant. 85% mid lesion, progressed from 50% in 2019.</p>
+      <p>LVEDP 14 mmHg.</p>
+      <p class="h">Intervention</p>
+      <p>3.5 x 18 mm drug eluting stent to the mid RCA, post dilated to 4.0 mm. 0% residual, TIMI 3 flow.</p>
+      <p class="h">Impression</p>
+      <p data-line="imp">1. Single vessel PCI of the mid RCA with one drug eluting stent.</p><p>2. Patent LAD stents.</p></div></details>
+
+    <details class="rpt" id="nst2021"><summary>3/16/2021 Nuclear stress test <span>Inferior ischemia</span></summary><div class="rbody">
+      <p class="h">Indication</p><p>Exertional chest pressure, known coronary artery disease.</p>
+      <p class="h">Findings</p>
+      <p>Exercise: Bruce protocol, 6:10, 7.0 METs, 88% of predicted maximum heart rate. Chest pressure at peak exercise. 1 mm horizontal ST depression in II, III, aVF.</p>
+      <p>Perfusion: moderate sized, moderate severity, reversible defect of the mid to basal inferior wall. Small fixed apical anterior defect.</p>
+      <p>Gated images: EF 48%. No transient ischemic dilation.</p>
+      <p class="h">Impression</p>
+      <p data-line="imp">1. Moderate inferior ischemia in the RCA territory.</p><p>2. Small prior anterior infarct.</p><p>3. EF 48%.</p></div></details>
+
+    <details class="rpt" id="echo2019"><summary>3/6/2019 Transthoracic echocardiogram <span>EF 40 to 45%</span></summary><div class="rbody">
+      <p class="h">Indication</p><p>Anterior STEMI, status post PCI to the LAD.</p>
+      <p class="h">Findings</p>
+      <p data-line="ef">Left ventricle: normal cavity size. Hypokinesis of the mid to apical anterior and anteroseptal walls. LVEF 40 to 45%.</p>
+      <p>No LV thrombus seen with contrast.</p>
+      <p>Right ventricle: normal size and function.</p>
+      <p>Valves: mild mitral regurgitation. No aortic stenosis.</p>
+      <p class="h">Impression</p>
+      <p>1. Mildly to moderately reduced LV systolic function, EF 40 to 45%, with anterior wall motion abnormality.</p><p>2. No LV thrombus.</p></div></details>
+
+    <details class="rpt" id="cath2019"><summary>3/4/2019 Emergent left heart cath and PCI <span>Two DES to LAD</span></summary><div class="rbody">
+      <p class="h">Indication</p><p>Anterior ST elevation myocardial infarction. Door to balloon 41 minutes.</p>
+      <p class="h">Findings</p>
+      <p>Access: right radial, 6 Fr.</p>
+      <p>Left main: no significant disease.</p>
+      <p>LAD: 100% thrombotic occlusion of the proximal segment, TIMI 0 flow.</p>
+      <p>Circumflex: 20% proximal.</p>
+      <p>RCA: dominant. 50% mid lesion.</p>
+      <p class="h">Intervention</p>
+      <p>Aspiration thrombectomy. 3.0 x 28 mm and 3.0 x 16 mm overlapping drug eluting stents to the proximal and mid LAD, post dilated to 3.5 mm. TIMI 3 flow.</p>
+      <p class="h">Impression</p>
+      <p data-line="imp">1. Anterior STEMI from proximal LAD occlusion, treated with two drug eluting stents.</p><p>2. Moderate mid RCA disease, medical therapy.</p></div></details>
+  </div>
+</section>
+
 <!-- 6 FOR REZA -->
 <section class="screen" id="s6">
   <h2>Notes for Reza</h2>
@@ -355,7 +444,7 @@ svg{max-width:100%;height:auto}
       <li>The problem list follows the clinician's own format. Numbered problems. Under each, one line per test or event that establishes the diagnosis, written as date, test, finding, oldest first. Stents carry size, type and post dilation. Problems with nothing to add stay as one line. Family history and a line on how the patient lives go at the end. No duplicate codes.</li>
       <li>The Twin adds only two things to that list. A status tag on each problem, and a "New" tag on any line added since the last visit.</li>
       <li>Detail is one click down, never on the first view.</li>
-      <li>Every statement can show where it came from.</li>
+      <li>Every result in the Twin's text is a link. One tap opens the lab value or the line of the report it came from, highlighted. Back returns to the same place.</li>
       <li>Say what changed since the last visit. Do not repeat what is the same.</li>
       <li>Each finding appears once, on one screen.</li>
       <li>Show confidence, and say so when data is thin.</li>
@@ -384,18 +473,72 @@ svg{max-width:100%;height:auto}
       <tr><td>After the visit</td><td>Care gaps and drug checks as proposed orders with a reason, marked discussed or not discussed. Follow up items with a due date, an owner, and what happens if they are missed.</td></tr>
       <tr><td>Between visits</td><td>New results, messages and refills read against the Twin. A proposed action and a draft patient message.</td></tr>
       <tr><td>Population</td><td>Ranking across all Twins with the reason and the owner.</td></tr>
+      <tr><td>Labs and imaging</td><td>Results in a grid by date, reports as text. Each statement the Twin writes keeps a pointer to the exact value or report line it used.</td></tr>
     </table>
   </div>
 </section>
 
 </main>
+<button id="back" onclick="goBack()">Back to where you were</button>
 <script>
 function go(id){
   document.querySelectorAll('.screen').forEach(function(s){s.classList.toggle('on',s.id===id)});
   document.querySelectorAll('#nav button').forEach(function(b){b.classList.toggle('on',b.dataset.s===id)});
+  var nb=document.querySelector('#nav button.on'); if(nb) nb.scrollIntoView({block:'nearest',inline:'center'});
   window.scrollTo(0,0);
+  if(id!='labs'&&id!='img'){document.getElementById('back').classList.remove('on')}
 }
 document.querySelectorAll('#nav button').forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
+var LD=['10/28/26','8/12/26','2/10/26','9/15/25','3/11/25','9/9/24','9/12/23','9/14/22'];
+var LABS=[
+ ['Kidney'],
+ ['egfr','eGFR','over 60',[38,44,46,47,48,49,55,62],function(v){return v<60}],
+ ['cr','Creatinine','0.7 to 1.3',[1.96,1.73,1.67,1.65,1.62,1.60,1.46,1.33],function(v){return v>1.3}],
+ ['bun','BUN','7 to 20',[31,27,26,25,24,24,21,19],function(v){return v>20}],
+ ['uacr','Urine alb/creat','under 30',['','','',68,'',41,24,18],function(v){return v>=30}],
+ ['Chemistry'],
+ ['k','Potassium','3.5 to 5.0',[4.8,4.5,4.6,4.4,4.5,4.3,4.4,4.2],function(v){return v>5||v<3.5}],
+ ['na','Sodium','135 to 145',[139,140,138,140,141,139,140,141],function(v){return v>145||v<135}],
+ ['co2','CO2','22 to 29',[22,23,24,24,25,24,25,26],function(v){return v<22}],
+ ['glu','Glucose','70 to 99',[148,152,141,156,139,134,128,131],function(v){return v>99}],
+ ['a1c','Hemoglobin A1c','under 5.7',[7.4,'',7.3,7.5,7.2,7.1,7.0,6.9],function(v){return v>=5.7}],
+ ['Lipids'],
+ ['tc','Total cholesterol','under 200',[166,'',167,160,'',154,148,146],function(v){return v>=200}],
+ ['ldl','LDL','under 70',[92,'',94,88,'',84,79,76],function(v){return v>=70}],
+ ['hdl','HDL','over 40',[41,'',40,42,'',41,43,44],function(v){return v<40}],
+ ['tg','Triglycerides','under 150',[165,'',166,150,'',146,131,128],function(v){return v>=150}],
+ ['Blood count'],
+ ['hgb','Hemoglobin','13.5 to 17.5',[12.9,'',13.1,13.4,'',13.8,14.2,14.6],function(v){return v<13.5}]
+];
+(function(){var t='<tr><th>Test</th>'+LD.map(function(d){return '<th>'+d+'</th>'}).join('')+'<th>Range</th></tr>';
+ LABS.forEach(function(r){
+  if(r.length==1){t+='<tr class="grp"><td colspan="'+(LD.length+2)+'">'+r[0]+'</td></tr>';return}
+  t+='<tr id="lab-'+r[0]+'"><td>'+r[1]+'</td>'+r[3].map(function(v,i){return '<td id="lab-'+r[0]+'-'+i+'"'+(v!==''&&r[4](v)?' class="ab"':'')+'>'+v+'</td>'}).join('')+'<td class="rng">'+r[2]+'</td></tr>';
+ });
+ document.getElementById('labt').innerHTML=t;})();
+var backTo=null;
+function cur(){return document.querySelector('.screen.on').id}
+document.addEventListener('click',function(e){
+  var a=e.target.closest('.ref'); if(!a) return;
+  backTo={s:cur(),y:window.scrollY};
+  document.querySelectorAll('.hit').forEach(function(x){x.classList.remove('hit')});
+  var el;
+  if(a.dataset.t=='lab'){
+    go('labs');
+    el=document.getElementById('lab-'+a.dataset.id+(a.dataset.line!==''?'-'+a.dataset.line:''));
+    if(a.dataset.line==='') el.querySelectorAll('td').forEach(function(x){x.classList.add('hit')}); else el.classList.add('hit');
+  } else {
+    go('img');
+    var d=document.getElementById(a.dataset.id); d.open=true;
+    el=d.querySelector('[data-line="'+a.dataset.line+'"]')||d; el.classList.add('hit');
+  }
+  document.getElementById('back').classList.add('on');
+  setTimeout(function(){el.scrollIntoView({block:'center',inline:'nearest'})},50);
+});
+function goBack(){
+  if(!backTo) return; var b=backTo; backTo=null;
+  go(b.s); window.scrollTo(0,b.y);
+}
 function tog(id){document.getElementById(id).classList.toggle('on')}
 function pick(b){
   b.parentNode.querySelectorAll('.btn').forEach(function(x){x.classList.remove('sel')});
