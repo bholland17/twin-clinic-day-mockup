@@ -67,6 +67,14 @@ table{width:100%;border-collapse:collapse;font-size:14px}
 td,th{text-align:left;padding:8px 6px;border-top:1px solid var(--line);vertical-align:top}
 th{color:var(--soft);font-weight:600;border-top:0}
 .rules li{margin-bottom:6px}
+.prob{padding:10px 0;border-top:1px solid var(--line)}
+.prob:first-of-type{border-top:0}
+.prob .ttl{font-weight:600}
+.prob ul{margin:4px 0 0;padding-left:20px;font-size:15px}
+.prob li{margin-bottom:2px}
+.role{font-size:13px;color:var(--brand);font-weight:600;margin:0 0 2px}
+.notebox{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:15px;margin-top:6px}
+.notebox p{margin:0 0 8px}
 svg{max-width:100%;height:auto}
 </style>
 </head>
@@ -77,10 +85,11 @@ svg{max-width:100%;height:auto}
 </header>
 <nav id="nav">
   <button data-s="s1" class="on">1 Schedule</button>
-  <button data-s="s2">2 Before the visit</button>
-  <button data-s="s3">3 End of visit</button>
-  <button data-s="s4">4 Between visits</button>
-  <button data-s="s5">5 Population</button>
+  <button data-s="s2">2 Before, the resident</button>
+  <button data-s="sv">3 During, the scribe</button>
+  <button data-s="s3">4 After, the APP</button>
+  <button data-s="s4">5 Between visits</button>
+  <button data-s="s5">6 Population</button>
   <button data-s="s6">For Reza</button>
 </nav>
 <main>
@@ -120,8 +129,27 @@ svg{max-width:100%;height:auto}
 
 <!-- 2 BEFORE THE VISIT -->
 <section class="screen" id="s2">
+  <p class="role">The best resident. The research is done before you walk in.</p>
   <h2>Mr. A, before the visit</h2>
-  <div class="banner"><span><b>62 M</b></span><span>Heart attack 2019, 3 stents</span><span>Diabetes</span><span>High blood pressure</span><span>Kidney disease stage 3b</span></div>
+  <div class="card">
+    <div class="banner" style="margin:0"><span><b>Mr. A, 62 M</b></span><span>Here for 3 month follow up</span><span>Last seen Aug 12, 2026</span><span>No drug allergies</span><span>BP today 148 over 86, HR 64</span></div>
+  </div>
+
+  <div class="card">
+    <h3>Problem list</h3>
+    <div class="prob"><div class="ttl">1. Coronary artery disease <span class="tag low">Stable</span></div>
+      <ul><li>Anterior heart attack 2019. Two stents to the LAD.</li><li>Exertional angina 2021. One stent to the RCA.</li><li>Echo Oct 2024, EF 50 percent.</li><li>No chest pain and no hospital stays since 2021.</li><li>Aspirin 81, atorvastatin 40, metoprolol succinate 50.</li></ul></div>
+    <div class="prob"><div class="ttl">2. Chronic kidney disease, stage 3b <span class="tag high">Worse</span></div>
+      <ul><li>eGFR 62 in 2022, 38 on Oct 28, 2026. Two values under 45 more than 3 months apart.</li><li>Urine protein mildly elevated Sep 2025. Not repeated.</li><li>Cause not stated in the record. Never seen by nephrology.</li><li>Naproxen started by urgent care Oct 20.</li></ul></div>
+    <div class="prob"><div class="ttl">3. Type 2 diabetes <span class="tag mid">Dose problem</span></div>
+      <ul><li>Diagnosed 2016. A1c 7.4 on Oct 28.</li><li>Metformin 1000 mg twice a day, too high for eGFR 38.</li></ul></div>
+    <div class="prob"><div class="ttl">4. Hypertension <span class="tag mid">Not at goal</span></div>
+      <ul><li>Diagnosed 2016. Home average 146 over 86, 22 readings in 30 days.</li><li>Lisinopril 20, amlodipine 5 added Mar 2025.</li></ul></div>
+    <div class="prob"><div class="ttl">5. Hyperlipidemia <span class="tag mid">Not at goal</span></div>
+      <ul><li>LDL 92 on atorvastatin 40.</li></ul></div>
+    <button class="link" onclick="tog('srcp')">Where did this come from</button>
+    <div class="more" id="srcp">Each bullet links to its source. Cath reports 2019 and 2021, echo report Oct 2024, 9 kidney lab results 2022 to 2026, outside pharmacy fill Oct 20, 2026, active medication list.</div>
+  </div>
 
   <div class="card">
     <h3>The short story</h3>
@@ -162,8 +190,8 @@ svg{max-width:100%;height:auto}
     <div class="zoom"><button class="on" onclick="zoom(this,'z1')">10 years</button><button onclick="zoom(this,'z2')">2 years</button><button onclick="zoom(this,'z3')">6 months</button></div>
     <div class="tl on" id="z1">
       <div><b>2016</b>Diabetes and high blood pressure diagnosed.</div>
-      <div><b>2019</b>Heart attack. Two stents to the front artery.</div>
-      <div><b>2021</b>Chest pain with exertion. One stent to the right artery.</div>
+      <div><b>2019</b>Heart attack. Two stents to the LAD.</div>
+      <div><b>2021</b>Chest pain with exertion. One stent to the RCA.</div>
       <div><b>2022 to 2026</b>Kidney function falls from 62 to 38.</div>
     </div>
     <div class="tl" id="z2">
@@ -180,18 +208,45 @@ svg{max-width:100%;height:auto}
       <div><b>Nov 11</b>Today's visit.</div>
     </div>
   </div>
-  <div class="btns"><button class="btn pri" onclick="go('s3')">Visit is done, go to end of visit</button></div>
+  <div class="btns"><button class="btn pri" onclick="go('sv')">Walk into the room</button></div>
   <p class="note">Nothing chimes or talks during the visit. The clinician turns the chair and talks to the patient.</p>
+</section>
+
+<!-- DURING THE VISIT -->
+<section class="screen" id="sv">
+  <p class="role">The best scribe. Listens, stays quiet, writes the note.</p>
+  <h2>Mr. A, during the visit</h2>
+  <p class="when">You turn the chair and talk to him. The screen shows nothing new and makes no sound.</p>
+  <div class="card">
+    <h3>Heard in the room</h3>
+    <div class="row"><div class="main"><div class="ttl">No chest pain. Walks 2 miles most days.</div><div class="sub">Matches the record.</div></div><span class="tag low">Same</span></div>
+    <div class="row"><div class="main"><div class="ttl">Takes naproxen twice a day, and ibuprofen at night</div><div class="sub">The ibuprofen is not in any record. Added to his Twin.</div></div><span class="tag high">New</span></div>
+    <div class="row"><div class="main"><div class="ttl">Ankles swell by evening for the last month</div><div class="sub">Not in the record before today.</div></div><span class="tag mid">New</span></div>
+    <div class="row"><div class="main"><div class="ttl">You explained the kidney numbers. He agreed to stop naproxen and start empagliflozin.</div><div class="sub">Lined up as orders on the next screen.</div></div><span class="tag info">Plan</span></div>
+  </div>
+  <div class="card">
+    <h3>Draft note, by problem</h3>
+    <div class="notebox">
+      <p><b>Interval history.</b> Doing well from a cardiac standpoint. No angina, walks 2 miles most days. Knee pain since October, taking naproxen twice a day and ibuprofen at night. Ankle swelling by evening for one month.</p>
+      <p><b>1. Coronary artery disease.</b> Stable, no angina. Continue aspirin and metoprolol. LDL 92, above goal.</p>
+      <p><b>2. Chronic kidney disease stage 3b.</b> eGFR 44 to 38 in two months while taking two NSAIDs. Stop both, acetaminophen for knee pain. Start empagliflozin 10 mg. Urine protein today.</p>
+      <p><b>3. Type 2 diabetes.</b> A1c 7.4. Lower metformin to 500 mg twice a day for eGFR 38.</p>
+      <p><b>4. Hypertension.</b> 148 over 86 in clinic, home average 146 over 86. Expect improvement off NSAIDs. Recheck home readings in 2 weeks.</p>
+    </div>
+    <p class="note">Written from the conversation plus what his Twin already knows, in the same problem order as before the visit. You edit and sign.</p>
+  </div>
+  <div class="btns"><button class="btn pri" onclick="go('s3')">Visit is done, go to orders and follow up</button></div>
 </section>
 
 <!-- 3 END OF VISIT -->
 <section class="screen" id="s3">
-  <h2>Mr. A, end of visit</h2>
-  <p class="when">Back at the computer, before he leaves the office. The Twin listened and lines up what to do. Nothing happens until you sign.</p>
+  <p class="role">The best APP. Gets the orders done and makes sure the follow up happens.</p>
+  <h2>Mr. A, after the visit</h2>
+  <p class="when">Back at the computer, before he leaves the office. The orders are lined up. Nothing happens until you sign.</p>
   <div class="card" id="orders">
     <h3>Proposed, check off or change</h3>
 
-    <div class="row"><div class="main"><div class="ttl">Stop naproxen, use acetaminophen</div><div class="sub">You told him this in the room.</div>
+    <div class="row"><div class="main"><div class="ttl">Stop naproxen and ibuprofen, use acetaminophen</div><div class="sub">You told him this in the room.</div>
       <button class="link" onclick="tog('w1')">Why</button><div class="more" id="w1">This type of pain reliever lowers kidney blood flow and raises blood pressure. He has an eGFR of 38 and is on lisinopril.</div>
       <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button><button class="btn skip" onclick="pick(this)">Skip</button></div></div><span class="tag high">Safety</span></div>
 
@@ -206,6 +261,10 @@ svg{max-width:100%;height:auto}
     <div class="row"><div class="main"><div class="ttl">Urine protein test today</div><div class="sub">Last one was 14 months ago.</div>
       <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button><button class="btn skip" onclick="pick(this)">Skip</button></div></div><span class="tag mid">Care gap</span></div>
 
+    <div class="row"><div class="main"><div class="ttl">Refer to nephrology</div><div class="sub">Never seen. You did not discuss this.</div>
+      <button class="link" onclick="tog('w5')">Why</button><div class="more" id="w5">eGFR falling more than 5 points a year is a standard reason for a kidney referral.</div>
+      <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button><button class="btn skip" onclick="pick(this)">Skip</button></div></div><span class="tag mid">Not discussed</span></div>
+
     <div class="row"><div class="main"><div class="ttl">Atorvastatin 40 up to 80 mg</div><div class="sub">LDL 92, above goal after a heart attack. You did not discuss this.</div>
       <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button><button class="btn skip" onclick="pick(this)">Skip</button></div></div><span class="tag mid">Not discussed</span></div>
 
@@ -214,6 +273,13 @@ svg{max-width:100%;height:auto}
 
     <div class="btns"><button class="btn pri" onclick="document.getElementById('signed').classList.add('on')">Sign what I accepted</button></div>
     <div class="done" id="signed">Signed. Orders sent, his Twin is updated, the visit note is drafted for your review.</div>
+  </div>
+  <div class="card">
+    <h3>Follow up the Twin will watch</h3>
+    <div class="row"><div class="main"><div class="ttl">Kidney labs due Nov 25</div><div class="sub">If not drawn by Nov 27, he gets a message and the nurse is told.</div></div><span class="tag info">Nurse</span></div>
+    <div class="row"><div class="main"><div class="ttl">Home blood pressure for 2 weeks</div><div class="sub">If the average stays above 140, it comes back to you with a proposed change.</div></div><span class="tag info">You</span></div>
+    <div class="row"><div class="main"><div class="ttl">Nephrology appointment</div><div class="sub">If not scheduled in 14 days, the referral coordinator is told.</div></div><span class="tag info">Coordinator</span></div>
+    <div class="row"><div class="main"><div class="ttl">Visit in 3 months, with labs the week before</div><div class="sub">Booked before he leaves the building.</div></div><span class="tag info">Front desk</span></div>
   </div>
   <p class="note">The "not discussed" label matters. It is something the Twin found that never came up in the room, so it can be raised before he walks out.</p>
 </section>
@@ -267,9 +333,19 @@ svg{max-width:100%;height:auto}
   <h2>Notes for Reza</h2>
   <p class="when">What the clinician is asking for, and what each screen needs from the back end.</p>
   <div class="card">
+    <h3>What the Twin has to be</h3>
+    <ol class="rules">
+      <li>The best resident. Does the research before the visit.</li>
+      <li>The best scribe. Listens during the visit and writes the note.</li>
+      <li>The best APP. Gets the orders done and makes sure there is follow up after the visit.</li>
+    </ol>
+    <p class="note">Before the visit the order on screen is fixed. Patient banner, then the problem list with the bullets that establish each diagnosis and its significant events, then the short story.</p>
+  </div>
+  <div class="card">
     <h3>The rules behind every screen</h3>
     <ol class="rules">
-      <li>Short story first. Three or four plain sentences, like a colleague telling you about the patient. No lists of codes, dates or drug names on top.</li>
+      <li>The short story is three or four plain sentences, like a colleague telling you about the patient. It sits under the problem list.</li>
+      <li>Each problem shows only the facts that establish the diagnosis and the significant events. No duplicate codes.</li>
       <li>Detail is one click down, never on the first view.</li>
       <li>Every statement can show where it came from.</li>
       <li>Say what changed since the last visit. Do not repeat what is the same.</li>
@@ -284,8 +360,9 @@ svg{max-width:100%;height:auto}
     <table>
       <tr><th>Screen</th><th>Needs from the back end</th></tr>
       <tr><td>Schedule</td><td>Tomorrow's schedule. Overnight run on each patient. One sentence per patient and a count of items to decide.</td></tr>
-      <tr><td>Before the visit</td><td>Trajectory text per index condition, shortened to the short story. Change since last visit. Organ scores with confidence. Timeline at three zoom levels. Source for each statement.</td></tr>
-      <tr><td>End of visit</td><td>Care gaps and drug checks as proposed orders with a reason. Later, visit listening to mark what was discussed.</td></tr>
+      <tr><td>Before the visit</td><td>Index conditions as the problem list, with the few facts that establish each one. Trajectory text shortened to the short story. Change since last visit. Organ scores with confidence. Timeline at three zoom levels. Source for each statement.</td></tr>
+      <tr><td>During the visit</td><td>Visit listening. New facts added to the Twin. Draft note by problem, in the problem list order.</td></tr>
+      <tr><td>After the visit</td><td>Care gaps and drug checks as proposed orders with a reason, marked discussed or not discussed. Follow up items with a due date, an owner, and what happens if they are missed.</td></tr>
       <tr><td>Between visits</td><td>New results, messages and refills read against the Twin. A proposed action and a draft patient message.</td></tr>
       <tr><td>Population</td><td>Ranking across all Twins with the reason and the owner.</td></tr>
     </table>
