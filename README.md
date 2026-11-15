@@ -4,4 +4,4 @@ Clickable mockup of the Twin through one clinic day. Made up patient, made up nu
 
 Open index.html, or use the live link once Pages is on.
 
-The 30 second March style demo for meetings is demo.html.
+demo.html is the patient centered March style demo for meetings. demo-overview.html is the earlier three problem overview version.

@@ -6,62 +6,77 @@
 <title>March Twin demo</title>
 <style>
 :root{
-  --bg:#0a1020; --panel:#111a30; --panel2:#16213c; --line:#24314f; --ink:#e8eefb; --soft:#93a3c2;
+  --bg:#0a1020; --panel:#111a30; --panel2:#16213c; --deep:#0d1528; --line:#24314f; --ink:#e8eefb; --soft:#93a3c2;
   --brand:#35d0ba; --brand2:#4d8dff; --high:#ff6b6b; --highbg:#3a1820; --mid:#ffc24d; --midbg:#3a2e14;
-  --low:#4cd98a; --lowbg:#12331f; --infobg:#14294d; --info:#8db8ff; --vio:#c9a4ff; --viobg:#2a1f47;
+  --low:#4cd98a; --lowbg:#12331f; --infobg:#14294d; --info:#8db8ff;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
 button{font:inherit;color:inherit}
+.num{font-variant-numeric:tabular-nums}
 .ehr{display:flex;gap:2px;align-items:flex-end;background:#cfd6de;color:#4a5665;font-size:12px;padding:5px 12px 0}
 .ehr b{margin-right:14px;padding-bottom:5px;font-weight:600}
 .ehr span{padding:4px 12px;border-radius:6px 6px 0 0;background:#bcc5cf}
 .ehr span.on{background:#0c1428;color:#fff;font-weight:600}
-.top{display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid var(--line);background:#0c1428;flex-wrap:wrap}
+.top{display:flex;align-items:center;gap:12px;padding:9px 18px;border-bottom:1px solid var(--line);background:#0c1428;flex-wrap:wrap}
 .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:18px;letter-spacing:.02em}
 .logo small{font-weight:500;color:var(--soft);font-size:13px;letter-spacing:0}
 .pill{font-size:12px;padding:3px 10px;border-radius:20px;border:1px solid var(--line);color:var(--soft)}
 .sp{flex:1}
 .seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.seg button{background:none;border:0;padding:7px 12px;font-size:13px;color:var(--soft);cursor:pointer}
-.seg button.on{background:var(--panel2);color:var(--ink);font-weight:600}
-.tbtn{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer}
-.tbtn.on{border-color:var(--brand);color:var(--brand)}
+.seg button{background:none;border:0;padding:7px 14px;font-size:13.5px;color:var(--soft);cursor:pointer;font-weight:600}
+.seg button.on{background:var(--panel2);color:var(--ink)}
+.seg button .ct{background:var(--highbg);color:var(--high);border-radius:10px;padding:0 7px;font-size:11.5px;margin-left:6px}
 .play{background:var(--brand);color:#04201c;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer}
 .play.stop{background:var(--highbg);color:var(--high)}
-.wrap{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:calc(100% - 84px)}
-.wrap.chat{grid-template-columns:232px minmax(0,1fr) 372px}
+.page{display:none}
+.page.on{display:grid}
+#chart{grid-template-columns:250px minmax(0,1fr);min-height:calc(100% - 82px)}
+#attn{display:none;padding:18px 22px 60px}
+#attn.on{display:block}
 .side{border-right:1px solid var(--line);padding:14px 10px;background:#0c1428}
-.nv{display:block;width:100%;text-align:left;background:none;border:1px solid transparent;border-radius:10px;padding:9px 11px;margin-bottom:4px;cursor:pointer}
-.nv:hover{background:var(--panel)}
-.nv.on{background:var(--panel);border-color:var(--brand)}
-.nv .na{font-weight:600;display:block}
-.nv .nb{font-size:12.5px;color:var(--soft);display:block}
-.side h4,.box h3,.h3{margin:0 0 10px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);font-weight:600}
-.side h4{margin:16px 6px 8px}
-.main{padding:18px 22px 70px;min-width:0}
+.h4,.box h3{margin:0 0 10px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);font-weight:600}
+.side .h4{margin:4px 6px 8px}
+.pt{padding:9px 10px;border-radius:10px;border:1px solid transparent;cursor:pointer;margin-bottom:5px}
+.pt:hover{background:var(--panel)}
+.pt.on{background:var(--panel);border-color:var(--brand)}
+.pt .n{font-weight:600;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.pt .d{font-size:12.5px;color:var(--soft);margin-top:2px}
+.cov{margin:16px 2px 0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}
+.bar{height:8px;border-radius:5px;background:#3a1820;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;width:82%;background:linear-gradient(90deg,var(--low),var(--brand))}
+.srcl{display:flex;justify-content:space-between;font-size:12.5px;padding:4px 0;border-top:1px solid var(--line)}
+.srcl span{color:var(--soft)}
+.main{padding:14px 22px 60px;min-width:0}
+.ban{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:12px}
+.ban .r1{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline}
+.ban .nm{font-size:19px;font-weight:700}
+.ban .r1 span,.ban .r2 span{color:var(--soft);font-size:13.5px}
+.ban .r1 .nm{color:var(--ink)}
+.ban .r2{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
+.ban b{color:var(--ink);font-weight:600}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:14px;overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:9px 13px;color:var(--soft);cursor:pointer;font-weight:600;white-space:nowrap}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--brand)}
 .view{display:none}
 .view.on{display:block}
-h1{font-size:22px;margin:0 0 2px}
-.lede{color:var(--soft);margin:0 0 16px;max-width:760px}
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
 .box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;grid-column:span 6;min-width:0;transition:box-shadow .3s,border-color .3s}
 .box.w{grid-column:span 12}
-.box.t{grid-column:span 4}
+.box.s4{grid-column:span 4}
 .glow{border-color:var(--brand) !important;box-shadow:0 0 0 3px rgba(53,208,186,.28)}
-tr.glow td{background:#12283a}
 .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap}
 .tag.high{background:var(--highbg);color:var(--high)}
 .tag.mid{background:var(--midbg);color:var(--mid)}
 .tag.low{background:var(--lowbg);color:var(--low)}
 .tag.info{background:var(--infobg);color:var(--info)}
-.tag.vio{background:var(--viobg);color:var(--vio)}
+.tag.na{background:var(--panel2);color:var(--soft)}
 .row{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
 .row:first-of-type{border-top:0;padding-top:0}
 .row .m{flex:1;min-width:0}
 .row .t{font-weight:600}
-.row .s,.s{color:var(--soft);font-size:13.5px}
+.s{color:var(--soft);font-size:13px}
 .ref{color:var(--brand);border-bottom:1px dotted var(--brand);cursor:pointer}
 .btn{border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px 12px;font-size:13.5px;cursor:pointer}
 .btn:hover{border-color:var(--brand)}
@@ -69,122 +84,92 @@ tr.glow td{background:#12283a}
 .btn.pri{background:var(--brand);border-color:var(--brand);color:#04201c;font-weight:700}
 .btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .note{font-size:12.5px;color:var(--soft);margin-top:10px}
-.story{font-size:17px;line-height:1.55}
+.story{font-size:16px;line-height:1.55}
 .story p{margin:0 0 8px}
-/* home */
-.hero{cursor:pointer}
-.hero .p{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--mid)}
-.hero .k{font-size:34px;font-weight:700;line-height:1.15;margin:6px 0 2px}
-.hero .k small{font-size:15px;font-weight:500;color:var(--soft)}
-.hero .d{color:var(--soft);font-size:14px;min-height:64px}
-.hero .go{color:var(--brand);font-weight:600;margin-top:8px;font-size:14px}
-.hero:hover{border-color:var(--brand)}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{text-align:left;padding:9px 8px;border-top:1px solid var(--line);vertical-align:top}
-th{border-top:0;color:var(--soft);font-weight:600;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase}
-tr.g{cursor:pointer}
-tr.g:hover td{background:var(--panel2)}
-tr.sub{display:none}
-tr.sub.on{display:table-row}
-tr.sub td{background:#0d1528;font-size:14px}
-.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
-.tile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.tile .k{font-size:27px;font-weight:700;line-height:1.1}
-.tile .l{font-size:13px;color:var(--soft)}
-.said{color:var(--soft)}
-.wait s{color:var(--soft)}
-.wait b{color:var(--low)}
-/* referral detail */
-.back{background:none;border:0;color:var(--brand);cursor:pointer;padding:0;margin-bottom:10px;font-weight:600}
-.specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.spec{border:1px solid var(--line);background:var(--panel2);border-radius:9px;padding:8px 10px;font-size:13px;cursor:pointer;opacity:.35;transition:opacity .3s,border-color .3s}
-.spec.rd{opacity:1}
-.spec .n{font-weight:600;display:flex;justify-content:space-between;gap:6px;align-items:center}
-.spec .dot{width:8px;height:8px;border-radius:50%;background:var(--line);flex:0 0 auto}
-.spec.f .dot{background:var(--mid)}
-.spec.h .dot{background:var(--high)}
-.spec.v .dot{background:var(--vio)}
-.spec .st{color:var(--soft);font-size:12px}
-.spec.on{border-color:var(--brand)}
-#specline{background:#0d1528;border-radius:9px;padding:10px 12px;margin-top:10px;font-size:14.5px;min-height:44px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.cmp div{background:var(--panel2);border-radius:10px;padding:10px 12px}
-.cmp .h3{margin-bottom:4px}
-.sig{margin:6px 0 0;padding-left:18px}
-.sig li{margin-bottom:3px}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-/* record */
-.tl{width:100%;height:auto;display:block}
-.tl text{font-size:11px;fill:#93a3c2}
-.tl .ln{font-size:12px;fill:#e8eefb;font-weight:600}
-.tl circle{cursor:pointer;opacity:0;transition:opacity .4s}
-.tl.go circle{opacity:1}
-.tl circle:hover{stroke:#fff;stroke-width:2}
-/* visit */
-.sub2{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px}
-.sub2 button{background:none;border:0;border-bottom:3px solid transparent;padding:9px 14px;color:var(--soft);cursor:pointer;font-weight:600}
-.sub2 button.on{color:var(--ink);border-bottom-color:var(--brand)}
-.vv{display:none}.vv.on{display:block}
-.ban{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline;padding:0 0 10px}
-.ban .nm{font-size:20px;font-weight:700}
-.ban span{color:var(--soft);font-size:14px}
-.organs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.org{background:var(--panel2);border-radius:10px;padding:10px 12px}
-.org .n{font-weight:600;margin-bottom:4px}
-.org .y{font-size:13px;color:var(--soft)}
-.prob{font-size:14px;padding:5px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}
-.prob:first-of-type{border-top:0}
-.prob .tag{align-self:flex-start}
-#rtab td:first-child,#wtab td:first-child{white-space:nowrap}
-.notebox{background:#0d1528;border-radius:9px;padding:10px 12px;font-size:14.5px}
+.prob{padding:8px 0;border-top:1px solid var(--line)}
+.prob:first-of-type{border-top:0;padding-top:0}
+.prob .ttl{font-weight:600;display:flex;justify-content:space-between;gap:10px}
+.prob ul{margin:4px 0 0;padding-left:20px;font-size:13.5px;color:#c9d4ea}
+.prob li{margin-bottom:2px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:7px 8px;border-top:1px solid var(--line);vertical-align:top}
+th{border-top:0;color:var(--soft);font-weight:600;font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.scroll{overflow-x:auto}
+.labt{min-width:820px}
+.labt th,.labt td{white-space:nowrap;text-align:right}
+.labt th:first-child,.labt td:first-child{text-align:left;position:sticky;left:0;background:var(--panel)}
+.labt .grp td{background:var(--deep);font-weight:600;color:var(--soft);text-align:left}
+.labt .ab{color:var(--high);font-weight:700}
+.labt .u{color:var(--soft);text-align:left}
+.labt th .tag{display:block;margin-top:2px;font-size:10px;padding:1px 5px}
+/* trajectory */
+.tj{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:18px;align-items:start}
+.tj h4{margin:0 0 2px;font-size:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tj .kv{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:13.5px;margin:8px 0}
+.tj .kv span:nth-child(odd){color:var(--soft)}
+.tj p{margin:6px 0 0}
+svg.ch{width:100%;height:auto;display:block}
+svg.ch text{font-size:10.5px;fill:#93a3c2}
+svg.ch .v{fill:#e8eefb;font-weight:600}
+/* scores */
+.sc .big{font-size:26px;font-weight:700;line-height:1.15;margin:2px 0}
+.sc .big small{font-size:13px;font-weight:500;color:var(--soft)}
+.sc .in{font-size:13px;color:#c9d4ea;margin:8px 0 0;padding-left:18px}
+.sc .in li{margin-bottom:2px}
+.sc.off{opacity:.62}
+.pick{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 10px;color:var(--ink);font:inherit}
+.notebox{background:var(--deep);border-radius:9px;padding:10px 12px;font-size:14px}
 .notebox p{margin:0 0 8px}
 .done{display:none;background:var(--lowbg);color:var(--low);border-radius:8px;padding:10px 12px;margin-top:10px;font-weight:600}
 .done.on{display:block}
 /* chat */
-.chatp{display:none;border-left:1px solid var(--line);background:#0c1428;padding:14px;position:sticky;top:0;height:100vh;flex-direction:column}
-.wrap.chat .chatp{display:flex}
-.chatp .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.chatp .hd b{font-size:15px}
-.chatp .x{background:none;border:0;color:var(--soft);font-size:20px;cursor:pointer}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
-.chip{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:6px 11px;font-size:13px;cursor:pointer;text-align:left}
+.chat{max-width:860px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:7px 13px;font-size:13.5px;cursor:pointer}
 .chip:hover{border-color:var(--brand)}
-.log{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-right:2px}
-.q{align-self:flex-end;background:var(--brand2);color:#fff;border-radius:14px 14px 2px 14px;padding:8px 12px;max-width:88%;font-size:14px}
-.a{background:var(--panel);border:1px solid var(--line);border-radius:14px 14px 14px 2px;padding:11px 13px;font-size:14px}
-.a .lead{font-size:15.5px;font-weight:600;margin:0 0 6px}
-.a p{margin:0 0 6px}
-.a ul{margin:4px 0 6px;padding-left:18px}
-.a li{margin-bottom:3px}
+.log{display:flex;flex-direction:column;gap:12px;min-height:220px}
+.q{align-self:flex-end;background:var(--brand2);color:#fff;border-radius:14px 14px 2px 14px;padding:9px 14px;max-width:80%}
+.ans{background:var(--panel);border:1px solid var(--line);border-radius:14px 14px 14px 2px;padding:12px 16px;max-width:94%}
+.ans .lead{font-size:16px;font-weight:600;margin:0 0 6px}
+.ans p{margin:0 0 6px}
+.ans ul{margin:4px 0 6px;padding-left:20px}
+.ans li{margin-bottom:3px}
 .fade{opacity:0;transform:translateY(4px);transition:opacity .35s,transform .35s}
 .fade.in{opacity:1;transform:none}
-.from{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.from{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .from .tag{cursor:pointer}
 .dots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--soft);margin-right:4px;animation:bl 1s infinite}
 .dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
 @keyframes bl{0%,100%{opacity:.25}50%{opacity:1}}
-.ask{display:flex;gap:6px;margin-top:10px}
-.ask input{flex:1;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);font:inherit;outline:none}
+.ask{display:flex;gap:8px;margin-top:16px;position:sticky;bottom:12px}
+.ask input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 14px;color:var(--ink);font:inherit;outline:none}
 .ask input:focus{border-color:var(--brand)}
-#drawer{position:fixed;right:16px;bottom:16px;width:360px;max-width:calc(100% - 32px);background:#0d1630;border:1px solid var(--brand);border-radius:12px;padding:14px 16px;display:none;z-index:30;box-shadow:0 10px 40px rgba(0,0,0,.55)}
+/* attention */
+h1{font-size:21px;margin:0 0 2px}
+.lede{color:var(--soft);margin:0 0 14px;max-width:780px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.tile .k{font-size:26px;font-weight:700;line-height:1.1}
+.tile .l{font-size:13px;color:var(--soft)}
+.filt{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.filt button{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:5px 12px;font-size:13px;cursor:pointer;color:var(--soft)}
+.filt button.on{border-color:var(--brand);color:var(--brand)}
+tr.g{cursor:pointer}
+tr.g:hover td{background:var(--panel2)}
+#atab td:first-child{white-space:nowrap}
+#drawer{position:fixed;right:16px;bottom:16px;width:370px;max-width:calc(100% - 32px);background:#0d1630;border:1px solid var(--brand);border-radius:12px;padding:14px 16px;display:none;z-index:30;box-shadow:0 10px 40px rgba(0,0,0,.55)}
 #drawer.on{display:block}
-.wrap.chat ~ #drawer{right:388px}
 #drawer h5{margin:0 0 6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
 #drawer .x{position:absolute;top:8px;right:10px;background:none;border:0;color:var(--soft);cursor:pointer;font-size:18px}
 #drawer .w{font-weight:600;margin-bottom:4px;padding-right:14px}
 #drawer .o{font-size:13px;color:var(--soft)}
-.foot{font-size:12px;color:var(--soft);margin-top:24px}
+.foot{font-size:12px;color:var(--soft);margin-top:22px}
 @media(max-width:1000px){
-  .wrap,.wrap.chat{grid-template-columns:1fr}
-  .side{border-right:0;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:4px;padding:8px}
-  .side h4{display:none}
-  .nv{width:auto;margin:0}.nv .nb{display:none}
-  .box,.box.t{grid-column:span 12}
+  #chart{grid-template-columns:1fr}
+  .side{border-right:0;border-bottom:1px solid var(--line)}
+  .box,.box.s4{grid-column:span 12}
   .tiles{grid-template-columns:repeat(2,1fr)}
-  .organs,.two,.cols{grid-template-columns:1fr}
-  .chatp{position:fixed;inset:0;height:auto;z-index:25}
-  .wrap.chat ~ #drawer{right:16px}
-  .hero .d{min-height:0}
+  .tj{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -195,514 +180,452 @@ tr.sub td{background:#0d1528;font-size:14px}
     <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="7" fill="#35d0ba"/><path d="M4 14h4l2-6 3 11 2.5-8 1.5 3h5" fill="none" stroke="#04201c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     March <small>Twin</small>
   </div>
-  <span class="pill">Demo. Made up patients and numbers.</span>
+  <span class="pill">Demo. Synthetic patients and data.</span>
   <div class="sp"></div>
-  <div class="seg" id="mode"><button class="on" data-m="sys">Health system</button><button data-m="plan">Health plan</button></div>
-  <button class="tbtn" id="chatbtn" onclick="stopTour();toggleChat()">Ask the Twin</button>
+  <div class="seg" id="pages"><button class="on" data-p="chart">Patient</button><button data-p="attn">Patients needing attention<span class="ct">38</span></button></div>
   <button class="play" id="play" onclick="tour()">Play guided demo</button>
 </div>
 
-<div class="wrap" id="wrap">
-  <aside class="side" id="nav">
-    <button class="nv on" data-v="home"><span class="na">Today</span><span class="nb">Three problems, one view</span></button>
-    <h4>The three problems</h4>
-    <button class="nv" data-v="ref"><span class="na">Referrals</span><span class="nb">Clinics booked out</span></button>
-    <button class="nv" data-v="watch"><span class="na">Between visits</span><span class="nb">Beds full</span></button>
-    <button class="nv" data-v="rec"><span class="na">Lifetime record</span><span class="nb">Records scattered</span></button>
-    <h4>In the exam room</h4>
-    <button class="nv" data-v="visit"><span class="na">Clinic visit</span><span class="nb">Resident, scribe, and APP</span></button>
+<!-- ================= PATIENT ================= -->
+<div class="page on" id="chart">
+  <aside class="side">
+    <div class="h4">Clinic schedule, 11/16/2026</div>
+    <div class="pt on"><div class="n">Mr. A, 62 M <span class="tag high">3 to decide</span></div><div class="d">08:00 Follow up. eGFR falling.</div></div>
+    <div class="pt" onclick="other()"><div class="n">Mrs. B, 84 F <span class="tag mid">1 to decide</span></div><div class="d">08:20 Aortic stenosis. TTE 14 months old.</div></div>
+    <div class="pt" onclick="other()"><div class="n">Mr. C, 71 M <span class="tag low">No change</span></div><div class="d">08:40 Atrial fibrillation. Stable since 06/2026.</div></div>
+    <div class="pt" onclick="other()"><div class="n">Ms. D, 58 F <span class="tag info">New</span></div><div class="d">09:00 Chest pain. Records from 2 hospitals.</div></div>
+    <div class="cov">
+      <div class="h4" style="margin:0 0 2px">Twin data completeness</div>
+      <div class="bar"><i></i></div>
+      <div class="s">82%. Missing: UACR within 12 months, TTE within 24 months.</div>
+      <div style="margin-top:8px">
+        <div class="srcl"><b>This health system</b><span>2015 to 2026</span></div>
+        <div class="srcl"><b>Outside health systems</b><span>2</span></div>
+        <div class="srcl"><b>Pharmacy fill history</b><span>All pharmacies</span></div>
+        <div class="srcl"><b>Home BP device</b><span>22 readings</span></div>
+      </div>
+    </div>
   </aside>
 
   <main class="main">
+    <div class="ban" id="ban">
+      <div class="r1"><span class="nm">Mr. A</span><span><b>62 y M</b></span><span>DOB <b>03/22/1964</b></span><span>MRN <b>DEMO-004829</b></span><span>Visit <b>11/16/2026 08:00</b>, cardiology follow up</span><span>Last visit <b>08/12/2026</b></span><span>Allergies <b>NKDA</b></span></div>
+      <div class="r2 num"><span>Vitals 11/16/2026 07:52</span><span>BP <b>148/86 mmHg</b></span><span>HR <b>64 bpm</b></span><span>SpO2 <b>98% RA</b></span><span>Temp <b>36.7 °C</b></span><span>Wt <b>94.3 kg</b></span><span>BMI <b>29.8 kg/m²</b></span></div>
+    </div>
+    <div class="tabs" id="tabs">
+      <button class="on" data-v="first">What to know first</button>
+      <button data-v="traj">Condition trajectory</button>
+      <button data-v="risk">Risk scores</button>
+      <button data-v="labs">Labs</button>
+      <button data-v="vnote">Visit note</button>
+      <button data-v="ord">Orders and follow up</button>
+      <button data-v="ask">Ask the Twin</button>
+    </div>
 
-    <!-- HOME -->
-    <section class="view on" id="home">
-      <h1>Today</h1>
-      <p class="lede">Clinics booked out. Beds full. Records scattered. The Twin opens inside the EHR and works on all three.</p>
+    <!-- WHAT TO KNOW FIRST -->
+    <section class="view on" id="first">
       <div class="grid">
-        <div class="box t hero" id="h1" onclick="stopTour();view('ref')">
-          <div class="p">Clinics booked out</div>
-          <div class="k">6 <small>moved to this week</small></div>
-          <div class="d">64 new referrals were read by 17 specialties the day they arrived. The sickest get in first. 11 were answered without a visit.</div>
-          <div class="go">Open referrals</div>
-        </div>
-        <div class="box t hero" id="h2" onclick="stopTour();view('watch')">
-          <div class="p">Beds full</div>
-          <div class="k">9 <small>need a call today</small></div>
-          <div class="d">18,400 <span data-sys="patients" data-plan="members">patients</span> are watched every night between visits. The Twin flags who is heading to the ER and what to do next.</div>
-          <div class="go">Open between visits</div>
-        </div>
-        <div class="box t hero" id="h3" onclick="stopTour();view('rec')">
-          <div class="p">Records scattered</div>
-          <div class="k">4 <small>places of care, 2 states</small></div>
-          <div class="d">One <span data-sys="patient" data-plan="member">patient</span>, 11 years, one record. Nine things about Mr. A are in someone else's chart and not in yours.</div>
-          <div class="go">Open lifetime record</div>
-        </div>
         <div class="box w">
-          <h3>What the EHR does and what the Twin adds</h3>
+          <h3>Summary, generated 11/16/2026 07:00 before the visit</h3>
+          <div class="story">
+            <p>62 y M with CAD (anterior STEMI 03/2019, PCI to LAD; PCI to RCA 03/2021), T2DM, HTN, and CKD here for 3 month follow up. No angina and no admissions since the <span class="ref" data-s="cath">2021 PCI</span>.</p>
+            <p>Kidney function is the issue today. <span class="ref" data-s="egfr">eGFR 62 to 38 mL/min/1.73 m² since 09/2022</span>, with the fastest drop in the last 11 weeks. Three items need a decision before he leaves.</p>
+          </div>
+        </div>
+
+        <div class="box" id="bdecide">
+          <h3>Decide today</h3>
+          <div class="row"><div class="m"><div class="t">Stop naproxen 500 mg BID</div><div class="s"><span class="ref" data-s="naproxen">Started 10/20/2026 at an outside urgent care</span>. NSAID with eGFR 38 on an ACE inhibitor.</div>
+            <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag high">Medication safety</span></div>
+          <div class="row"><div class="m"><div class="t">Reduce metformin to 500 mg BID</div><div class="s"><span class="ref" data-s="metformin">Current 1,000 mg BID</span>. Maximum 1,000 mg/day at eGFR 30 to 44.</div>
+            <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag high">Medication safety</span></div>
+          <div class="row"><div class="m"><div class="t">Start empagliflozin 10 mg daily</div><div class="s">T2DM with CKD and ASCVD. <span class="ref" data-s="sglt2">No SGLT2 inhibitor on any medication list or fill record</span>.</div>
+            <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag mid">Care gap</span></div>
+        </div>
+
+        <div class="box">
+          <h3>Interval change since 08/12/2026</h3>
+          <div class="row"><div class="m"><div class="t num"><span class="ref" data-s="egfr">eGFR 44 → 38 mL/min/1.73 m²</span> (10/28/2026)</div><div class="s num">Creatinine 1.73 → 1.96 mg/dL. K 4.8 mmol/L.</div></div><span class="tag high">Worse</span></div>
+          <div class="row"><div class="m"><div class="t">Naproxen 500 mg BID, new</div><div class="s"><span class="ref" data-s="naproxen">Outside urgent care 10/20/2026</span>, right knee pain. Fill confirmed 10/20/2026.</div></div><span class="tag info">Outside record</span></div>
+          <div class="row"><div class="m"><div class="t num">Home BP mean 146/86 mmHg</div><div class="s num"><span class="ref" data-s="bp">22 readings, 10/17 to 11/15/2026</span>. Prior 30 day mean 138/82 mmHg.</div></div><span class="tag mid">Higher</span></div>
+          <div class="row"><div class="m"><div class="t num">HbA1c 7.4%, LDL-C <span class="ref" data-s="ldl">92 mg/dL</span> (10/28/2026)</div><div class="s">No meaningful change. LDL-C above the 70 mg/dL threshold.</div></div><span class="tag low">Stable</span></div>
+        </div>
+
+        <div class="box">
+          <h3>Problem list</h3>
+          <div class="prob"><div class="ttl"><span>1. Coronary artery disease</span><span class="tag low">Stable</span></div>
+            <ul><li>03/04/2019 anterior STEMI, <span class="ref" data-s="cath19">cath/PCI</span>: 100% proximal LAD, 50% mid RCA → 3.0 x 28 mm and 3.0 x 16 mm DES to LAD (pd 3.5)</li>
+            <li>03/06/2019 TTE: LVEF 40 to 45%, anterior hypokinesis</li>
+            <li>03/16/2021 SPECT MPI: moderate reversible inferior defect, LVEF 48%</li>
+            <li>03/22/2021 <span class="ref" data-s="cath">cath/PCI</span>: 85% mid RCA, patent LAD stents → 3.5 x 18 mm DES (pd 4.0)</li>
+            <li>10/09/2024 <span class="ref" data-s="echo">TTE</span>: LVEF 50%, mild anterior hypokinesis, no significant valve disease</li></ul></div>
+          <div class="prob"><div class="ttl"><span>2. Chronic kidney disease, G3b A2</span><span class="tag high">Worse</span></div>
+            <ul><li class="num"><span class="ref" data-s="egfr">eGFR</span>: 62 (09/2022), 55 (09/2023), 49 (09/2024), 44 (08/2026), 38 (10/2026)</li>
+            <li class="num">09/15/2025 UACR 68 mg/g</li><li>No renal imaging. No nephrology visit.</li></ul></div>
+          <div class="prob"><div class="ttl"><span>3. Type 2 diabetes mellitus, dx 2016</span><span class="tag mid">Dose issue</span></div>
+            <ul><li class="num">10/28/2026 HbA1c 7.4%. Metformin above renal dose limit.</li></ul></div>
+          <div class="prob"><div class="ttl"><span>4. Essential hypertension, dx 2016</span><span class="tag mid">Not at goal</span></div>
+            <ul><li class="num">11/16/2026 148/86 mmHg in clinic. Home mean 146/86 mmHg.</li></ul></div>
+          <div class="prob"><div class="ttl"><span>5. Dyslipidemia</span><span class="tag mid">Not at goal</span></div>
+            <ul><li class="num">10/28/2026 LDL-C 92 mg/dL on atorvastatin 40 mg</li></ul></div>
+          <div class="prob"><div class="ttl"><span>6. Osteoarthritis, right knee</span><span class="tag info">Outside record</span></div>
+            <ul><li>10/20/2026 XR right knee: moderate medial compartment osteoarthritis</li></ul></div>
+          <div class="prob"><div class="ttl"><span>7. Family history: brother, MI at age 52</span></div></div>
+          <div class="prob"><div class="ttl"><span>8. Retired diesel mechanic. Lives with spouse. Walks 2 miles most days. Never smoker.</span></div></div>
+        </div>
+
+        <div class="box">
+          <h3>Active medications</h3>
           <table>
-            <tr><th style="width:22%"></th><th style="width:36%">The EHR</th><th>The Twin</th></tr>
-            <tr><td><b>A new referral</b></td><td class="said">Waits in the queue by the date it arrived.</td><td>Read by 17 specialties the same day against the whole record. Sorted by who is sickest.</td></tr>
-            <tr><td><b>Between visits</b></td><td class="said">Shows the chart when someone opens it.</td><td>Reads every <span data-sys="patient" data-plan="member">patient</span> every night. Flags the ones getting worse, with a next step and an owner.</td></tr>
-            <tr><td><b>Outside care</b></td><td class="said">Holds what was done in this health system.</td><td>Pulls the lifetime record across health systems and states, and reads it as one story.</td></tr>
-            <tr><td><b>The individual</b></td><td class="said">Same rules for everyone.</td><td>Reads women's history and living situation as part of the risk, not as a footnote.</td></tr>
+            <tr><th>Medication</th><th>Sig</th><th>Last fill</th></tr>
+            <tr><td>Aspirin</td><td>81 mg PO daily</td><td class="num">10/02/2026</td></tr>
+            <tr><td>Atorvastatin</td><td>40 mg PO nightly</td><td class="num">10/02/2026</td></tr>
+            <tr><td>Metoprolol succinate</td><td>50 mg PO daily</td><td class="num">10/02/2026</td></tr>
+            <tr><td>Lisinopril</td><td>20 mg PO daily</td><td class="num">10/02/2026</td></tr>
+            <tr><td>Amlodipine</td><td>5 mg PO daily</td><td class="num">10/02/2026</td></tr>
+            <tr><td>Metformin <span class="tag high">Dose</span></td><td>1,000 mg PO BID</td><td class="num">10/02/2026</td></tr>
+            <tr><td>Naproxen <span class="tag info">Outside</span> <span class="tag high">New</span></td><td>500 mg PO BID</td><td class="num">10/20/2026</td></tr>
           </table>
+          <p class="note">Fill dates from pharmacy claims across all pharmacies.</p>
+          <h3 style="margin-top:14px">Organ health</h3>
+          <div class="row"><div class="m"><div class="t">Kidney</div><div class="s">8 eGFR values since 2022. Confidence high.</div></div><span class="tag high">High risk, worsening</span></div>
+          <div class="row"><div class="m"><div class="t">Heart</div><div class="s">Last TTE 10/09/2024. Confidence moderate.</div></div><span class="tag high">High risk, stable</span></div>
+          <div class="row"><div class="m"><div class="t">Metabolic</div><div class="s">HbA1c 6.9 to 7.5% since 2022. Confidence high.</div></div><span class="tag mid">Intermediate</span></div>
         </div>
       </div>
     </section>
 
-    <!-- REFERRALS -->
-    <section class="view" id="ref">
-      <div id="refq">
-        <h1>Referrals</h1>
-        <p class="lede">Every referral is read the day it arrives. The queue is sorted by what the whole record says, not by the word on the fax.</p>
-        <div class="tiles">
-          <div class="tile"><div class="k">64</div><div class="l">referrals read today</div></div>
-          <div class="tile"><div class="k" style="color:var(--high)">6</div><div class="l">moved to this week</div></div>
-          <div class="tile"><div class="k" style="color:var(--low)">11</div><div class="l">answered without a visit, slots opened</div></div>
-          <div class="tile"><div class="k"><span style="color:var(--soft);font-size:18px;text-decoration:line-through">41</span> 4 <span style="font-size:15px;font-weight:500;color:var(--soft)">days</span></div><div class="l">wait for the sickest referrals</div></div>
-        </div>
-        <div class="box w" style="grid-column:auto">
-          <h3>Cardiology queue, sorted by the Twin</h3>
-          <table id="rtab"><tr><th>Patient</th><th>The referral said</th><th>The Twin read</th><th>Wait</th></tr></table>
-          <p class="note">Tap a row for the reason. Tap Ms. D for the full 17 specialty read.</p>
-        </div>
-      </div>
+    <!-- TRAJECTORY -->
+    <section class="view" id="traj">
+      <div class="grid" id="tjgrid"></div>
+    </section>
 
-      <div id="refd" style="display:none">
-        <button class="back" onclick="stopTour();refBack()">Back to the queue</button>
-        <div class="ban"><span class="nm">Ms. D, 58 F</span><span>Referred Nov 9 by primary care</span><span>First open slot was Dec 28</span></div>
-        <div class="grid">
-          <div class="box w">
-            <div class="two cmp">
-              <div><div class="h3">The referral said</div>Atypical chest pain, likely reflux or anxiety. Routine.</div>
-              <div style="border:1px solid var(--high)"><div class="h3" style="color:var(--high)">The Twin read</div>Highest risk referral in this week's queue. Symptoms come with exertion and stop with rest. See her this week.</div>
-            </div>
+    <!-- RISK SCORES -->
+    <section class="view" id="risk">
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+        <select class="pick" id="rsel" onchange="stopTour();riskFilter(this.value)">
+          <option value="all">All scores</option>
+          <option value="app">Applicable to this patient</option>
+          <option value="kid">Kidney</option>
+          <option value="cv">Cardiovascular</option>
+          <option value="na">Not applicable, with reason</option>
+        </select>
+        <span class="s">Calculated by the Twin from the record on 11/16/2026. Each input links to its source.</span>
+      </div>
+      <div class="grid" id="rgrid"></div>
+    </section>
+
+    <!-- LABS -->
+    <section class="view" id="labs">
+      <div class="box w" style="grid-column:auto"><h3>Results, newest first. Abnormal values in red.</h3><div class="scroll"><table class="labt num" id="labt"></table></div></div>
+    </section>
+
+    <!-- VISIT NOTE -->
+    <section class="view" id="vnote">
+      <div class="grid">
+        <div class="box">
+          <h3>Captured during the visit</h3>
+          <div class="row"><div class="m"><div class="t">No angina. Walks 2 miles most days.</div><div class="s">Consistent with the record.</div></div><span class="tag low">Unchanged</span></div>
+          <div class="row"><div class="m"><div class="t">Naproxen 500 mg BID plus ibuprofen 400 mg at night</div><div class="s">Ibuprofen is over the counter and not in any record. Added to the Twin.</div></div><span class="tag high">New</span></div>
+          <div class="row"><div class="m"><div class="t">Bilateral ankle edema by evening for 4 weeks</div><div class="s">Not previously documented.</div></div><span class="tag mid">New</span></div>
+          <div class="row"><div class="m"><div class="t">Agreed to stop NSAIDs and start empagliflozin</div><div class="s">Queued under Orders and follow up.</div></div><span class="tag info">Plan</span></div>
+        </div>
+        <div class="box">
+          <h3>Draft assessment and plan</h3>
+          <div class="notebox">
+            <p><b>Interval history.</b> No angina, walks 2 miles most days. Right knee pain since 10/2026, taking naproxen 500 mg BID and ibuprofen 400 mg nightly. Bilateral ankle edema by evening for 4 weeks.</p>
+            <p><b>1. CAD.</b> Stable, no angina. Continue aspirin 81 mg and metoprolol succinate 50 mg. LDL-C 92 mg/dL, above threshold; increase atorvastatin to 80 mg.</p>
+            <p><b>2. CKD G3b A2.</b> eGFR 44 → 38 mL/min/1.73 m² over 11 weeks on two NSAIDs. Stop both, acetaminophen for knee pain. Start empagliflozin 10 mg daily. UACR today. BMP in 2 weeks. Refer nephrology.</p>
+            <p><b>3. T2DM.</b> HbA1c 7.4%. Reduce metformin to 500 mg BID for eGFR 38.</p>
+            <p><b>4. HTN.</b> 148/86 mmHg in clinic, home mean 146/86 mmHg. Expect improvement off NSAIDs. Review home readings in 2 weeks.</p>
           </div>
-          <div class="box w" id="bspecs">
-            <h3>17 specialty read. Done 4 minutes after the referral arrived.</h3>
-            <div class="specs" id="specs"></div>
-            <div id="specline">Tap a specialty to see what it found.</div>
-          </div>
-          <div class="box" id="bsex">
-            <h3>What a standard risk score does not count</h3>
-            <div class="row"><div class="m"><div class="t">Preeclampsia in both pregnancies</div><div class="s"><span class="ref" data-s="d_ob">Obstetric records, 1994 and 1997</span>. Raises lifetime heart risk.</div></div><span class="tag vio">Women's history</span></div>
-            <div class="row"><div class="m"><div class="t">Menopause at 41</div><div class="s"><span class="ref" data-s="d_meno">Gynecology note, 2009</span>. Early menopause raises heart risk.</div></div><span class="tag vio">Women's history</span></div>
-            <div class="row"><div class="m"><div class="t">Jaw ache, shortness of breath, and fatigue with exertion</div><div class="s">Women with heart disease often describe these alongside chest pain. The referral called it atypical.</div></div><span class="tag vio">Symptoms</span></div>
-            <div class="row"><div class="m"><div class="t">Works nights and cares for her mother</div><div class="s"><span class="ref" data-s="d_sdoh">Missed two daytime appointments this year</span>. Offer an early morning or video slot.</div></div><span class="tag info">Living situation</span></div>
-          </div>
-          <div class="box">
-            <h3>Found outside this chart</h3>
-            <div class="row"><div class="m"><div class="t">ER visit in Florida, Sept 14</div><div class="s"><span class="ref" data-s="d_ed">One heart enzyme test, normal</span>. No stress test. No follow up arranged.</div></div><span class="tag info">Other state</span></div>
-            <div class="row"><div class="m"><div class="t">Calcium in the heart arteries on a 2023 chest CT</div><div class="s"><span class="ref" data-s="d_ct">Done for a cough at another health system</span>. Never acted on.</div></div><span class="tag info">Outside</span></div>
-            <div class="row"><div class="m"><div class="t">LDL 162, no statin ever filled</div><div class="s"><span class="ref" data-s="d_ldl">Lab from her employer screening</span> and pharmacy fills.</div></div><span class="tag info">Outside</span></div>
-          </div>
-          <div class="box w">
-            <h3>Proposed. Nothing is booked or ordered until someone signs.</h3>
-            <div class="row"><div class="m"><div class="t">Thursday 7:20 am, before her shift ends</div><div class="s">Slot opened by answering Mr. J's referral without a visit.</div>
-              <div class="btns"><button class="btn" onclick="pick(this)">Book it</button><button class="btn" onclick="pick(this)">Offer video</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag high">This week</span></div>
-            <div class="row"><div class="m"><div class="t">ECG and blood count at check in. Stress imaging order ready for the cardiologist to sign.</div><div class="s">Her hemoglobin was 11.2 in September. Anemia can make angina worse.</div>
-              <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag mid">Before the visit</span></div>
-            <div class="row"><div class="m"><div class="t">Message to Ms. D</div><div class="s">If the chest or jaw discomfort comes on at rest or lasts more than a few minutes, call 911. Sent only after the clinic approves it.</div>
-              <div class="btns"><button class="btn" onclick="pick(this)">Approve</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag info">Safety</span></div>
-          </div>
+          <p class="note">Drafted from the visit conversation and the Twin. The clinician edits and signs.</p>
         </div>
       </div>
     </section>
 
-    <!-- BETWEEN VISITS -->
-    <section class="view" id="watch">
-      <h1>Between visits</h1>
-      <p class="lede">The Twin reads every <span data-sys="patient" data-plan="member">patient</span> every night. It flags who is heading to the ER and what to do next. Every flag has an owner.</p>
-      <div class="tiles">
-        <div class="tile"><div class="k">18,400</div><div class="l"><span data-sys="patients" data-plan="members">patients</span> watched every night</div></div>
-        <div class="tile"><div class="k" style="color:var(--mid)">46</div><div class="l">flagged this week</div></div>
-        <div class="tile"><div class="k" style="color:var(--high)">9</div><div class="l">need a call today</div></div>
-        <div class="tile"><div class="k" style="color:var(--low)">17,900</div><div class="l">nothing new, no one needs to look</div></div>
-      </div>
-      <div class="box w" style="grid-column:auto">
-        <h3>Heading to the ER without action</h3>
-        <table id="wtab"><tr><th><span data-sys="Patient" data-plan="Member">Patient</span></th><th>Why now</th><th data-sys="What it avoids" data-plan="Avoidable claim">What it avoids</th><th>Owner</th></tr></table>
-        <p class="note">Tap a row for the signals and the next steps. Demo rows. The other 40 flags work the same way.</p>
-      </div>
-    </section>
-
-    <!-- LIFETIME RECORD -->
-    <section class="view" id="rec">
-      <h1>Lifetime record</h1>
-      <p class="lede">Mr. A, 62. Everything, everywhere he has been seen, read as one story. With his consent, pulled across health systems and states.</p>
-      <div class="tiles">
-        <div class="tile"><div class="k">11</div><div class="l">years of record</div></div>
-        <div class="tile"><div class="k">4</div><div class="l">places of care</div></div>
-        <div class="tile"><div class="k">2</div><div class="l">states</div></div>
-        <div class="tile"><div class="k" style="color:var(--mid)">9</div><div class="l">items not in your chart</div></div>
-      </div>
-      <div class="box w" style="grid-column:auto;margin-bottom:14px" id="btl">
-        <h3>Where his record lives. Tap any dot.</h3>
-        <svg class="tl" id="tl" viewBox="0 0 900 290" role="img" aria-label="Timeline of Mr. A's care across six sources from 2015 to 2026"></svg>
-        <p class="note"><span class="tag low">In your chart</span> <span class="tag info">Outside your chart</span> <span class="tag high">Changes today's care</span></p>
-      </div>
-      <div class="box w" style="grid-column:auto" id="bmiss">
-        <h3>What your chart alone would miss</h3>
-        <div class="row"><div class="m"><div class="t">Naproxen started three weeks ago</div><div class="s"><span class="ref" data-s="naproxen">Urgent care visit, Oct 20</span>. It is the likely reason his kidney function dropped faster.</div></div><span class="tag high">Changes today</span></div>
-        <div class="row"><div class="m"><div class="t">Two of his eight kidney results</div><div class="s"><span class="ref" data-s="egfr">Drawn at a second Georgia health system</span>. Without them the decline looks slower.</div></div><span class="tag high">Changes today</span></div>
-        <div class="row"><div class="m"><div class="t">The stents from his 2019 heart attack</div><div class="s"><span class="ref" data-s="fl">Hospital in Florida</span>. Size, type, and location of both stents.</div></div><span class="tag info">Outside</span></div>
-        <div class="row"><div class="m"><div class="t">Home blood pressure, 22 readings</div><div class="s"><span class="ref" data-s="bp">His home cuff</span>. Average 146 over 86, higher than in clinic a year ago.</div></div><span class="tag info">Home</span></div>
-        <div class="row"><div class="m"><div class="t">Every pharmacy fill, from every pharmacy</div><div class="s"><span class="ref" data-s="sglt2">11 years of fills</span>. Shows what he takes, not only what was prescribed here.</div></div><span class="tag info">Pharmacy</span></div>
-        <div class="btns"><button class="btn pri" onclick="stopTour();view('visit')">See how this changes his visit</button></div>
-      </div>
-    </section>
-
-    <!-- CLINIC VISIT -->
-    <section class="view" id="visit">
-      <div class="ban"><span class="nm">Mr. A, 62 M</span><span>3 month follow up</span><span>Last seen Aug 12, 2026</span><span>BP today 148 over 86</span><span>No drug allergies</span></div>
-      <div class="sub2" id="vt">
-        <button class="on" data-x="vb">Before, the resident</button>
-        <button data-x="vd">During, the scribe</button>
-        <button data-x="va">After, the APP</button>
-      </div>
-
-      <div class="vv on" id="vb">
-        <div class="grid">
-          <div class="box w">
-            <h3>The short story. Built an hour before the visit. No one had to ask.</h3>
-            <div class="story">
-              <p>Mr. A is here for his 3 month follow up. His heart has been quiet since the <span class="ref" data-s="cath">last stent in 2021</span>.</p>
-              <p>His kidneys are the story today. Kidney function has <span class="ref" data-s="egfr">dropped from 62 to 38</span> over four years, and the last drop was the fastest.</p>
-              <p>Three things need a decision before he leaves.</p>
-            </div>
-          </div>
-          <div class="box" id="bdecide">
-            <h3>Decide today</h3>
-            <div class="row"><div class="m"><div class="t">Stop naproxen</div><div class="s">Started by an <span class="ref" data-s="naproxen">outside urgent care</span> three weeks ago. Harms kidneys and raises blood pressure.</div>
-              <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag high">Safety</span></div>
-            <div class="row"><div class="m"><div class="t">Lower metformin to 500 mg twice a day</div><div class="s"><span class="ref" data-s="metformin">Current dose</span> is above the limit for his kidney function.</div>
-              <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag high">Safety</span></div>
-            <div class="row"><div class="m"><div class="t">Start empagliflozin 10 mg</div><div class="s">Protects kidney and heart. He <span class="ref" data-s="sglt2">qualifies and has never been offered it</span>.</div>
-              <div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag mid">Care gap</span></div>
-          </div>
-          <div class="box">
-            <h3>What changed since August</h3>
-            <div class="row"><div class="m"><div class="t"><span class="ref" data-s="egfr">Kidney function 44 down to 38</span></div>
-              <svg viewBox="0 0 300 70" width="100%" style="max-width:320px" role="img" aria-label="Kidney function falling from 62 in 2022 to 38 in 2026">
-                <polyline fill="none" stroke="#ff6b6b" stroke-width="2.5" points="15,14 80,24 145,33 210,41 285,50"/>
-                <g fill="#ff6b6b"><circle cx="15" cy="14" r="3"/><circle cx="80" cy="24" r="3"/><circle cx="145" cy="33" r="3"/><circle cx="210" cy="41" r="3"/><circle cx="285" cy="50" r="3"/></g>
-                <g font-size="11" fill="#93a3c2"><text x="6" y="66">2022, 62</text><text x="66" y="66">55</text><text x="134" y="66">49</text><text x="200" y="66">44</text><text x="244" y="66">2026, 38</text></g>
-              </svg></div><span class="tag high">Worse</span></div>
-            <div class="row"><div class="m"><div class="t">Naproxen and home blood pressure 146 over 86</div><div class="s">Both from <span class="ref" data-s="bp">outside this chart</span>.</div></div><span class="tag info">Outside</span></div>
-            <div class="row"><div class="m"><div class="t">A1c 7.4, LDL <span class="ref" data-s="ldl">92</span></div><div class="s">About the same. LDL is above goal after a heart attack.</div></div><span class="tag low">Same</span></div>
-          </div>
-          <div class="box">
-            <h3>Organ health</h3>
-            <div class="organs">
-              <div class="org"><div class="n">Kidney</div><span class="tag high">High, getting worse</span><div class="y">8 lab values in 5 years. Confidence high.</div></div>
-              <div class="org"><div class="n">Heart</div><span class="tag high">High, stable</span><div class="y"><span class="ref" data-s="echo">Last echo</span> is 2 years old. Confidence moderate.</div></div>
-              <div class="org"><div class="n">Metabolic</div><span class="tag mid">Intermediate</span><div class="y">A1c steady. Confidence high.</div></div>
-            </div>
-            <p class="note">Kidney and heart are linked here. The same blood pressure is driving both.</p>
-          </div>
-          <div class="box">
-            <h3>Problem list</h3>
-            <div class="prob"><span>1. Coronary artery disease. Heart attack 2019, stents 2019 and 2021</span><span class="tag low">Stable</span></div>
-            <div class="prob"><span>2. Chronic kidney disease, stage 3b</span><span class="tag high">Worse</span></div>
-            <div class="prob"><span>3. Type 2 diabetes, since 2016</span><span class="tag mid">Dose problem</span></div>
-            <div class="prob"><span>4. Hypertension</span><span class="tag mid">Not at goal</span></div>
-            <div class="prob"><span>5. Dyslipidemia</span><span class="tag mid">Not at goal</span></div>
-            <div class="prob"><span>6. Osteoarthritis, right knee</span><span class="tag info">New, outside</span></div>
-          </div>
+    <!-- ORDERS -->
+    <section class="view" id="ord">
+      <div class="grid">
+        <div class="box">
+          <h3>Proposed orders. Nothing is sent until signed.</h3>
+          <div class="row"><div class="m"><div class="t">Discontinue naproxen and ibuprofen. Acetaminophen 650 mg q6h PRN.</div><div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag high">Medication safety</span></div>
+          <div class="row"><div class="m"><div class="t">Metformin 500 mg PO BID</div><div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag high">Medication safety</span></div>
+          <div class="row"><div class="m"><div class="t">Empagliflozin 10 mg PO daily</div><div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag mid">Care gap</span></div>
+          <div class="row"><div class="m"><div class="t">UACR today. BMP in 2 weeks.</div><div class="s">Last UACR 09/15/2025.</div><div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag mid">Care gap</span></div>
+          <div class="row"><div class="m"><div class="t">Referral to nephrology</div><div class="s">eGFR decline over 5 mL/min/1.73 m² per year. Not discussed during the visit.</div><div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Skip</button></div></div><span class="tag mid">Not discussed</span></div>
+          <div class="row"><div class="m"><div class="t">Atorvastatin 80 mg PO nightly</div><div class="s">LDL-C 92 mg/dL, very high risk ASCVD. Not discussed during the visit.</div><div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Skip</button></div></div><span class="tag mid">Not discussed</span></div>
+          <div class="btns"><button class="btn pri" onclick="document.getElementById('signed').classList.add('on')">Sign accepted orders</button></div>
+          <div class="done" id="signed">Signed 11/16/2026 08:24. Orders sent to the EHR. Twin updated. Note ready for review.</div>
         </div>
-        <div class="btns"><button class="btn pri" onclick="stopTour();vtab('vd')">Walk into the room</button></div>
-      </div>
-
-      <div class="vv" id="vd">
-        <p class="lede">The clinician turns the chair and talks to him. The screen shows nothing new and makes no sound.</p>
-        <div class="grid">
-          <div class="box">
-            <h3>Heard in the room</h3>
-            <div class="row"><div class="m"><div class="t">No chest pain. Walks 2 miles most days.</div><div class="s">Matches the record.</div></div><span class="tag low">Same</span></div>
-            <div class="row"><div class="m"><div class="t">Takes naproxen twice a day, and ibuprofen at night</div><div class="s">The ibuprofen is not in any record. Added to his Twin.</div></div><span class="tag high">New</span></div>
-            <div class="row"><div class="m"><div class="t">Ankles swell by evening for the last month</div><div class="s">Not in the record before today.</div></div><span class="tag mid">New</span></div>
-            <div class="row"><div class="m"><div class="t">He agreed to stop naproxen and start empagliflozin</div><div class="s">Lined up as orders for after the visit.</div></div><span class="tag info">Plan</span></div>
-          </div>
-          <div class="box">
-            <h3>Draft note, by problem</h3>
-            <div class="notebox">
-              <p><b>Interval history.</b> No angina, walks 2 miles most days. Knee pain since October, taking naproxen twice a day and ibuprofen at night. Ankle swelling by evening for one month.</p>
-              <p><b>1. Coronary artery disease.</b> Stable. Continue aspirin and metoprolol. LDL 92, above goal.</p>
-              <p><b>2. Chronic kidney disease stage 3b.</b> eGFR 44 to 38 in two months on two NSAIDs. Stop both, acetaminophen for knee pain. Start empagliflozin 10 mg. Urine protein today.</p>
-              <p><b>3. Type 2 diabetes.</b> A1c 7.4. Lower metformin to 500 mg twice a day for eGFR 38.</p>
-              <p><b>4. Hypertension.</b> 148 over 86 in clinic, home average 146 over 86. Recheck home readings in 2 weeks off NSAIDs.</p>
-            </div>
-            <p class="note">Written from the conversation plus what his Twin already knows. The clinician edits and signs.</p>
-          </div>
-        </div>
-        <div class="btns"><button class="btn pri" onclick="stopTour();vtab('va')">Visit is done</button></div>
-      </div>
-
-      <div class="vv" id="va">
-        <p class="lede">Before he leaves the office. The orders are lined up. Nothing happens until the clinician signs.</p>
-        <div class="grid">
-          <div class="box">
-            <h3>Proposed orders</h3>
-            <div class="row"><div class="m"><div class="t">Stop naproxen and ibuprofen, use acetaminophen</div><div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag high">Safety</span></div>
-            <div class="row"><div class="m"><div class="t">Lower metformin to 500 mg twice a day</div><div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag high">Safety</span></div>
-            <div class="row"><div class="m"><div class="t">Start empagliflozin 10 mg daily</div><div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Change</button></div></div><span class="tag mid">Care gap</span></div>
-            <div class="row"><div class="m"><div class="t">Refer to nephrology</div><div class="s">Never seen. This did not come up in the room.</div><div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Skip</button></div></div><span class="tag mid">Not discussed</span></div>
-            <div class="row"><div class="m"><div class="t">Atorvastatin 40 up to 80 mg</div><div class="s">LDL 92, above goal. This did not come up in the room.</div><div class="btns"><button class="btn" onclick="pick(this)">Accept</button><button class="btn" onclick="pick(this)">Skip</button></div></div><span class="tag mid">Not discussed</span></div>
-            <div class="btns"><button class="btn pri" onclick="document.getElementById('signed').classList.add('on')">Sign what I accepted</button></div>
-            <div class="done" id="signed">Signed. Orders sent to the EHR, his Twin is updated, the note is ready for review.</div>
-          </div>
-          <div class="box">
-            <h3>Follow up the Twin will watch</h3>
-            <div class="row"><div class="m"><div class="t">Kidney labs due Nov 25</div><div class="s">If not drawn by Nov 27, he gets a message and the nurse is told.</div></div><span class="tag info">Nurse</span></div>
-            <div class="row"><div class="m"><div class="t">Home blood pressure for 2 weeks</div><div class="s">If the average stays above 140, it comes back to the clinician with a proposed change.</div></div><span class="tag info">Clinician</span></div>
-            <div class="row"><div class="m"><div class="t">Nephrology appointment</div><div class="s">If not scheduled in 14 days, the referral coordinator is told.</div></div><span class="tag info">Coordinator</span></div>
-            <div class="row"><div class="m"><div class="t">Visit in 3 months, labs the week before</div><div class="s">Booked before he leaves the building.</div></div><span class="tag info">Front desk</span></div>
-            <p class="note">This is how Mr. A stays off the between visits list.</p>
-          </div>
+        <div class="box">
+          <h3>Follow up the Twin will track</h3>
+          <div class="row"><div class="m"><div class="t">BMP due 11/30/2026</div><div class="s">If not resulted by 12/02/2026, the patient is messaged and the nurse is notified.</div></div><span class="tag info">Nurse</span></div>
+          <div class="row"><div class="m"><div class="t">Home BP, 14 days</div><div class="s">If the mean stays at or above 140/90 mmHg, it returns to the clinician with a proposed change.</div></div><span class="tag info">Clinician</span></div>
+          <div class="row"><div class="m"><div class="t">Nephrology appointment</div><div class="s">If not scheduled by 11/30/2026, the referral coordinator is notified.</div></div><span class="tag info">Coordinator</span></div>
+          <div class="row"><div class="m"><div class="t">Return visit 02/2027, labs 1 week prior</div><div class="s">Scheduled at checkout.</div></div><span class="tag info">Front desk</span></div>
         </div>
       </div>
     </section>
 
-    <div class="foot">Demo only. Every patient and every number on this page is made up. Nothing is booked, ordered, or sent without a person signing.</div>
+    <!-- ASK -->
+    <section class="view" id="ask">
+      <div class="chat">
+        <div class="chips" id="chips"></div>
+        <div class="log" id="log"></div>
+        <form class="ask" onsubmit="return send()">
+          <input id="inp" placeholder="Ask about this patient" autocomplete="off">
+          <button class="btn pri" type="submit">Ask</button>
+        </form>
+      </div>
+    </section>
+
+    <div class="foot">Demo only. Synthetic patient and data. Nothing is ordered or sent without a clinician signature.</div>
   </main>
-
-  <aside class="chatp" id="chatp">
-    <div class="hd"><b>Ask the Twin</b><button class="x" onclick="stopTour();toggleChat(false)" aria-label="Close">&times;</button></div>
-    <div class="chips" id="chips"></div>
-    <div class="log" id="log"></div>
-    <form class="ask" onsubmit="return send()">
-      <input id="inp" placeholder="Ask a question" autocomplete="off">
-      <button class="btn pri" type="submit">Ask</button>
-    </form>
-  </aside>
 </div>
 
-<div id="drawer"><button class="x" onclick="closeD()" aria-label="Close">&times;</button><h5>Where this came from</h5><div class="w" id="dw"></div><div class="o" id="do"></div></div>
+<!-- ================= ATTENTION ================= -->
+<div class="page" id="attn">
+  <h1>Patients needing attention</h1>
+  <p class="lede">Panel of Dr. Holland, cardiology. The Twin reads every patient every night and lists the ones who need action before their next visit.</p>
+  <div class="tiles num">
+    <div class="tile"><div class="k">1,240</div><div class="l">patients on the panel</div></div>
+    <div class="tile"><div class="k" style="color:var(--high)">38</div><div class="l">need attention this month</div></div>
+    <div class="tile"><div class="k" style="color:var(--mid)">9</div><div class="l">need action today</div></div>
+    <div class="tile"><div class="k" style="color:var(--low)">1,202</div><div class="l">no new findings</div></div>
+  </div>
+  <div class="box w" style="grid-column:auto">
+    <div class="filt" id="afilt">
+      <button class="on" data-f="all">All 38</button>
+      <button data-f="med">Medication safety 12</button>
+      <button data-f="gap">Care gap 11</button>
+      <button data-f="dc">Post discharge 5</button>
+      <button data-f="trend">Worsening trend 10</button>
+    </div>
+    <div class="scroll"><table id="atab" class="num"><tr><th>Patient</th><th>Finding</th><th>Supporting data</th><th>Proposed next step</th><th>Owner</th><th>Due</th></tr></table></div>
+    <p class="note">Showing 9 of 38. Select Mr. A to open his chart.</p>
+  </div>
+  <div class="foot">Demo only. Synthetic patients and data.</div>
+</div>
+
+<div id="drawer"><button class="x" onclick="closeD()" aria-label="Close">&times;</button><h5>Source</h5><div class="w" id="dw"></div><div class="o" id="do"></div></div>
 
 <script>
 var $=function(id){return document.getElementById(id)};
-var CUR='home', MODE='sys';
 
 /* ---------- sources ---------- */
 var SRC={
- egfr:['eGFR 62 (2022), 55 (2023), 49 (2024), 44 (Aug 2026), 38 (Oct 28, 2026)','8 lab results. 6 from this health system, 2 from a second Georgia health system.'],
- naproxen:['Naproxen 500 mg twice a day, started Oct 20, 2026','Urgent care visit outside this health system. Confirmed by a pharmacy fill.'],
- bp:['Home average 146 over 86, 22 readings in 30 days','His home cuff. Was 138 over 82 before the naproxen.'],
- metformin:['Metformin 1000 mg twice a day','Medication list, this health system. Usual top dose at eGFR 30 to 44 is 1000 mg a day.'],
- sglt2:['No kidney and heart protecting drug on any list','Checked 11 years of medication lists and pharmacy fills from every pharmacy.'],
- ldl:['LDL 92 on atorvastatin 40, Oct 28, 2026','Lab result, this health system. Goal after a heart attack is under 70.'],
- echo:['Echo Oct 9, 2024. Pumping function 50 percent','Imaging report, this health system.'],
- cath:['Mar 22, 2021 heart cath. One stent to the right coronary artery','Procedure report, this health system.'],
- fl:['Mar 4, 2019 heart attack. Two stents to the LAD, 3.0 x 28 mm and 3.0 x 16 mm','Hospital in Florida. He was traveling. Procedure report pulled across state lines.'],
- cohort:['412 patients like Mr. A in the March record set','Same age range, diabetes, prior heart attack, falling kidney function. Demo number.'],
- first:['First visit, 2015. Diabetes and high blood pressure diagnosed 2016','Clinic notes, this health system.'],
- visit26:['Clinic visit Aug 12, 2026. eGFR 44. No changes made','Clinic note, this health system.'],
- lab23:['Kidney panel Sept 2023, eGFR 55','Second Georgia health system. Ordered by a primary care office there.'],
- lab26:['Kidney panel Feb 2026, eGFR 46','Second Georgia health system.'],
- spine:['Lumbar spine x ray June 2023. Notes calcium in the aorta','Second Georgia health system.'],
- fills:['Pharmacy fills 2015 to 2026','All pharmacies, through the national pharmacy network.'],
- d_ob:['Preeclampsia, 1994 and 1997','Obstetric records from a hospital in another state, pulled with her consent.'],
- d_meno:['Menopause at age 41','Gynecology note, 2009, outside practice.'],
- d_sdoh:['No show Mar 3 and Jun 17, 2026, both at 2 pm','Scheduling record. Intake form lists night shift work and caring for a parent at home.'],
- d_ed:['ER visit Sept 14, 2026. Chest tightness on stairs. One troponin, normal. ECG without acute change','Emergency department in Florida. Discharge instructions said to follow up with a doctor at home.'],
- d_ct:['Chest CT, Feb 2023. Coronary artery calcification noted in the LAD','Radiology report, another health system. Ordered for a cough.'],
- d_ldl:['LDL 162, Apr 2026','Employer health screening. No statin on any pharmacy fill.'],
- e_wt:['Home scale 168 lb Monday, 174 lb Saturday','Connected scale from her heart failure program.'],
- e_fill:['Furosemide refill 9 days late','Pharmacy fill record.'],
- f_dc:['Discharged Nov 12 after a 4 day heart failure stay','Hospital in another health system. Discharge summary pulled the next morning.']
+ egfr:['eGFR (CKD-EPI 2021), mL/min/1.73 m²: 62 (09/14/2022), 55 (09/12/2023), 49 (09/09/2024), 48 (03/11/2025), 47 (09/15/2025), 46 (02/10/2026), 44 (08/12/2026), 38 (10/28/2026)','8 results. 6 from this health system, 2 from an outside health system (09/12/2023, 02/10/2026).'],
+ naproxen:['Naproxen 500 mg PO BID, #60, prescribed 10/20/2026','Urgent care encounter, outside health system. Pharmacy fill 10/20/2026.'],
+ bp:['Home BP mean 146/86 mmHg, 22 readings, 10/17/2026 to 11/15/2026','Patient home device. Prior 30 day mean 138/82 mmHg.'],
+ metformin:['Metformin 1,000 mg PO BID','Medication list, this health system. Labeling: starting is not recommended at eGFR 30 to 44, reassess if already taking, contraindicated below 30. KDIGO: reduce the dose at eGFR under 45.'],
+ sglt2:['No SGLT2 inhibitor prescribed or filled, 2015 to 2026','Medication lists and pharmacy fill history, all pharmacies.'],
+ ldl:['LDL-C 92 mg/dL (10/28/2026), atorvastatin 40 mg nightly','Lipid panel, this health system.'],
+ echo:['TTE 10/09/2024: LVEF 50% (biplane), mild anterior hypokinesis, grade I diastolic dysfunction','Echocardiography report, this health system.'],
+ cath:['LHC/PCI 03/22/2021: 85% mid RCA, 3.5 x 18 mm DES, post dilated to 4.0 mm. Patent LAD stents.','Cardiac catheterization report, this health system.'],
+ cath19:['LHC/PCI 03/04/2019: 100% proximal LAD. 3.0 x 28 mm and 3.0 x 16 mm DES, post dilated to 3.5 mm.','Cardiac catheterization report, this health system.'],
+ uacr:['UACR 68 mg/g (09/15/2025). Prior 41 mg/g (09/09/2024), 24 mg/g (09/12/2023).','Urine albumin/creatinine ratio. Most recent value is 14 months old.'],
+ hgb:['Hemoglobin 14.6 (09/2022), 14.2, 13.8, 13.4, 13.1, 12.9 g/dL (10/28/2026)','CBC, this health system and one outside result.'],
+ a1c:['HbA1c 6.9% (09/2022), 7.0, 7.1, 7.2, 7.5, 7.3, 7.4% (10/28/2026)','Laboratory results.'],
+ cohort:['412 patients in the March record set matched on age, T2DM, prior MI, and eGFR slope','Demo figure.']
 };
 function showD(k){var s=SRC[k];if(!s)return;$('dw').textContent=s[0];$('do').textContent=s[1];$('drawer').classList.add('on')}
 function closeD(){$('drawer').classList.remove('on')}
 document.addEventListener('click',function(e){var r=e.target.closest('[data-s]');if(r){e.stopPropagation();showD(r.dataset.s)}},true);
 
 /* ---------- navigation ---------- */
-function view(v){
-  CUR=v;closeD();
-  document.querySelectorAll('.view').forEach(function(x){x.classList.toggle('on',x.id===v)});
-  document.querySelectorAll('#nav .nv').forEach(function(b){b.classList.toggle('on',b.dataset.v===v)});
-  if(v==='ref')refBack();
-  if(v==='rec'){var t=$('tl');t.classList.remove('go');setTimeout(function(){t.classList.add('go')},60)}
-  chipsFor();window.scrollTo(0,0);
-}
-document.querySelectorAll('#nav .nv').forEach(function(b){b.onclick=function(){stopTour();view(b.dataset.v)}});
-function vtab(id){
-  document.querySelectorAll('.vv').forEach(function(x){x.classList.toggle('on',x.id===id)});
-  document.querySelectorAll('#vt button').forEach(function(b){b.classList.toggle('on',b.dataset.x===id)});
+function page(p){
+  closeD();
+  $('chart').classList.toggle('on',p==='chart');$('attn').classList.toggle('on',p==='attn');
+  document.querySelectorAll('#pages button').forEach(function(b){b.classList.toggle('on',b.dataset.p===p)});
   window.scrollTo(0,0);
 }
-document.querySelectorAll('#vt button').forEach(function(b){b.onclick=function(){stopTour();vtab(b.dataset.x)}});
+document.querySelectorAll('#pages button').forEach(function(b){b.onclick=function(){stopTour();page(b.dataset.p)}});
+function view(v){
+  closeD();
+  document.querySelectorAll('.view').forEach(function(x){x.classList.toggle('on',x.id===v)});
+  document.querySelectorAll('#tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v)});
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('#tabs button').forEach(function(b){b.onclick=function(){stopTour();view(b.dataset.v)}});
 function pick(b){b.parentNode.querySelectorAll('.btn').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel')}
-function setMode(m){
-  MODE=m;
-  document.querySelectorAll('#mode button').forEach(function(b){b.classList.toggle('on',b.dataset.m===m)});
-  document.querySelectorAll('[data-sys]').forEach(function(e){e.textContent=e.dataset[m]});
-  document.querySelectorAll('[data-avoid-sys]').forEach(function(e){e.textContent=m==='sys'?e.dataset.avoidSys:e.dataset.avoidPlan});
+function other(){stopTour();view('ask');say('Open another patient','<p class="lead">This demo follows Mr. A.</p><p>The other three patients on the schedule were read overnight the same way. Their one line summaries are in the schedule on the left.</p>',[])}
+
+/* ---------- charts ---------- */
+function chart(o){
+  var W=460,H=170,l=34,r=14,t=16,b=28,pts=o.pts,xs=pts.map(function(p){return p[0]});
+  var x0=Math.min.apply(null,xs),x1=o.xmax||Math.max.apply(null,xs),y0=o.ymin,y1=o.ymax;
+  function X(x){return l+(x-x0)/(x1-x0)*(W-l-r)}function Y(y){return t+(y1-y)/(y1-y0)*(H-t-b)}
+  var s='<svg class="ch" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+o.label+'">';
+  (o.bands||[]).forEach(function(bd){s+='<rect x="'+l+'" y="'+Y(bd[1])+'" width="'+(W-l-r)+'" height="'+(Y(bd[0])-Y(bd[1]))+'" fill="'+bd[2]+'" opacity=".10"/><text x="'+(W-r-2)+'" y="'+(Y(bd[1])+11)+'" text-anchor="end">'+bd[3]+'</text>'});
+  o.ticks.forEach(function(v){s+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#1b2743"/><text x="'+(l-5)+'" y="'+(Y(v)+3.5)+'" text-anchor="end">'+v+'</text>'});
+  for(var y=Math.ceil(x0);y<=x1;y++){s+='<text x="'+X(y)+'" y="'+(H-8)+'" text-anchor="middle">'+y+'</text><line x1="'+X(y)+'" x2="'+X(y)+'" y1="'+(H-b)+'" y2="'+(H-b+4)+'" stroke="#24314f"/>'}
+  if(o.goal!==undefined){s+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(o.goal)+'" y2="'+Y(o.goal)+'" stroke="'+(o.goalColor||'#4cd98a')+'" stroke-dasharray="4 4"/><text x="'+(o.goalLeft?l+4:W-r-2)+'" y="'+(Y(o.goal)-4)+'" text-anchor="'+(o.goalLeft?'start':'end')+'" style="fill:'+(o.goalColor||'#4cd98a')+'">'+o.goalLabel+'</text>'}
+  if(o.proj){var lp=pts[pts.length-1];s+='<line x1="'+X(lp[0])+'" y1="'+Y(lp[1])+'" x2="'+X(o.proj[0])+'" y2="'+Y(o.proj[1])+'" stroke="'+o.color+'" stroke-width="2" stroke-dasharray="5 5" opacity=".7"/><text x="'+X(o.proj[0])+'" y="'+(Y(o.proj[1])+14)+'" text-anchor="end">'+o.proj[2]+'</text>'}
+  s+='<polyline fill="none" stroke="'+o.color+'" stroke-width="2.5" points="'+pts.map(function(p){return X(p[0])+','+Y(p[1])}).join(' ')+'"/>';
+  pts.forEach(function(p,i){var out=p[2];s+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="'+(out?4.5:3.5)+'" fill="'+(out?'#0a1020':o.color)+'" stroke="'+o.color+'" stroke-width="2"/>';
+    if(i===0||i===pts.length-1||o.all)s+='<text class="v" x="'+X(p[0])+'" y="'+(Y(p[1])+(o.lastBelow&&i===pts.length-1?17:-8))+'" text-anchor="'+(i===0?'start':i===pts.length-1?(o.lastBelow?'middle':'end'):'middle')+'">'+p[1]+'</text>'});
+  return s+'</svg>';
 }
-document.querySelectorAll('#mode button').forEach(function(b){b.onclick=function(){stopTour();setMode(b.dataset.m)}});
-
-/* ---------- referrals ---------- */
-var REF=[
- {n:'Ms. D, 58 F',said:'Atypical chest pain. Routine.',read:'See this week. Pattern fits angina. Risk the referral did not count.',tag:['high','Moved up'],w:['47 days','3 days'],open:true,
-  why:'Tap to open the full read.'},
- {n:'Mr. N, 71 M',said:'Heart murmur. Routine.',read:'See this week. Outside echo showed a narrowed aortic valve. He fainted last month.',tag:['high','Moved up'],w:['44 days','4 days'],
-  why:'An echo at another health system in 2024 showed moderate aortic stenosis. An urgent care note from Oct 22 records a faint while climbing stairs. Neither is in the referral. Echo ordered for the morning of the visit.'},
- {n:'Mrs. S, 66 F',said:'Shortness of breath. Routine.',read:'See this week. Heart failure signs rising across two health systems.',tag:['high','Moved up'],w:['41 days','5 days'],
-  why:'BNP 180 in June at one system and 610 in October at another. Weight up 9 lb since summer. Two ER visits for breathlessness. Labs and echo lined up before the visit.'},
- {n:'Mr. Q, 60 M',said:'High blood pressure. Routine.',read:'Routine is right. Start the home blood pressure program first.',tag:['low','Same'],w:['38 days','38 days'],
-  why:'No organ damage on labs or ECG. Three clinic readings, no home readings. A cuff is mailed this week so the first visit has 30 days of numbers.'},
- {n:'Mr. J, 45 M',said:'Palpitations. Urgent.',read:'No visit needed. Workup already done elsewhere and normal. Answer drafted.',tag:['info','Slot opened'],w:['6 days','Answered'],
-  why:'A 14 day heart monitor in June at another health system showed rare benign extra beats. Thyroid and blood count normal in August. A written answer for the referring doctor is drafted for the cardiologist to sign. His slot goes to Ms. D.'},
- {n:'Ms. W, 52 F',said:'Clearance before knee surgery.',read:'No visit needed. Good exercise capacity, no heart disease. Answer drafted.',tag:['info','Slot opened'],w:['29 days','Answered'],
-  why:'No heart disease, walks 3 miles a day, normal ECG in March. Guidelines call for no further testing. A letter for the surgeon is drafted for the cardiologist to sign.'}
+var TJ=[
+ {t:'Chronic kidney disease',tag:['high','Worsening, rapid'],src:'egfr',
+  kv:[['Measure','eGFR (CKD-EPI 2021), mL/min/1.73 m²'],['Latest','38 on 10/28/2026'],['Stage','G2 (2022) → G3a (2023) → G3b (08/2026)'],['Slope','−5.8 per year since 09/2022. Rapid progression is over 5 per year.'],['Projection','Reaches 30 about 03/2028 at the current slope']],
+  p:'Steady decline of about 5 per year from 2022 to 08/2026, consistent with diabetic and hypertensive kidney disease. Then 6 points in 11 weeks after naproxen was started. Two of the eight values are from an outside health system; without them the 2023 and early 2026 points are missing.',
+  ch:{label:'eGFR 2022 to 2026 with projection',color:'#ff6b6b',ymin:20,ymax:70,ticks:[30,45,60],xmax:2028.4,goal:30,goalLabel:'30, metformin contraindicated',goalColor:'#ff6b6b',lastBelow:1,goalLeft:1,
+      pts:[[2022.70,62],[2023.70,55,1],[2024.69,49],[2025.19,48],[2025.71,47],[2026.11,46,1],[2026.61,44],[2026.82,38]],proj:[2028.2,30,'Projected 03/2028']},
+  foot:'Open circles are outside results.'},
+ {t:'Hypertension',tag:['mid','Above goal, rising'],src:'bp',
+  kv:[['Measure','Clinic systolic BP, mmHg'],['Latest','148/86 mmHg on 11/16/2026'],['Home','Mean 146/86 mmHg, 22 readings, last 30 days'],['Therapy','Lisinopril 20 mg, amlodipine 5 mg (added 03/2025), metoprolol succinate 50 mg']],
+  p:'Controlled after amlodipine was added in 03/2025. Rising again since 08/2026. The timing matches the NSAID start, and home readings confirm the clinic values.',
+  ch:{label:'Clinic systolic blood pressure 2024 to 2026',color:'#ffc24d',ymin:120,ymax:160,ticks:[130,140,150],goal:130,goalLabel:'Goal under 130',all:1,
+      pts:[[2024.69,134],[2025.19,152],[2025.71,136],[2026.11,138],[2026.61,142],[2026.87,148]]}},
+ {t:'Type 2 diabetes mellitus',tag:['low','Stable'],src:'a1c',
+  kv:[['Measure','HbA1c, %'],['Latest','7.4% on 10/28/2026'],['Range','6.9 to 7.5% since 09/2022'],['Therapy','Metformin 1,000 mg BID. Dose exceeds the limit for eGFR 38.']],
+  p:'Glycemic control has been steady for four years. The change needed is the regimen, not the target: metformin must come down and an SGLT2 inhibitor is indicated for kidney and heart protection.',
+  ch:{label:'HbA1c 2022 to 2026',color:'#8db8ff',ymin:6,ymax:8.5,ticks:[6.5,7,7.5,8],goal:7,goalLabel:'7.0',
+      pts:[[2022.70,6.9],[2023.70,7.0],[2024.69,7.1],[2025.19,7.2],[2025.71,7.5],[2026.11,7.3],[2026.82,7.4]]}},
+ {t:'Dyslipidemia, secondary prevention',tag:['mid','Above threshold, drifting up'],src:'ldl',
+  kv:[['Measure','LDL-C, mg/dL'],['Latest','92 mg/dL on 10/28/2026'],['Threshold','70 mg/dL, very high risk ASCVD'],['Therapy','Atorvastatin 40 mg nightly, unchanged since 2019']],
+  p:'LDL-C has risen from 76 to 92 mg/dL over four years on the same statin dose. Fill history shows no gaps, so this is not an adherence problem. Intensification is indicated.',
+  ch:{label:'LDL cholesterol 2022 to 2026',color:'#ffc24d',ymin:50,ymax:110,ticks:[60,80,100],goal:70,goalLabel:'70',
+      pts:[[2022.70,76],[2023.70,79],[2024.69,84],[2025.71,88],[2026.11,94],[2026.82,92]]}},
+ {t:'Coronary artery disease',tag:['low','Stable'],src:'echo',
+  kv:[['Measure','LVEF, %'],['Latest','50% on 10/09/2024 (TTE)'],['Events','STEMI 03/2019, PCI to LAD. PCI to RCA 03/2021.'],['Since 2021','No angina, no admissions, no change in exercise tolerance']],
+  p:'LV function recovered from 40 to 45% after the 2019 infarct to 50% by 2024. No events for 5 years. The last echo is 25 months old; new ankle edema would be a reason to repeat it.',
+  ch:{label:'Left ventricular ejection fraction 2019 to 2024',color:'#4cd98a',ymin:30,ymax:65,ticks:[40,50,60],all:1,xmax:2026.9,
+      pts:[[2019.18,42],[2021.21,48],[2024.77,50]]}},
+ {t:'Hemoglobin',tag:['mid','Watch'],src:'hgb',
+  kv:[['Measure','Hemoglobin, g/dL'],['Latest','12.9 g/dL on 10/28/2026'],['Reference','13.5 to 17.5 g/dL'],['Workup','No iron studies on record']],
+  p:'Not on the problem list. Hemoglobin has fallen 1.7 g/dL over four years in step with kidney function. Daily NSAID and aspirin use adds a possible GI source. Iron studies are a reasonable addition to today\'s labs.',
+  ch:{label:'Hemoglobin 2022 to 2026',color:'#ffc24d',ymin:11.5,ymax:15.5,ticks:[12,13,14,15],goal:13.5,goalLabel:'Lower limit 13.5',goalColor:'#93a3c2',goalLeft:1,
+      pts:[[2022.70,14.6],[2023.70,14.2],[2024.69,13.8],[2025.71,13.4],[2026.11,13.1],[2026.82,12.9]]}}
 ];
-(function(){var t=$('rtab');REF.forEach(function(r,i){
-  var tr=document.createElement('tr');tr.className='g';tr.id='rr'+i;
-  tr.innerHTML='<td><b>'+r.n+'</b></td><td class="said">'+r.said+'</td><td>'+r.read+' <span class="tag '+r.tag[0]+'">'+r.tag[1]+'</span></td><td class="wait">'+(r.w[0]===r.w[1]?r.w[0]:'<s>'+r.w[0]+'</s><br><b>'+r.w[1]+'</b>')+'</td>';
-  var sub=document.createElement('tr');sub.className='sub';sub.innerHTML='<td colspan="4">'+r.why+'</td>';
-  tr.onclick=function(){stopTour();if(r.open)refOpen();else sub.classList.toggle('on')};
-  t.appendChild(tr);t.appendChild(sub);
-})})();
-var SPEC=[
- ['Cardiology','h','Jaw ache and shortness of breath on stairs for 6 weeks, gone with rest. This is angina until shown otherwise.'],
- ['Women\'s health','v','Preeclampsia in both pregnancies and menopause at 41. Both raise her lifetime heart risk and neither is in a standard risk score.'],
- ['Emergency medicine','h','ER visit in Florida on Sept 14 for chest tightness. One normal heart enzyme test, no stress test, no follow up arranged.'],
- ['Imaging','h','A 2023 chest CT for a cough, at another health system, noted calcium in the LAD. No one acted on it.'],
- ['Prevention','f','Mother had a heart attack at 59. Blood pressure 138 over 86. Never smoked.'],
- ['Pharmacy','f','LDL 162 and no statin ever filled. Omeprazole for 8 weeks without relief.'],
- ['Endocrinology','f','A1c 6.1. Prediabetes, not treated.'],
- ['Hematology','f','Hemoglobin 11.2. Mild anemia can make angina worse. Iron studies were never done.'],
- ['Gastroenterology','f','Reflux was treated for 8 weeks without relief. Reflux is unlikely to be the whole answer.'],
- ['Behavioral health','f','Anxiety is on the referral. It does not explain symptoms that come with exertion and stop with rest.'],
- ['Social needs','f','Works nights and cares for her mother. Missed two afternoon appointments. Offer early morning or video.'],
- ['Pulmonology','','Nothing to add. Chest x ray in September was clear.'],
- ['Nephrology','','Nothing to add. Kidney function normal.'],
- ['Neurology','','Nothing to add.'],
- ['Oncology','','Nothing to add. Screening up to date.'],
- ['Rheumatology','','Nothing to add.'],
- ['Infectious disease','','Nothing to add.']
-];
-(function(){var g=$('specs');SPEC.forEach(function(s,i){
-  var d=document.createElement('div');d.className='spec '+s[1];d.id='sp'+i;
-  d.innerHTML='<div class="n">'+s[0]+'<span class="dot"></span></div><div class="st">'+(s[1]?'Finding':'Nothing to add')+'</div>';
-  d.onclick=function(){stopTour();specShow(i)};g.appendChild(d);
-})})();
-function specShow(i){document.querySelectorAll('.spec').forEach(function(x){x.classList.remove('on')});$('sp'+i).classList.add('on');$('specline').innerHTML='<b>'+SPEC[i][0]+'.</b> '+SPEC[i][2]}
-var specT=[];
-function refOpen(){
-  $('refq').style.display='none';$('refd').style.display='block';window.scrollTo(0,0);
-  specT.forEach(clearTimeout);specT=[];
-  document.querySelectorAll('.spec').forEach(function(x){x.classList.remove('rd','on')});
-  $('specline').textContent='Reading the record.';
-  SPEC.forEach(function(s,i){specT.push(setTimeout(function(){$('sp'+i).classList.add('rd')},250+110*i))});
-  specT.push(setTimeout(function(){specShow(1)},250+110*SPEC.length+200));
-}
-function refBack(){$('refq').style.display='block';$('refd').style.display='none'}
+(function(){var g=$('tjgrid');TJ.forEach(function(c,i){
+  var d=document.createElement('div');d.className='box w';d.id='tj'+i;
+  d.innerHTML='<div class="tj"><div><h4>'+c.t+' <span class="tag '+c.tag[0]+'">'+c.tag[1]+'</span></h4><div class="kv num">'+c.kv.map(function(k){return '<span>'+k[0]+'</span><span>'+k[1]+'</span>'}).join('')+'</div><p>'+c.p+'</p><p class="note"><span class="ref" data-s="'+c.src+'">Source values</span>'+(c.foot?' &nbsp; '+c.foot:'')+'</p></div><div>'+chart(c.ch)+'</div></div>';
+  g.appendChild(d)})})();
 
-/* ---------- between visits ---------- */
-var W=[
- {n:'Mrs. E, 77 F',why:'Heart failure. Weight up 6 lb in 5 days.',tags:[['high','Today'],['info','Living situation']],av:['Heart failure admission','Inpatient stay, about 5 days'],own:'Nurse',
-  sig:['<span class="ref" data-s="e_wt">Home scale 168 to 174 lb since Monday</span>','<span class="ref" data-s="e_fill">Water pill refill is 9 days late</span>','Called the after hours line Saturday about swollen ankles','Lives alone and does not drive'],
-  next:['Nurse calls her this morning','Extra water pill dose for 3 days, ready for the cardiologist to sign','Pharmacy delivery set up so refills arrive at her door','Ride booked for Thursday\'s visit']},
- {n:'Mr. F, 69 M',why:'Home 3 days from an outside hospital. No visit booked.',tags:[['high','Today']],av:['Readmission','30 day readmission'],own:'Care manager',
-  sig:['<span class="ref" data-s="f_dc">Discharged Nov 12 from another health system</span>','Two new medicines are not on this health system\'s list','One of them doubles a medicine he already takes','No appointment on any calendar'],
-  next:['Visit within 7 days, two open slots offered to him by message','Pharmacist reviews the medicine list today','Weight and symptom check by phone on day 5']},
- {n:'Ms. G, 55 F',why:'Heart attack in May. Two heart medicines not filled for 6 weeks.',tags:[['high','This week'],['info','Cost']],av:['Second heart attack','Repeat heart attack admission'],own:'Pharmacist',
-  sig:['Last fill of her statin and her antiplatelet medicine was Oct 1','Her copay rose in October after a coverage change','Portal message about cost on Oct 20, not answered'],
-  next:['Pharmacist calls about a covered alternative, for the cardiologist to approve','Assistance program form filled in and ready for her signature','Answer to her portal message drafted']},
- {n:'Mrs. Y, 73 F',why:'COPD. Three rescue inhaler fills in 5 weeks.',tags:[['mid','This week'],['info','Other state']],av:['COPD admission','ER visit and admission'],own:'Nurse',
-  sig:['Three rescue inhaler fills since Oct 8','ER visit in Tennessee on Oct 30 while visiting her daughter, treated with steroids','Daily controller inhaler not filled since July'],
-  next:['Nurse call and inhaler check this week','Controller inhaler refill sent for the clinician to sign','Visit within 7 days']},
- {n:'Mr. V, 81 M',why:'Two falls in a month. On a blood thinner. New sleeping pill.',tags:[['mid','This week']],av:['Hip fracture or head bleed','Fall related admission'],own:'Pharmacist',
-  sig:['Two urgent care visits for falls, both outside this health system','Takes apixaban for atrial fibrillation','A sleeping pill was started Oct 15 by an outside clinician'],
-  next:['Pharmacist reviews the sleeping pill with his primary doctor','Home safety visit offered','Balance and blood pressure check at next visit']},
- {n:'Mr. A, 62 M',why:'Kidney function falling. Naproxen from an outside urgent care.',tags:[['mid','At his visit']],av:['Kidney injury admission','Kidney injury admission'],own:'Clinician',
-  sig:['<span class="ref" data-s="egfr">eGFR 44 to 38 in two months</span>','<span class="ref" data-s="naproxen">Naproxen started Oct 20</span>','<span class="ref" data-s="bp">Home blood pressure rising</span>'],
-  next:['Three decisions are lined up for his visit <button class="btn" style="margin-left:6px" onclick="stopTour();view(\'visit\')">Open his visit</button>']}
+/* ---------- risk scores ---------- */
+var RS=[
+ {c:'kid',ok:1,n:'KDIGO CKD risk category',big:'G3b A2 <small>very high risk</small>',tag:['high','Very high'],
+  inp:['<span class="ref" data-s="egfr">eGFR 38 mL/min/1.73 m² (10/28/2026)</span>: G3b','<span class="ref" data-s="uacr">UACR 68 mg/g (09/15/2025)</span>: A2'],
+  note:'KDIGO 2024. UACR is 14 months old. Category may change with today\'s result.'},
+ {c:'kid',ok:1,n:'Kidney Failure Risk Equation, 4 variable',big:'1.8% <small>at 2 years</small> &nbsp; 5.5% <small>at 5 years</small>',tag:['mid','Intermediate'],
+  inp:['Age 62 y, male','<span class="ref" data-s="egfr">eGFR 38 mL/min/1.73 m²</span>','<span class="ref" data-s="uacr">UACR 68 mg/g</span>'],
+  note:'Tangri 2016, North American calibration. Risk of kidney failure needing dialysis or transplant.'},
+ {c:'kid',ok:1,n:'eGFR slope',big:'−5.8 <small>mL/min/1.73 m² per year</small>',tag:['high','Rapid progression'],
+  inp:['<span class="ref" data-s="egfr">8 values, 09/14/2022 to 10/28/2026</span>','Rapid progression: sustained decline over 5 per year'],
+  note:'KDIGO definition. Supports nephrology referral.'},
+ {c:'cv',ok:1,n:'ASCVD risk category, secondary prevention',big:'Very high risk',tag:['high','Very high'],
+  inp:['Major event: MI 03/04/2019','High risk conditions: diabetes, hypertension, CKD (eGFR 15 to 59), prior PCI','<span class="ref" data-s="ldl">LDL-C 92 mg/dL</span>, threshold 70 mg/dL'],
+  note:'2018 AHA/ACC cholesterol guideline. One major event plus multiple high risk conditions.'},
+ {c:'cv',ok:0,n:'CHA₂DS₂-VASc',big:'Not applicable',tag:['na','No atrial fibrillation'],
+  inp:['No atrial fibrillation or flutter on any ECG, monitor, or problem list, 2015 to 2026','If AF were diagnosed the score would be 3: hypertension 1, diabetes 1, vascular disease 1'],
+  note:'Shown so the reason is visible. The Twin recalculates if AF is documented.'},
+ {c:'cv',ok:0,n:'Pooled Cohort Equations, Framingham, PREVENT',big:'Not applicable',tag:['na','Established ASCVD'],
+  inp:['These estimate first event risk in people without cardiovascular disease','Mr. A had an MI in 2019, so the secondary prevention category above applies'],
+  note:'Shown so the reason is visible.'},
+ {c:'cv',ok:0,n:'HAS-BLED',big:'Not applicable',tag:['na','Not on anticoagulation'],
+  inp:['No anticoagulant prescribed or filled','Relevant bleeding factors if needed later: daily NSAID, aspirin, eGFR 38'],
+  note:'Shown so the reason is visible.'}
 ];
-(function(){var t=$('wtab');W.forEach(function(r,i){
-  var tr=document.createElement('tr');tr.className='g';tr.id='wr'+i;
-  tr.innerHTML='<td><b>'+r.n+'</b></td><td>'+r.why+' '+r.tags.map(function(x){return '<span class="tag '+x[0]+'">'+x[1]+'</span>'}).join(' ')+'</td><td data-avoid-sys="'+r.av[0]+'" data-avoid-plan="'+r.av[1]+'">'+r.av[0]+'</td><td>'+r.own+'</td>';
-  var sub=document.createElement('tr');sub.className='sub';sub.id='ws'+i;
-  sub.innerHTML='<td colspan="4"><div class="cols"><div><div class="h3">Why the Twin flagged this</div><ul class="sig">'+r.sig.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div><div><div class="h3">What to do next</div><ul class="sig">'+r.next.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><div class="btns"><button class="btn" onclick="pick(this)">Assign to '+r.own.toLowerCase()+'</button><button class="btn" onclick="pick(this)">Change</button></div></div></div></td>';
-  tr.onclick=function(){stopTour();sub.classList.toggle('on')};
-  t.appendChild(tr);t.appendChild(sub);
-})})();
+(function(){var g=$('rgrid');RS.forEach(function(r,i){
+  var d=document.createElement('div');d.className='box sc'+(r.ok?'':' off');d.id='rs'+i;d.dataset.c=r.c;d.dataset.ok=r.ok;
+  d.innerHTML='<h3>'+r.n+'</h3><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div class="big num">'+r.big+'</div><span class="tag '+r.tag[0]+'">'+r.tag[1]+'</span></div><ul class="in num">'+r.inp.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><p class="note">'+r.note+'</p>';
+  g.appendChild(d)})})();
+function riskFilter(v){document.querySelectorAll('#rgrid .box').forEach(function(b){
+  var show=v==='all'||(v==='app'&&b.dataset.ok==='1')||(v==='na'&&b.dataset.ok==='0')||b.dataset.c===v;b.style.display=show?'':'none'})}
 
-/* ---------- lifetime record timeline ---------- */
-(function(){
-  var L=[['Your health system','Georgia'],['Hospital in Florida','Florida'],['Second health system','Georgia'],['Urgent care','Georgia'],['Pharmacies','All'],['Home devices','Cuff']];
-  var x0=190,x1=880,y0=34,dy=40;function X(y){return x0+(y-2015)/(2027-2015)*(x1-x0)}
-  var s='';
-  for(var y=2015;y<=2026;y++){s+='<line x1="'+X(y)+'" y1="18" x2="'+X(y)+'" y2="'+(y0+dy*5+18)+'" stroke="#1b2743"/><text x="'+X(y)+'" y="12" text-anchor="middle">'+y+'</text>'}
-  L.forEach(function(l,i){var yy=y0+dy*i;
-    s+='<text class="ln" x="0" y="'+(yy+4)+'">'+l[0]+'</text><text x="0" y="'+(yy+18)+'">'+l[1]+'</text><line x1="'+x0+'" y1="'+yy+'" x2="'+x1+'" y2="'+yy+'" stroke="#24314f" stroke-width="2"/>'});
-  s+='<line x1="'+X(2015.2)+'" y1="'+(y0+dy*4)+'" x2="'+X(2026.87)+'" y2="'+(y0+dy*4)+'" stroke="#4d8dff" stroke-width="5" stroke-linecap="round" opacity=".55"/>';
-  s+='<line x1="'+X(2025.3)+'" y1="'+(y0+dy*5)+'" x2="'+X(2026.87)+'" y2="'+(y0+dy*5)+'" stroke="#4d8dff" stroke-width="5" stroke-linecap="round" opacity=".55"/>';
-  var D=[[0,2015.3,'low','first'],[0,2016.4,'low','first'],[0,2021.22,'low','cath'],[0,2022.7,'low','egfr'],[0,2024.77,'low','echo'],[0,2026.61,'low','visit26'],[0,2026.82,'low','ldl'],
-         [1,2019.17,'info','fl'],[2,2023.45,'info','spine'],[2,2023.7,'high','lab23'],[2,2026.11,'high','lab26'],[3,2026.8,'high','naproxen'],[4,2020.5,'info','fills'],[4,2026.8,'high','naproxen'],[5,2026.6,'info','bp']];
-  var C={low:'#4cd98a',info:'#8db8ff',high:'#ff6b6b'};
-  D.forEach(function(d,i){s+='<circle cx="'+X(d[1])+'" cy="'+(y0+dy*d[0])+'" r="7" fill="'+C[d[2]]+'" data-s="'+d[3]+'" style="transition-delay:'+(i*70)+'ms"/>'});
-  s+='<line x1="'+X(2026.87)+'" y1="18" x2="'+X(2026.87)+'" y2="'+(y0+dy*5+18)+'" stroke="#35d0ba" stroke-dasharray="4 4"/><text x="'+X(2026.87)+'" y="'+(y0+dy*5+32)+'" text-anchor="middle" fill="#35d0ba">Today</text>';
-  $('tl').innerHTML=s;
-})();
+/* ---------- labs ---------- */
+var LD=['10/28/2026','08/12/2026','02/10/2026','09/15/2025','03/11/2025','09/09/2024','09/12/2023','09/14/2022'],LO=[0,0,1,0,0,0,1,0];
+var LABS=[
+ ['Renal'],
+ ['eGFR (CKD-EPI 2021)','mL/min/1.73 m²','≥60',[38,44,46,47,48,49,55,62],function(v){return v<60}],
+ ['Creatinine','mg/dL','0.70 to 1.30',['1.96','1.73','1.67','1.65','1.62','1.60','1.46','1.33'],function(v){return v>1.3}],
+ ['BUN','mg/dL','7 to 20',[31,27,26,25,24,24,21,19],function(v){return v>20}],
+ ['Urine albumin/creatinine','mg/g','<30',['','','',68,'',41,24,18],function(v){return v>=30}],
+ ['Chemistry'],
+ ['Potassium','mmol/L','3.5 to 5.0',['4.8','4.5','4.6','4.4','4.5','4.3','4.4','4.2'],function(v){return v>5||v<3.5}],
+ ['Sodium','mmol/L','135 to 145',[139,140,138,140,141,139,140,141],function(v){return v>145||v<135}],
+ ['CO2','mmol/L','22 to 29',[22,23,24,24,25,24,25,26],function(v){return v<22}],
+ ['Glucose','mg/dL','70 to 99',[148,152,141,156,139,134,128,131],function(v){return v>99}],
+ ['Hemoglobin A1c','%','<5.7',['7.4','','7.3','7.5','7.2','7.1','7.0','6.9'],function(v){return v>=5.7}],
+ ['Lipids'],
+ ['Total cholesterol','mg/dL','<200',[166,'',167,160,'',154,148,146],function(v){return v>=200}],
+ ['LDL-C','mg/dL','<70',[92,'',94,88,'',84,79,76],function(v){return v>=70}],
+ ['HDL-C','mg/dL','>40',[41,'',40,42,'',41,43,44],function(v){return v<40}],
+ ['Triglycerides','mg/dL','<150',[165,'',166,150,'',146,131,128],function(v){return v>=150}],
+ ['Hematology'],
+ ['Hemoglobin','g/dL','13.5 to 17.5',['12.9','','13.1','13.4','','13.8','14.2','14.6'],function(v){return v<13.5}]
+];
+(function(){var t='<tr><th>Test</th>'+LD.map(function(d,i){return '<th>'+d+(LO[i]?'<span class="tag info">Outside</span>':'')+'</th>'}).join('')+'<th style="text-align:left">Units</th><th style="text-align:left">Reference</th></tr>';
+ LABS.forEach(function(r){
+  if(r.length==1){t+='<tr class="grp"><td colspan="'+(LD.length+3)+'">'+r[0]+'</td></tr>';return}
+  t+='<tr><td>'+r[0]+'</td>'+r[3].map(function(v){return '<td'+(v!==''&&r[4](parseFloat(v))?' class="ab"':'')+'>'+(v===''?'':v+(r[4](parseFloat(v))?(r[0]==='HDL-C'||r[0]==='Hemoglobin'||r[0].indexOf('eGFR')===0||r[0]==='CO2'?' L':' H'):''))+'</td>'}).join('')+'<td class="u">'+r[1]+'</td><td class="u">'+r[2]+'</td></tr>';
+ });$('labt').innerHTML=t;})();
 
 /* ---------- chat ---------- */
 function f(k,label){return '<span class="tag info" data-s="'+k+'">'+label+'</span>'}
 var QA=[
- {v:'ref',q:'Who should be seen first this week?',k:['first','sickest','priorit','who should','this week','queue'],
-  a:'<p class="lead">Ms. D, then Mr. N, then Mrs. S.</p><ul><li>Ms. D, 58. Sent as routine. Her symptoms fit angina and she has calcium in her heart arteries on an outside CT.</li><li>Mr. N, 71. Sent for a murmur. An outside echo shows a narrowed aortic valve and he fainted last month.</li><li>Mrs. S, 66. Heart failure signs rising across two health systems.</li></ul><p>All three were booked more than 40 days out. All three now have a slot this week.</p>',s:[['d_ct','Outside CT'],['d_ed','Florida ER visit']]},
- {v:'ref',q:'Why did Ms. D move up?',k:['ms. d','ms d','why did','move up','moved','chest pain','woman','women','gender','sex'],
-  a:'<p class="lead">The referral said atypical chest pain. The record says angina in a woman with risk no score counted.</p><ul><li>Jaw ache and shortness of breath on stairs, gone with rest.</li><li>Preeclampsia twice and menopause at 41.</li><li>An ER visit in Florida in September with no follow up.</li><li>Calcium in her heart arteries on a 2023 CT that no one acted on.</li></ul><p>None of the last three are in this health system\'s chart.</p>',s:[['d_ob','Obstetric records'],['d_ed','Florida ER visit'],['d_ct','Outside CT'],['d_meno','Gynecology note']]},
- {v:'ref',q:'Which referrals do not need a visit?',k:['not need','no visit','without a visit','free','open','slots','capacity','booked'],
-  a:'<p class="lead">11 of today\'s 64. Each has a written answer ready for a cardiologist to sign.</p><ul><li>Mr. J. Palpitations already worked up at another health system, normal.</li><li>Ms. W. Clearance before knee surgery, no further testing called for.</li><li>Nine more like these.</li></ul><p>Those 11 slots went to the patients the Twin moved up. No new clinic time was added.</p>',s:[]},
- {v:'watch',q:'Who is heading to the ER this week?',k:['heading','er ','emergency','admit','hospital','who is','risk this week','beds'],
-  a:'<p class="lead">Nine people need a call today. Mrs. E is first.</p><ul><li>Mrs. E, 77. Heart failure, weight up 6 lb in 5 days, water pill refill late.</li><li>Mr. F, 69. Home 3 days from an outside hospital, no visit booked.</li><li>Ms. G, 55. Heart attack in May, heart medicines not filled for 6 weeks.</li></ul><p>Each one has a next step and an owner. 17,900 others have nothing new and no one needs to look.</p>',s:[['e_wt','Home scale'],['f_dc','Outside discharge']]},
- {v:'watch',q:'What should we do for Mrs. E today?',k:['mrs. e','mrs e','heart failure','weight','what should we','do for'],
-  a:'<p class="lead">Call her this morning and get the water pill to her door.</p><ul><li>Nurse call today.</li><li>Extra water pill dose for 3 days, ready for the cardiologist to sign.</li><li>Pharmacy delivery, since she lives alone and does not drive.</li><li>Ride booked for Thursday\'s visit.</li></ul><p>The late refill and the ride matter here as much as the heart does.</p>',s:[['e_wt','Home scale'],['e_fill','Pharmacy fill']]},
- {v:'rec',q:'What is in Mr. A\'s record that is not in ours?',k:['not in our','not in your','missing','outside','elsewhere','other system','scattered','record'],
-  a:'<p class="lead">Nine items from outside this chart. Two of them change today\'s care.</p><ul><li>Naproxen started Oct 20 at an urgent care.</li><li>Two kidney results from a second Georgia health system.</li><li>The stents from his 2019 heart attack in Florida.</li><li>22 home blood pressure readings.</li><li>Every pharmacy fill for 11 years.</li></ul><p>Read from this chart alone, his kidney decline looks slower and the cause is not visible.</p>',s:[['naproxen','Urgent care'],['egfr','Kidney labs, 2 systems'],['fl','Florida hospital']]},
- {v:'rec',q:'Where has he been treated?',k:['where','treated','states','systems','places','been seen'],
-  a:'<p class="lead">Four places of care in two states.</p><ul><li>This health system, Georgia, since 2015.</li><li>A hospital in Florida, 2019, for a heart attack while traveling.</li><li>A second Georgia health system, labs and an x ray, 2023 to 2026.</li><li>An urgent care, October 2026.</li></ul>',s:[['fl','Florida hospital'],['lab23','Second health system']]},
- {v:'visit',q:'What matters most today?',k:['matter','most','today','summary','summar','going on','tell me','overview'],
-  a:'<p class="lead">His kidneys. Function has fallen from 62 to 38 and the last drop was the fastest.</p><ul><li>An urgent care started naproxen three weeks ago.</li><li>His metformin dose is too high for his kidneys now.</li><li>He qualifies for a kidney and heart protecting drug and is not on one.</li></ul><p>His heart is stable. No chest pain, no hospital stays since 2021.</p>',s:[['egfr','Kidney labs, 2 systems'],['naproxen','Outside urgent care'],['metformin','Medication list']]},
- {v:'visit',q:'Why are his kidneys getting worse?',k:['why','kidney','worse','cause','egfr','renal'],
-  a:'<p class="lead">A slow decline for four years, then a faster drop after naproxen was started.</p><ul><li>2022 to August 2026, about 5 points a year. Diabetes and blood pressure above goal explain that.</li><li>August to October 2026, 6 points in two months. The naproxen started October 20.</li><li>Home blood pressure rose over the same weeks.</li></ul>',s:[['egfr','Kidney labs, 2 systems'],['naproxen','Outside urgent care'],['bp','Home cuff']]},
- {v:'visit',q:'What happens if nothing changes?',k:['nothing','if we','happen','predict','future','trajectory','forecast','next year'],
-  a:'<p class="lead">At this rate his kidney function crosses 30 in a little over a year.</p><p>Below 30, metformin has to stop and his options narrow.</p><p>The Twin compared him with 412 patients like him. Those who stopped the pain reliever and started the protecting drug lost kidney function more slowly over three years.</p><p>This is a comparison with similar patients, not a promise about Mr. A.</p>',s:[['egfr','Kidney trend'],['cohort','412 similar patients']]},
- {v:'visit',q:'What should I do before he leaves?',k:['order','plan','before he','recommend','next step','treat','should i'],
-  a:'<p class="lead">Five orders are lined up. Nothing happens until you sign.</p><ul><li>Stop naproxen, use acetaminophen for the knee.</li><li>Lower metformin to 500 mg twice a day.</li><li>Start empagliflozin 10 mg daily.</li><li>Urine protein test today.</li><li>Kidney labs in 2 weeks, visit in 3 months.</li></ul><div class="btns"><button class="btn pri" onclick="sign(this)">Sign all five</button></div><p class="note" style="display:none">Signed. Orders sent to the EHR. The Twin will watch for the labs on Nov 25. If they are not drawn by Nov 27, he gets a message and the nurse is told.</p>',s:[['metformin','Dosing limit'],['sglt2','Care gap check']]}
+ {q:'What matters most today?',k:['matter','most','today','summary','summar','going on','tell me','overview','brief'],
+  a:'<p class="lead">Kidney function. eGFR 62 → 38 mL/min/1.73 m² since 09/2022, with 6 points lost in the last 11 weeks.</p><ul><li>Naproxen 500 mg BID started 10/20/2026 at an outside urgent care.</li><li>Metformin 1,000 mg BID exceeds the limit for eGFR 38.</li><li>Indicated for an SGLT2 inhibitor and not on one.</li></ul><p>CAD is stable. No angina and no admissions since PCI in 03/2021.</p>',s:[['egfr','eGFR, 8 results'],['naproxen','Outside urgent care'],['metformin','Medication list']]},
+ {q:'Why is his kidney function falling?',k:['why','kidney','falling','worse','cause','egfr','renal','creatinine'],
+  a:'<p class="lead">Chronic decline of about 5 per year, then an acute drop after an NSAID was started.</p><ul><li>09/2022 to 08/2026: 62 → 44. Diabetes since 2016, BP above goal, UACR 68 mg/g.</li><li>08/12 to 10/28/2026: 44 → 38. Naproxen started 10/20/2026 while on lisinopril.</li><li>Home BP mean rose from 138/82 to 146/86 mmHg over the same weeks.</li></ul><p>The naproxen and two of the eGFR values are in outside records only.</p>',s:[['egfr','eGFR, 8 results'],['naproxen','Outside urgent care'],['bp','Home BP'],['uacr','UACR']]},
+ {q:'What is his trajectory if nothing changes?',k:['trajectory','nothing','if we','happen','predict','future','forecast','next year','project'],
+  a:'<p class="lead">At −5.8 per year, eGFR reaches 30 about 03/2028.</p><ul><li>Below 30, metformin is contraindicated.</li><li>KFRE: 1.8% risk of kidney failure at 2 years, 5.5% at 5 years.</li><li>Hemoglobin is already falling with it: 14.6 → 12.9 g/dL.</li></ul><p>In 412 matched patients, those who stopped the NSAID and started an SGLT2 inhibitor had a slower decline over 3 years. That is a comparison with similar patients, not a prediction for Mr. A.</p><div class="btns"><button class="btn" onclick="view(\'traj\')">Open condition trajectory</button></div>',s:[['egfr','eGFR slope'],['hgb','Hemoglobin'],['cohort','Matched cohort']]},
+ {q:'Which risk scores apply to him?',k:['risk score','score','framingham','chads','vasc','kfre','kdigo','ascvd','has-bled','calculator'],
+  a:'<p class="lead">Four apply. Three do not, and the Twin says why.</p><ul><li>KDIGO category G3b A2, very high risk.</li><li>KFRE 1.8% at 2 years, 5.5% at 5 years.</li><li>eGFR slope −5.8 per year, rapid progression.</li><li>ASCVD secondary prevention: very high risk, LDL-C threshold 70 mg/dL.</li></ul><p>CHA₂DS₂-VASc and HAS-BLED do not apply without atrial fibrillation or anticoagulation. Framingham and the Pooled Cohort Equations do not apply after an MI.</p><div class="btns"><button class="btn" onclick="view(\'risk\')">Open risk scores</button></div>',s:[['egfr','eGFR'],['uacr','UACR'],['ldl','LDL-C']]},
+ {q:'What should I order before he leaves?',k:['order','plan','before he','recommend','next step','treat','should i','what to do'],
+  a:'<p class="lead">Six orders are queued. Nothing is sent until you sign.</p><ul><li>Discontinue naproxen. Acetaminophen 650 mg q6h PRN.</li><li>Metformin 500 mg PO BID.</li><li>Empagliflozin 10 mg PO daily.</li><li>UACR today. BMP in 2 weeks.</li><li>Referral to nephrology.</li><li>Atorvastatin 80 mg PO nightly.</li></ul><div class="btns"><button class="btn pri" onclick="sign(this)">Sign all six</button><button class="btn" onclick="view(\'ord\')">Review one by one</button></div><p class="note" style="display:none">Signed 11/16/2026 08:24. Orders sent to the EHR. The Twin will track the BMP due 11/30/2026 and notify the nurse if it is not resulted by 12/02/2026.</p>',s:[['metformin','Renal dosing'],['sglt2','Care gap'],['ldl','LDL-C']]},
+ {q:'Who else on my panel looks like this?',k:['who else','panel','other patients','population','how many','look like','similar patients'],
+  a:'<p class="lead">9 other patients have eGFR under 60 with a falling trend and an NSAID fill in the last 90 days.</p><p>Six have no visit scheduled in the next 60 days. They are on the attention list under medication safety, with the fill date and latest eGFR for each.</p><div class="btns"><button class="btn pri" onclick="page(\'attn\')">Open patients needing attention</button></div>',s:[]}
 ];
-function chipsFor(){
-  var c=$('chips');c.innerHTML='';
-  var list=QA.map(function(x,i){return i}).filter(function(i){return QA[i].v===CUR});
-  if(CUR==='home')list=[0,3,5,7];
-  list.forEach(function(i){var b=document.createElement('button');b.className='chip';b.type='button';b.textContent=QA[i].q;b.onclick=function(){stopTour();ask(i)};c.appendChild(b)});
-}
-function toggleChat(on){var w=$('wrap');if(on===undefined)on=!w.classList.contains('chat');w.classList.toggle('chat',on);$('chatbtn').classList.toggle('on',on);if(on)chipsFor()}
+(function(){var c=$('chips');QA.forEach(function(x,i){var b=document.createElement('button');b.className='chip';b.type='button';b.textContent=x.q;b.onclick=function(){stopTour();ask(i)};c.appendChild(b)})})();
 var log=$('log');
 function say(q,html,srcs){
   var qd=document.createElement('div');qd.className='q';qd.textContent=q;log.appendChild(qd);
-  var ad=document.createElement('div');ad.className='a';ad.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';log.appendChild(ad);
-  log.scrollTop=log.scrollHeight;
+  var ad=document.createElement('div');ad.className='ans';ad.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';log.appendChild(ad);
+  ad.scrollIntoView({block:'end',behavior:'smooth'});
   setTimeout(function(){
     var from=srcs.length?'<div class="from">'+srcs.map(function(s){return f(s[0],s[1])}).join('')+'</div>':'';
     ad.innerHTML=html+from;
     var kids=[].slice.call(ad.children).filter(function(k){return k.style.display!=='none'});
     kids.forEach(function(k){k.classList.add('fade')});
-    kids.forEach(function(k,i){setTimeout(function(){k.classList.add('in');log.scrollTop=log.scrollHeight},170*i)});
+    kids.forEach(function(k,i){setTimeout(function(){k.classList.add('in');ad.scrollIntoView({block:'end',behavior:'smooth'})},170*i)});
   },850);
 }
-function ask(i){toggleChat(true);var x=QA[i];say(x.q,x.a,x.s)}
+function ask(i){var x=QA[i];say(x.q,x.a,x.s)}
 function send(){
   stopTour();
   var el=$('inp'),t=el.value.trim();if(!t)return false;el.value='';
-  var low=' '+t.toLowerCase()+' ',best=-1,score=0;
-  QA.forEach(function(x,i){var n=0;x.k.forEach(function(k){if(low.indexOf(k)>-1)n+=k.length});if(n&&x.v===CUR)n+=4;if(n>score){score=n;best=i}});
-  if(best<0){var same=QA.map(function(x,i){return i}).filter(function(i){return QA[i].v===CUR});best=same.length?same[0]:7}
+  var low=' '+t.toLowerCase()+' ',best=0,score=0;
+  QA.forEach(function(x,i){var n=0;x.k.forEach(function(k){if(low.indexOf(k)>-1)n+=k.length});if(n>score){score=n;best=i}});
   var x=QA[best];say(t,x.a,x.s);return false;
 }
-function sign(b){b.textContent='Signed';b.classList.add('sel');b.disabled=true;var n=b.closest('.a').querySelector('.note');n.style.display='block';n.classList.add('fade');setTimeout(function(){n.classList.add('in');log.scrollTop=log.scrollHeight},30)}
+function sign(b){b.textContent='Signed';b.classList.add('sel');b.disabled=true;var n=b.closest('.ans').querySelector('.note');n.style.display='block';n.classList.add('fade');setTimeout(function(){n.classList.add('in');n.scrollIntoView({block:'end',behavior:'smooth'})},30)}
+
+/* ---------- attention list ---------- */
+var AT=[
+ ['Mr. A, 62 M','med','high','NSAID with declining eGFR','eGFR 44 → 38 mL/min/1.73 m² (10/28/2026). Naproxen 500 mg BID filled 10/20/2026.','Stop NSAID, adjust metformin, start SGLT2 inhibitor','Clinician','Visit today',1],
+ ['Mrs. E, 77 F','trend','high','Heart failure, weight gain','Home weight 168 → 174 lb (11/09 to 11/14/2026). Furosemide 40 mg refill 9 days overdue.','Nurse call. Furosemide 40 mg BID x 3 days for signature.','Nurse','Today'],
+ ['Mr. F, 69 M','dc','high','Discharged, no follow up scheduled','Discharged 11/12/2026, outside hospital, heart failure, LOS 4 days. 2 new medications not reconciled.','Visit within 7 days. Medication reconciliation.','Care manager','11/19/2026'],
+ ['Ms. G, 55 F','gap','high','Post MI, antiplatelet and statin not filled','NSTEMI with PCI 05/14/2026. Ticagrelor 90 mg BID and atorvastatin 80 mg last filled 10/01/2026.','Pharmacist outreach. Covered alternative for cardiologist approval.','Pharmacist','Today'],
+ ['Mr. H, 66 M','gap','mid','Elevated BP, no hypertension diagnosis','BP 152/94 mmHg (09/30/2026), 148/90 mmHg (11/11/2026). No antihypertensive on record.','Recheck visit. Home BP monitoring.','Clinician','11/30/2026'],
+ ['Mrs. K, 74 F','med','mid','NSAID with CKD','eGFR 41 mL/min/1.73 m² (10/02/2026). Ibuprofen 800 mg TID filled monthly since 06/2026.','Pharmacist review with PCP','Pharmacist','11/23/2026'],
+ ['Mrs. B, 84 F','gap','mid','Aortic stenosis, surveillance echo due','Moderate AS, Vmax 3.6 m/s, mean gradient 28 mmHg (TTE 09/08/2025).','Order TTE at today\'s visit','Clinician','Visit today'],
+ ['Mr. V, 81 M','med','mid','Falls on anticoagulation, new sedative','2 urgent care visits for falls (10/19, 11/06/2026), outside. Apixaban 5 mg BID. Zolpidem 10 mg started 10/15/2026.','Pharmacist review. Discuss stopping zolpidem.','Pharmacist','11/20/2026'],
+ ['Mrs. L, 59 F','gap','low','Diabetes, no UACR in 12 months','T2DM, HbA1c 7.9% (08/2026). Last UACR 02/11/2025.','Add UACR to next lab draw','Nurse','12/15/2026']
+];
+var FN={med:'Medication safety',gap:'Care gap',dc:'Post discharge',trend:'Worsening trend'};
+(function(){var t=$('atab');AT.forEach(function(r){
+  var tr=document.createElement('tr');tr.className='g';tr.dataset.f=r[1];
+  tr.innerHTML='<td><b>'+r[0]+'</b></td><td>'+r[3]+'<br><span class="tag '+r[2]+'">'+FN[r[1]]+'</span></td><td>'+r[4]+'</td><td>'+r[5]+'</td><td>'+r[6]+'</td><td>'+r[7]+'</td>';
+  if(r[8])tr.onclick=function(){stopTour();page('chart');view('first')};else tr.onclick=function(){stopTour();pickRow(tr)};
+  t.appendChild(tr)})})();
+function pickRow(tr){var on=tr.style.outline;document.querySelectorAll('#atab tr.g').forEach(function(x){x.style.outline=''});if(!on)tr.style.outline='1px solid #35d0ba'}
+document.querySelectorAll('#afilt button').forEach(function(b){b.onclick=function(){stopTour();
+  document.querySelectorAll('#afilt button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+  document.querySelectorAll('#atab tr.g').forEach(function(tr){tr.style.display=(b.dataset.f==='all'||tr.dataset.f===b.dataset.f)?'':'none'})}});
 
 /* ---------- guided demo ---------- */
 var T=[],touring=false;
@@ -713,29 +636,20 @@ function stopTour(){if(!touring)return;T.forEach(clearTimeout);T=[];touring=fals
 function tour(){
   if(touring){stopTour();return}
   touring=true;var p=$('play');p.textContent='Stop';p.classList.add('stop');
-  log.innerHTML='';closeD();toggleChat(false);vtab('vb');document.querySelectorAll('tr.sub.on').forEach(function(x){x.classList.remove('on')});
-  view('home');
-  later(function(){glow('h1')},500);
-  later(function(){glow('h2')},2300);
-  later(function(){glow('h3')},4100);
-  later(function(){unglow();view('ref')},6200);
-  later(function(){glow('rr0')},7000);
-  later(function(){unglow();refOpen()},9500);
-  later(function(){glow('bspecs')},10200);
-  later(function(){glow('bsex')},15000);
-  later(function(){unglow();view('watch')},19500);
-  later(function(){$('ws0').classList.add('on');glow('wr0')},20400);
-  later(function(){unglow();view('rec')},26500);
-  later(function(){glow('btl')},27000);
-  later(function(){glow('bmiss')},30000);
-  later(function(){unglow();ask(5)},33000);
-  later(function(){view('visit');glow('bdecide')},39500);
-  later(function(){unglow();ask(10)},43500);
-  later(function(){var b=log.querySelector('.a:last-child .btn.pri');if(b)sign(b)},47500);
-  later(function(){toggleChat(false);view('home')},51500);
-  later(function(){stopTour()},52000);
+  log.innerHTML='';closeD();$('rsel').value='all';riskFilter('all');page('chart');view('first');
+  later(function(){glow('ban')},500);
+  later(function(){glow('bdecide')},3500);
+  later(function(){showD('naproxen')},5500);
+  later(function(){unglow();view('traj');glow('tj0')},9000);
+  later(function(){glow('tj5')},14000);
+  later(function(){unglow();view('risk');glow('rs1')},18000);
+  later(function(){glow('rs4')},22000);
+  later(function(){unglow();view('ask');ask(0)},25500);
+  later(function(){ask(4)},31500);
+  later(function(){var b=log.querySelector('.ans:last-child .btn.pri');if(b)sign(b)},36000);
+  later(function(){page('attn')},40000);
+  later(function(){stopTour()},43000);
 }
-chipsFor();
 </script>
 </body>
 </html>
