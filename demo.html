@@ -902,19 +902,20 @@ function tour(){
   if(touring){stopTour();return}
   touring=true;var p=$('play');p.textContent='Stop';p.classList.add('stop');
   log.innerHTML='';closeD();$('rsel').value='all';riskFilter('all');page('chart');ws('chat');
-  later(function(){glow('brief')},500);
-  later(function(){glow('sec-gaps')},4000);
-  later(function(){unglow();view('first');glow('bdecide')},7500);
-  later(function(){showD('naproxen')},9500);
-  later(function(){closeD();unglow();view('found');glow('bfound')},12500);
-  later(function(){unglow();view('traj');glow('tj0')},17000);
-  later(function(){unglow();view('risk');glow('rs1')},21500);
-  later(function(){glow('rs4')},24500);
-  later(function(){unglow();ask(0)},27500);
-  later(function(){ask(5)},33000);
-  later(function(){var b=log.querySelector('.ans:last-child .btn.pri');if(b)sign(b)},37500);
-  later(function(){page('attn')},41500);
-  later(function(){stopTour()},44500);
+  var S=1000;
+  later(function(){glow('brief')},1*S);
+  later(function(){glow('sec-gaps')},18*S);
+  later(function(){unglow();view('first');glow('bdecide')},30*S);
+  later(function(){showD('naproxen')},42*S);
+  later(function(){closeD();unglow();view('found');glow('bfound')},52*S);
+  later(function(){unglow();view('traj');glow('tj0')},72*S);
+  later(function(){unglow();view('risk');glow('rs1')},88*S);
+  later(function(){glow('rs4')},95*S);
+  later(function(){unglow();ask(0)},102*S);
+  later(function(){ask(5)},116*S);
+  later(function(){var b=log.querySelector('.ans:last-child .btn.pri');if(b)sign(b)},125*S);
+  later(function(){page('attn')},134*S);
+  later(function(){stopTour()},172*S);
 }
 </script>
 </body>
