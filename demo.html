@@ -212,6 +212,15 @@ details.how ul{margin:8px 0 2px;padding-left:18px;color:#c9d4ea}
 .tlv .yr{border-left-color:var(--brand);font-weight:700;color:var(--brand);padding-top:12px}
 .kvs{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:14px}
 .kvs span:nth-child(odd){color:var(--soft)}
+.ct2{background:var(--goldbg);color:var(--gold);border:1px solid var(--gold);border-radius:10px;padding:0 7px;font-size:11.5px;margin-left:7px}
+.fd{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:6px 22px;margin-top:6px}
+.fd ul{margin:0;padding-left:18px;font-size:13.5px;color:#c9d4ea}
+.fd li{margin-bottom:2px}
+.fd .lab{margin:6px 0 4px}
+.fitem{padding:14px 0;border-top:1px solid var(--line)}
+.fitem:first-of-type{border-top:0;padding-top:4px}
+.fitem .ft{font-size:15px;font-weight:700;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+@media(max-width:1000px){.fd{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -263,6 +272,7 @@ details.how ul{margin:8px 0 2px;padding-left:18px;color:#c9d4ea}
     <div class="tabrow">
     <div class="tabs" id="tabs">
       <button class="on" data-v="first">What to know first</button>
+      <button data-v="found">Findings and care gaps<span class="ct2">11</span></button>
       <button data-v="narr">Trajectory narrative</button>
       <button data-v="traj">Condition trajectories</button>
       <button data-v="since">Since last visit</button>
@@ -336,6 +346,59 @@ details.how ul{margin:8px 0 2px;padding-left:18px;color:#c9d4ea}
             <tr><td>Naproxen <span class="tag info">Outside</span> <span class="tag high">New</span></td><td>500 mg PO BID</td><td class="num">10/20/2026</td></tr>
           </table>
           <p class="note">Fill dates from pharmacy claims across all pharmacies.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINDINGS AND CARE GAPS -->
+    <section class="view" id="found">
+      <div class="grid">
+        <div class="box w tw" id="bfound">
+          <h3>Found trajectories, not on the problem list <span class="vb">3 of 3 validated</span><span class="built">Built 11/16/2026 07:00</span><span class="flag">Flag an inaccuracy</span></h3>
+          <p class="s" style="margin:0 0 4px">Patterns in the record that point to a condition no one has named yet. Each one states how sure the Twin is, the evidence, and what would confirm it.</p>
+
+          <div class="fitem"><div class="ft">Anemia, likely related to chronic kidney disease <span class="tag mid">Likely</span></div>
+            <div class="fd num"><div><div class="lab">Evidence</div><ul>
+              <li><span class="ref" data-s="hgb">Hemoglobin 14.6 → 12.9 g/dL, 09/14/2022 to 10/28/2026</span></li>
+              <li>Below 13.5 g/dL on 3 consecutive results since 09/15/2025</li>
+              <li>Decline tracks eGFR 62 → 38 mL/min/1.73 m² over the same period</li>
+              <li>Daily aspirin plus NSAID since 10/20/2026: a GI source is not excluded</li></ul></div>
+            <div><div class="lab">To confirm</div><ul><li>CBC with indices, ferritin, transferrin saturation, reticulocyte count</li><li>No iron studies on record</li></ul>
+              <div class="btns"><button class="btn" onclick="pick(this)">Order workup</button><button class="btn" onclick="pick(this)">Add to problem list</button><button class="btn" onclick="pick(this)">Dismiss</button></div></div></div></div>
+
+          <div class="fitem"><div class="ft">Hyperkalemia, rising risk <span class="tag mid">At risk</span></div>
+            <div class="fd num"><div><div class="lab">Evidence</div><ul>
+              <li>Potassium 4.2 mmol/L (09/14/2022) → 4.5 (08/12/2026) → 4.8 (10/28/2026)</li>
+              <li>Lisinopril 20 mg daily with eGFR 38 mL/min/1.73 m²</li>
+              <li><span class="ref" data-s="naproxen">NSAID added 10/20/2026</span></li>
+              <li>CO2 26 → 22 mmol/L over the same period</li></ul></div>
+            <div><div class="lab">To confirm</div><ul><li>BMP 1 to 2 weeks after stopping the NSAID and starting empagliflozin</li><li>Already in the proposed orders</li></ul>
+              <div class="btns"><button class="btn" onclick="pick(this)">Keep watching</button><button class="btn" onclick="pick(this)">Dismiss</button></div></div></div></div>
+
+          <div class="fitem"><div class="ft">Heart failure, possible <span class="tag info">Possible</span></div>
+            <div class="fd num"><div><div class="lab">Evidence</div><ul>
+              <li>Prior anterior MI, <span class="ref" data-s="echo">LVEF 50% on 10/09/2024</span>, grade I diastolic dysfunction</li>
+              <li>NSAID use since 10/20/2026, BP rising, eGFR falling</li>
+              <li>Weight 92.1 kg (08/12/2026) → 94.3 kg (11/16/2026)</li>
+              <li>Against: no dyspnea or edema documented in any note</li></ul></div>
+            <div><div class="lab">To confirm</div><ul><li>Ask about edema, orthopnea, and exertional dyspnea today</li><li>NT-proBNP. No natriuretic peptide on record.</li><li>TTE. Last study is 25 months old.</li></ul>
+              <div class="btns"><button class="btn" onclick="pick(this)">Order workup</button><button class="btn" onclick="pick(this)">Dismiss</button></div></div></div></div>
+        </div>
+
+        <div class="box w tw">
+          <h3>Care gaps <span class="vb">8 of 8 validated</span><span class="flag">Flag an inaccuracy</span></h3>
+          <div class="scroll"><table class="num">
+            <tr><th>Gap</th><th>Evidence in the record</th><th>Basis</th><th>Proposed</th><th></th></tr>
+            <tr><td><b>SGLT2 inhibitor not prescribed</b><br><span class="tag mid">Medication</span></td><td>T2DM, CKD G3b A2, prior MI. <span class="ref" data-s="sglt2">None prescribed or filled, 2015 to 2026</span>.</td><td>KDIGO 2024, ADA Standards of Care</td><td>Empagliflozin 10 mg daily</td><td><button class="btn" onclick="pick(this)">Accept</button></td></tr>
+            <tr><td><b>LDL-C above threshold</b><br><span class="tag mid">Medication</span></td><td><span class="ref" data-s="ldl">LDL-C 92 mg/dL (10/28/2026)</span> on atorvastatin 40 mg. Above 70 mg/dL on 6 of 6 results since 2022.</td><td>2018 AHA/ACC cholesterol guideline, very high risk ASCVD</td><td>Atorvastatin 80 mg. Lipid panel in 6 to 8 weeks. Add ezetimibe if still 70 or above.</td><td><button class="btn" onclick="pick(this)">Accept</button></td></tr>
+            <tr><td><b>Metformin dose above renal limit</b><br><span class="tag high">Medication safety</span></td><td><span class="ref" data-s="metformin">1,000 mg BID</span> with eGFR 38 mL/min/1.73 m²</td><td>Product labeling, KDIGO 2022 diabetes in CKD</td><td>500 mg BID</td><td><button class="btn" onclick="pick(this)">Accept</button></td></tr>
+            <tr><td><b>UACR overdue</b><br><span class="tag info">Test</span></td><td><span class="ref" data-s="uacr">Last 09/15/2025, 68 mg/g</span>. 14 months ago.</td><td>KDIGO 2024: at least yearly in CKD</td><td>UACR today</td><td><button class="btn" onclick="pick(this)">Accept</button></td></tr>
+            <tr><td><b>No nephrology evaluation</b><br><span class="tag info">Referral</span></td><td><span class="ref" data-s="egfr">eGFR slope −5.8 per year</span>. No nephrology encounter in any record.</td><td>KDIGO 2024: refer for sustained decline over 5 per year</td><td>Nephrology referral</td><td><button class="btn" onclick="pick(this)">Accept</button></td></tr>
+            <tr><td><b>Blood pressure above goal</b><br><span class="tag mid">Medication</span></td><td>148/86 mmHg (11/16/2026). <span class="ref" data-s="bp">Home mean 146/86 mmHg</span>.</td><td>2017 ACC/AHA: goal under 130/80 mmHg</td><td>Stop NSAID first. Review 14 days of home readings, then adjust.</td><td><button class="btn" onclick="pick(this)">Accept</button></td></tr>
+            <tr><td><b>Echocardiogram not current</b><br><span class="tag info">Test</span></td><td><span class="ref" data-s="echo">Last TTE 10/09/2024</span>. Possible heart failure finding above.</td><td>Change in clinical status</td><td>TTE</td><td><button class="btn" onclick="pick(this)">Accept</button></td></tr>
+            <tr><td><b>Diabetic eye exam not on record</b><br><span class="tag info">Referral</span></td><td>No retinal exam in any record since 06/2024</td><td>ADA Standards of Care: every 1 to 2 years</td><td>Ophthalmology referral</td><td><button class="btn" onclick="pick(this)">Accept</button></td></tr>
+          </table></div>
+          <p class="note">Accepted items move to Orders and follow up. Nothing is ordered until the clinician signs.</p>
         </div>
       </div>
     </section>
@@ -734,6 +797,8 @@ var QA=[
   a:'<p class="lead">Chronic decline of about 5 per year, then an acute drop after an NSAID was started.</p><ul><li>09/2022 to 08/2026: 62 → 44. Diabetes since 2016, BP above goal, UACR 68 mg/g.</li><li>08/12 to 10/28/2026: 44 → 38. Naproxen started 10/20/2026 while on lisinopril.</li><li>Home BP mean rose from 138/82 to 146/86 mmHg over the same weeks.</li></ul><p>The naproxen and two of the eGFR values are in outside records only.</p>',s:[['egfr','eGFR, 8 results'],['naproxen','Outside urgent care'],['bp','Home BP'],['uacr','UACR']]},
  {q:'What is his trajectory if nothing changes?',k:['trajectory','nothing','if we','happen','predict','future','forecast','next year','project'],
   a:'<p class="lead">At −5.8 per year, eGFR reaches 30 about 03/2028.</p><ul><li>Below 30, metformin is contraindicated.</li><li>KFRE: 1.8% risk of kidney failure at 2 years, 5.5% at 5 years.</li><li>Hemoglobin is already falling with it: 14.6 → 12.9 g/dL.</li></ul><p>In 412 matched patients, those who stopped the NSAID and started an SGLT2 inhibitor had a slower decline over 3 years. That is a comparison with similar patients, not a prediction for Mr. A.</p><div class="btns"><button class="btn" onclick="view(\'traj\')">Open condition trajectory</button></div>',s:[['egfr','eGFR slope'],['hgb','Hemoglobin'],['cohort','Matched cohort']]},
+ {q:'What has the Twin found that is not on the problem list?',k:['found','not on the problem','undiagnosed','likely','care gap','gaps','missing','anemia','heart failure','potassium','hyperkal'],
+  a:'<p class="lead">Three found trajectories and eight care gaps.</p><ul><li>Anemia, likely. Hemoglobin 14.6 → 12.9 g/dL since 09/2022, tracking eGFR. No iron studies on record.</li><li>Hyperkalemia, at risk. K 4.2 → 4.8 mmol/L on lisinopril with an NSAID added.</li><li>Heart failure, possible. Prior MI, NSAID, weight up 2.2 kg since 08/12/2026. No NT-proBNP on record.</li></ul><p>Largest care gaps: no SGLT2 inhibitor, LDL-C 92 mg/dL above the 70 mg/dL threshold, UACR 14 months old, no nephrology evaluation.</p><div class="btns"><button class="btn" onclick="view(\'found\')">Open findings and care gaps</button></div>',s:[['hgb','Hemoglobin'],['ldl','LDL-C'],['uacr','UACR'],['sglt2','Fill history']]},
  {q:'Which risk scores apply to him?',k:['risk score','score','framingham','chads','vasc','kfre','kdigo','ascvd','has-bled','calculator'],
   a:'<p class="lead">Four apply. Three do not, and the Twin says why.</p><ul><li>KDIGO category G3b A2, very high risk.</li><li>KFRE 1.8% at 2 years, 5.5% at 5 years.</li><li>eGFR slope −5.8 per year, rapid progression.</li><li>ASCVD secondary prevention: very high risk, LDL-C threshold 70 mg/dL.</li></ul><p>CHA₂DS₂-VASc and HAS-BLED do not apply without atrial fibrillation or anticoagulation. Framingham and the Pooled Cohort Equations do not apply after an MI.</p><div class="btns"><button class="btn" onclick="view(\'risk\')">Open risk scores</button></div>',s:[['egfr','eGFR'],['uacr','UACR'],['ldl','LDL-C']]},
  {q:'What should I order before he leaves?',k:['order','plan','before he','recommend','next step','treat','should i','what to do'],
@@ -771,11 +836,11 @@ var AT=[
  ['Mrs. E, 77 F','trend','high','Heart failure, weight gain','Home weight 168 → 174 lb (11/09 to 11/14/2026). Furosemide 40 mg refill 9 days overdue.','Nurse call. Furosemide 40 mg BID x 3 days for signature.','Nurse','Today'],
  ['Mr. F, 69 M','dc','high','Discharged, no follow up scheduled','Discharged 11/12/2026, outside hospital, heart failure, LOS 4 days. 2 new medications not reconciled.','Visit within 7 days. Medication reconciliation.','Care manager','11/19/2026'],
  ['Ms. G, 55 F','gap','high','Post MI, antiplatelet and statin not filled','NSTEMI with PCI 05/14/2026. Ticagrelor 90 mg BID and atorvastatin 80 mg last filled 10/01/2026.','Pharmacist outreach. Covered alternative for cardiologist approval.','Pharmacist','Today'],
- ['Mr. H, 66 M','gap','mid','Elevated BP, no hypertension diagnosis','BP 152/94 mmHg (09/30/2026), 148/90 mmHg (11/11/2026). No antihypertensive on record.','Recheck visit. Home BP monitoring.','Clinician','11/30/2026'],
+ ['Mr. H, 66 M','gap','mid','Hypertension likely, not diagnosed','BP 152/94 mmHg (09/30/2026), 148/90 mmHg (11/11/2026). No antihypertensive on record.','Recheck visit. Home BP monitoring.','Clinician','11/30/2026'],
  ['Mrs. K, 74 F','med','mid','NSAID with CKD','eGFR 41 mL/min/1.73 m² (10/02/2026). Ibuprofen 800 mg TID filled monthly since 06/2026.','Pharmacist review with PCP','Pharmacist','11/23/2026'],
  ['Mrs. B, 84 F','gap','mid','Aortic stenosis, surveillance echo due','Moderate AS, Vmax 3.6 m/s, mean gradient 28 mmHg (TTE 09/08/2025).','Order TTE at today\'s visit','Clinician','Visit today'],
  ['Mr. V, 81 M','med','mid','Falls on anticoagulation, new sedative','2 urgent care visits for falls (10/19, 11/06/2026), outside. Apixaban 5 mg BID. Zolpidem 10 mg started 10/15/2026.','Pharmacist review. Discuss stopping zolpidem.','Pharmacist','11/20/2026'],
- ['Mrs. L, 59 F','gap','low','Diabetes, no UACR in 12 months','T2DM, HbA1c 7.9% (08/2026). Last UACR 02/11/2025.','Add UACR to next lab draw','Nurse','12/15/2026']
+ ['Mrs. L, 59 F','gap','low','Diabetes, UACR overdue','T2DM, HbA1c 7.9% (08/2026). Last UACR 02/11/2025.','Add UACR to next lab draw','Nurse','12/15/2026']
 ];
 var FN={med:'Medication safety',gap:'Care gap',dc:'Post discharge',trend:'Worsening trend'};
 (function(){var t=$('atab');AT.forEach(function(r){
@@ -801,13 +866,13 @@ function tour(){
   later(function(){glow('ban')},500);
   later(function(){glow('bdecide')},3500);
   later(function(){showD('naproxen')},5500);
-  later(function(){unglow();view('narr');glow('bnarr')},8500);
+  later(function(){unglow();view('found');glow('bfound')},8500);
   later(function(){unglow();view('traj');glow('tj0')},12000);
   later(function(){glow('tj5')},15500);
   later(function(){unglow();view('risk');glow('rs1')},19000);
   later(function(){glow('rs4')},22500);
   later(function(){unglow();view('ask');ask(0)},25500);
-  later(function(){ask(4)},31500);
+  later(function(){ask(5)},31500);
   later(function(){var b=log.querySelector('.ans:last-child .btn.pri');if(b)sign(b)},36000);
   later(function(){page('attn')},40000);
   later(function(){stopTour()},43000);
