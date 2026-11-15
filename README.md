@@ -3,3 +3,5 @@
 Clickable mockup of the Twin through one clinic day. Made up patient, made up numbers, no back end.
 
 Open index.html, or use the live link once Pages is on.
+
+The 30 second March style demo for meetings is demo.html.
