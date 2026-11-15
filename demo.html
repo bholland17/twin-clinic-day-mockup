@@ -5,299 +5,346 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>March Twin demo</title>
 <style>
-:root{
-  --bg:#0a1020; --panel:#111a30; --panel2:#16213c; --deep:#0d1528; --line:#24314f; --ink:#e8eefb; --soft:#93a3c2;
-  --brand:#35d0ba; --brand2:#4d8dff; --high:#ff6b6b; --highbg:#3a1820; --mid:#ffc24d; --midbg:#3a2e14;
-  --low:#4cd98a; --lowbg:#12331f; --infobg:#14294d; --info:#8db8ff;
-}
+:root{--ink:#1f2a37;--soft:#7b8794;--mut:#4b5a6a;--line:#d5dbe3;--line2:#e6eaf0;--bg2:#f4f6f9;--blue:#1a5aa6;--amber:#b8770f;--red:#c7451f;--green:#2e7d32;--mild:#8a9a1e}
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+body{margin:0;background:#fff;color:var(--ink);font:13px/1.5 "Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif}
 button{font:inherit;color:inherit}
 .num{font-variant-numeric:tabular-nums}
-.ehr{display:flex;gap:2px;align-items:flex-end;background:#cfd6de;color:#4a5665;font-size:12px;padding:5px 12px 0}
+.ehr{display:flex;gap:2px;align-items:flex-end;background:#dfe4ea;color:#4b5a6a;font-size:12px;padding:5px 12px 0}
 .ehr b{margin-right:14px;padding-bottom:5px;font-weight:600}
-.ehr span{padding:4px 12px;border-radius:6px 6px 0 0;background:#bcc5cf}
-.ehr span.on{background:#0c1428;color:#fff;font-weight:600}
-.top{display:flex;align-items:center;gap:12px;padding:9px 18px;border-bottom:1px solid var(--line);background:#0c1428;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:18px;letter-spacing:.02em}
-.logo small{font-weight:500;color:var(--soft);font-size:13px;letter-spacing:0}
-.pill{font-size:12px;padding:3px 10px;border-radius:20px;border:1px solid var(--line);color:var(--soft)}
+.ehr span{padding:4px 12px;border-radius:5px 5px 0 0;background:#cbd2da}
+.ehr span.on{background:#fff;color:var(--ink);font-weight:600}
+.top{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);background:#fff;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;margin-right:6px}
+.pill{font-size:12.5px;padding:4px 11px;border-radius:9999px;border:1px solid var(--line);color:var(--mut);background:var(--bg2);white-space:nowrap}
+.pill.ok{background:#e5f3e7;border-color:#b7dfbb;color:var(--green)}
+.pill.ok::before,.pill.bl::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:6px}
+.pill.bl::before{background:var(--blue)}
 .sp{flex:1}
-.seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.seg button{background:none;border:0;padding:7px 14px;font-size:13.5px;color:var(--soft);cursor:pointer;font-weight:600}
-.seg button.on{background:var(--panel2);color:var(--ink)}
-.seg button .ct{background:var(--highbg);color:var(--high);border-radius:10px;padding:0 7px;font-size:11.5px;margin-left:6px}
-.play{background:var(--brand);color:#04201c;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer}
-.play.stop{background:var(--highbg);color:var(--high)}
+.seg,.sw{display:flex;background:var(--bg2);border:1px solid var(--line);border-radius:5px;padding:3px}
+.seg button,.sw button{background:none;border:0;padding:5px 12px;border-radius:3px;cursor:pointer;color:var(--mut)}
+.seg button.on,.sw button.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:0 0 0 1px var(--line)}
+.ct{background:#fdecea;color:var(--red);border-radius:9px;padding:0 6px;font-size:11px;margin-left:6px;font-weight:700}
+.play{background:var(--blue);color:#fff;border:0;border-radius:5px;padding:7px 13px;font-weight:600;cursor:pointer}
+.play.stop{background:var(--red)}
 .page{display:none}
 .page.on{display:grid}
-#chart{grid-template-columns:250px minmax(0,1fr);min-height:calc(100% - 82px)}
-#attn{display:none;padding:18px 22px 60px}
+#chart{grid-template-columns:300px minmax(0,1fr);gap:12px;padding:12px;align-items:start}
+#attn{display:none;padding:14px 16px 50px}
 #attn.on{display:block}
-.side{border-right:1px solid var(--line);padding:14px 10px;background:#0c1428}
-.h4,.box h3{margin:0 0 10px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);font-weight:600}
-.side .h4{margin:4px 6px 8px}
-.pt{padding:9px 10px;border-radius:10px;border:1px solid transparent;cursor:pointer;margin-bottom:5px}
-.pt:hover{background:var(--panel)}
-.pt.on{background:var(--panel);border-color:var(--brand)}
-.pt .n{font-weight:600;display:flex;justify-content:space-between;gap:8px;align-items:center}
-.pt .d{font-size:12.5px;color:var(--soft);margin-top:2px}
-.cov{margin:16px 2px 0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}
-.bar{height:8px;border-radius:5px;background:#3a1820;overflow:hidden;margin:6px 0}
-.bar i{display:block;height:100%;width:82%;background:linear-gradient(90deg,var(--low),var(--brand))}
-.srcl{display:flex;justify-content:space-between;font-size:12.5px;padding:4px 0;border-top:1px solid var(--line)}
-.srcl span{color:var(--soft)}
-.main{padding:14px 22px 60px;min-width:0}
-.ban{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:12px}
-.ban .r1{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline}
-.ban .nm{font-size:19px;font-weight:700}
-.ban .r1 span,.ban .r2 span{color:var(--soft);font-size:13.5px}
-.ban .r1 .nm{color:var(--ink)}
-.ban .r2{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
-.ban b{color:var(--ink);font-weight:600}
-.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:14px;overflow-x:auto}
-.tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:9px 13px;color:var(--soft);cursor:pointer;font-weight:600;white-space:nowrap}
-.tabs button.on{color:var(--ink);border-bottom-color:var(--brand)}
-.view{display:none}
-.view.on{display:block}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;grid-column:span 6;min-width:0;transition:box-shadow .3s,border-color .3s}
-.box.w{grid-column:span 12}
-.box.s4{grid-column:span 4}
-.glow{border-color:var(--brand) !important;box-shadow:0 0 0 3px rgba(53,208,186,.28)}
-.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap}
-.tag.high{background:var(--highbg);color:var(--high)}
-.tag.mid{background:var(--midbg);color:var(--mid)}
-.tag.low{background:var(--lowbg);color:var(--low)}
-.tag.info{background:var(--infobg);color:var(--info)}
-.tag.na{background:var(--panel2);color:var(--soft)}
-.row{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+.card{background:#fff;border:1px solid var(--line);border-radius:7px;padding:10px 12px;margin-bottom:10px}
+.card h4,.k{margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+.tiny{font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--soft)}
+.snap .name{font-size:17px;font-weight:800}
+.snap .sub{color:var(--mut)}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--mut)}
+.bms{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.bm{background:var(--bg2);border:1px solid var(--line2);border-radius:5px;padding:6px 8px}
+.bm .k{font-weight:400;font-size:10.5px;margin:0}
+.bm b{font-size:14px}
+.two2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.nav2{background:#fff;border:1px solid var(--line);border-radius:7px;padding:9px 11px;text-align:left;cursor:pointer}
+.nav2 b{display:block;font-size:13.5px}
+.nav2 span{color:var(--soft);font-size:12px}
+.nav2.on{background:#e8f0fa;border-color:var(--blue)}
+.organ-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-top:1px solid var(--line2)}
+.organ-row:first-of-type{border-top:0}
+.organ-row .dot{width:8px;height:8px;border-radius:50%}
+.organ-row .name{flex:1}
+.organ-row .lbl{font-size:11px;font-weight:700}
+.organ-row .sco{width:24px;text-align:right;color:var(--mut)}
+.c-healthy{color:var(--green)}.c-mild{color:var(--mild)}.c-mod{color:var(--amber)}
+.b-healthy{background:var(--green)}.b-mild{background:var(--mild)}.b-mod{background:var(--amber)}
+.li{padding:5px 0;border-top:1px solid var(--line2)}
+.li:first-of-type{border-top:0}
+.li small{display:block;color:var(--soft)}
+.bar{height:7px;border-radius:4px;background:#fdecea;overflow:hidden;margin:4px 0 6px}
+.bar i{display:block;height:100%;width:82%;background:var(--green)}
+.main{min-width:0}
+.wshead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:10px}
+.wshead h2{margin:0;font-size:18px;font-weight:800}
+.ws{display:none}.ws.on{display:block}
+.brief{border:1px solid var(--line);border-radius:7px;padding:12px}
+.brief .bt{font-weight:700;font-size:14px;margin-bottom:2px}
+.brief .bs{color:var(--soft);margin-bottom:10px}
+.secs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sec{background:var(--bg2);border:1px solid var(--line2);border-radius:5px;padding:9px 11px}
+.sec .k{font-size:10.5px;color:var(--blue);margin-bottom:3px}
+.sec.gap .k{color:var(--amber)}.sec.saf .k{color:var(--red)}
+.chk{color:var(--green);margin:10px 0 2px;font-size:12.5px}
+.lnk{color:var(--mut);margin:2px 0 0;font-size:12.5px}
+.meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px;color:var(--soft);font-size:12px}
+.meta span.c{border:1px solid var(--line);border-radius:9999px;padding:1px 9px;background:#fff;color:var(--mut)}
+.twin{display:grid;grid-template-columns:270px minmax(0,1fr);gap:12px;align-items:start}
+.ov{border-left:3px solid var(--blue);padding-left:10px;font-weight:700;font-size:14px;line-height:1.4}
+.ochips{display:flex;flex-wrap:wrap;gap:6px}
+.ochip{border:1px solid var(--line);border-radius:9999px;padding:2px 9px;font-size:12px;display:inline-flex;gap:5px;align-items:center}
+.ochip i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.alert{border-left:3px solid var(--mild);padding:2px 0 2px 9px;margin-bottom:9px}
+.alert.mod{border-left-color:var(--amber)}
+.alert b{display:block}
+.tright{border:1px solid var(--line);border-radius:7px;padding:4px 12px 14px}
+.tabs{display:flex;flex-wrap:wrap;gap:0 2px;border-bottom:1px solid var(--line2);margin-bottom:12px}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:9px 10px 7px;color:var(--mut);cursor:pointer;font-weight:600;white-space:nowrap}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--blue)}
+.ct2{background:#fdf3dc;color:var(--amber);border-radius:9px;padding:0 6px;font-size:11px;margin-left:5px}
+.view{display:none}.view.on{display:block}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
+.box{background:#fff;border:1px solid var(--line2);border-radius:7px;padding:11px 13px;grid-column:span 6;min-width:0;transition:box-shadow .3s,border-color .3s}
+.box.w{grid-column:span 12}.box.s4{grid-column:span 4}
+.box h3{margin:0 0 8px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.glow{border-color:var(--blue) !important;box-shadow:0 0 0 3px rgba(26,90,166,.22)}
+.tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9999px;font-weight:700;white-space:nowrap}
+.tag.high{background:#fdecea;color:var(--red)}
+.tag.mid{background:#fdf3dc;color:var(--amber)}
+.tag.low{background:#e5f3e7;color:var(--green)}
+.tag.info{background:#e8f0fa;color:var(--blue)}
+.tag.na{background:var(--bg2);color:var(--soft)}
+.vb,.fb{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;border-radius:9999px;padding:1px 9px;border:1px solid #b7dfbb;color:var(--green);background:#e5f3e7;white-space:nowrap}
+.vb::before{content:"\2713"}
+.built{font-size:12px;color:var(--soft);font-weight:400}
+.loinc{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;color:var(--soft);font-weight:400}
+.flag{margin-left:auto;font-size:12px;color:var(--soft);font-weight:400;cursor:pointer;white-space:nowrap}
+.flag::before{content:"\2691  "}
+.lab{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);font-weight:700;margin:10px 0 4px}
+.narr{font-size:13.5px;line-height:1.6}
+.narr p{margin:0 0 8px}
+.row{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line2)}
 .row:first-of-type{border-top:0;padding-top:0}
 .row .m{flex:1;min-width:0}
 .row .t{font-weight:600}
-.s{color:var(--soft);font-size:13px}
-.ref{color:var(--brand);border-bottom:1px dotted var(--brand);cursor:pointer}
-.btn{border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px 12px;font-size:13.5px;cursor:pointer}
-.btn:hover{border-color:var(--brand)}
-.btn.sel{background:var(--low);border-color:var(--low);color:#04200f;font-weight:700}
-.btn.pri{background:var(--brand);border-color:var(--brand);color:#04201c;font-weight:700}
-.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.note{font-size:12.5px;color:var(--soft);margin-top:10px}
-.story{font-size:16px;line-height:1.55}
-.story p{margin:0 0 8px}
-.prob{padding:8px 0;border-top:1px solid var(--line)}
+.s{color:var(--mut);font-size:12.5px}
+.ref{color:var(--blue);text-decoration:underline;text-decoration-color:#a9c3e4;text-underline-offset:2px;cursor:pointer}
+.btn{border:1px solid var(--line);background:#fff;border-radius:5px;padding:4px 11px;font-size:12.5px;cursor:pointer}
+.btn:hover{border-color:var(--blue)}
+.btn.sel{background:var(--green);border-color:var(--green);color:#fff;font-weight:600}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:600}
+.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+.note{font-size:12px;color:var(--soft);margin-top:8px}
+.story{font-size:13.5px;line-height:1.55}
+.story p{margin:0 0 6px}
+.prob{padding:7px 0;border-top:1px solid var(--line2)}
 .prob:first-of-type{border-top:0;padding-top:0}
 .prob .ttl{font-weight:600;display:flex;justify-content:space-between;gap:10px}
-.prob ul{margin:4px 0 0;padding-left:20px;font-size:13.5px;color:#c9d4ea}
-.prob li{margin-bottom:2px}
-table{width:100%;border-collapse:collapse;font-size:13.5px}
-th,td{text-align:left;padding:7px 8px;border-top:1px solid var(--line);vertical-align:top}
-th{border-top:0;color:var(--soft);font-weight:600;font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.prob .ttl .tag{align-self:flex-start}
+.prob ul{margin:3px 0 0;padding-left:20px;color:var(--mut)}
+.prob li{margin-bottom:1px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:6px 8px;border-top:1px solid var(--line2);vertical-align:top}
+th{border-top:0;color:var(--soft);font-weight:700;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
 .scroll{overflow-x:auto}
 .labt{min-width:820px}
 .labt th,.labt td{white-space:nowrap;text-align:right}
-.labt th:first-child,.labt td:first-child{text-align:left;position:sticky;left:0;background:var(--panel)}
-.labt .grp td{background:var(--deep);font-weight:600;color:var(--soft);text-align:left}
-.labt .ab{color:var(--high);font-weight:700}
+.labt th:first-child,.labt td:first-child{text-align:left;position:sticky;left:0;background:#fff}
+.labt .grp td{background:var(--bg2);font-weight:700;color:var(--mut);text-align:left}
+.labt .ab{color:var(--red);font-weight:700}
 .labt .u{color:var(--soft);text-align:left}
-.labt th .tag{display:block;margin-top:2px;font-size:10px;padding:1px 5px}
-/* trajectory */
-.tj{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:18px;align-items:start}
-
-.tj .kv{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:13.5px;margin:8px 0}
-.tj .kv span:nth-child(odd){color:var(--soft)}
-.tj p{margin:6px 0 0}
+.labt th .tag{display:block;margin-top:2px;font-size:9.5px;padding:0 5px}
+.tj{display:grid;grid-template-columns:1fr;gap:10px}
+.tj>div:last-child{order:-1;max-width:680px}
+.tj .kv,.kvs{display:grid;grid-template-columns:auto 1fr;gap:2px 12px}
+.tj .kv span:nth-child(odd),.kvs span:nth-child(odd){color:var(--soft)}
+.kvs{gap:5px 16px}
 svg.ch{width:100%;height:auto;display:block}
-svg.ch text{font-size:10.5px;fill:#93a3c2}
-svg.ch .v{fill:#e8eefb;font-weight:600}
-/* scores */
-.sc .big{font-size:26px;font-weight:700;line-height:1.15;margin:2px 0}
-.sc .big small{font-size:13px;font-weight:500;color:var(--soft)}
-.sc .in{font-size:13px;color:#c9d4ea;margin:8px 0 0;padding-left:18px}
-.sc .in li{margin-bottom:2px}
-.sc.off{opacity:.62}
-.pick{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 10px;color:var(--ink);font:inherit}
-.notebox{background:var(--deep);border-radius:9px;padding:10px 12px;font-size:14px}
-.notebox p{margin:0 0 8px}
-.done{display:none;background:var(--lowbg);color:var(--low);border-radius:8px;padding:10px 12px;margin-top:10px;font-weight:600}
+svg.ch text{font-size:10.5px;fill:#7b8794;font-family:ui-monospace,Menlo,Consolas,monospace}
+svg.ch .v{fill:#1f2a37;font-weight:700}
+.sc .big{font-size:22px;font-weight:800;line-height:1.15;margin:2px 0}
+.sc .big small{font-size:12.5px;font-weight:400;color:var(--soft)}
+.sc .in{margin:6px 0 0;padding-left:18px;color:var(--mut)}
+.sc.off{background:var(--bg2)}
+.sc.off .big{color:var(--soft)}
+.pick{background:#fff;border:1px solid var(--line);border-radius:5px;padding:5px 8px;color:var(--ink);font:inherit}
+.notebox{background:var(--bg2);border:1px solid var(--line2);border-radius:5px;padding:9px 11px}
+.notebox p{margin:0 0 7px}
+.done{display:none;background:#e5f3e7;color:var(--green);border-radius:5px;padding:8px 11px;margin-top:9px;font-weight:600}
 .done.on{display:block}
-/* chat */
-.chat{max-width:860px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
-.chip{border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:7px 13px;font-size:13.5px;cursor:pointer}
-.chip:hover{border-color:var(--brand)}
-.log{display:flex;flex-direction:column;gap:12px;min-height:220px}
-.q{align-self:flex-end;background:var(--brand2);color:#fff;border-radius:14px 14px 2px 14px;padding:9px 14px;max-width:80%}
-.ans{background:var(--panel);border:1px solid var(--line);border-radius:14px 14px 14px 2px;padding:12px 16px;max-width:94%}
-.ans .lead{font-size:16px;font-weight:600;margin:0 0 6px}
-.ans p{margin:0 0 6px}
-.ans ul{margin:4px 0 6px;padding-left:20px}
-.ans li{margin-bottom:3px}
+.trend td{vertical-align:middle}.trend svg{display:block}
+.up,.dn{color:var(--red);font-weight:700}.ok{color:var(--green);font-weight:700}
+.tlv div{padding:5px 0 5px 12px;border-left:2px solid var(--line)}
+.tlv div b{display:inline-block;min-width:92px;color:var(--mut);font-weight:600;font-variant-numeric:tabular-nums}
+.tlv .yr{border-left-color:var(--blue);font-weight:700;color:var(--blue);padding-top:10px}
+.fd{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:4px 20px;margin-top:4px}
+.fd ul{margin:0;padding-left:18px;color:var(--mut)}
+.fitem{padding:11px 0;border-top:1px solid var(--line2)}
+.fitem:first-of-type{border-top:0;padding-top:2px}
+.fitem .ft{font-size:13.5px;font-weight:700;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.chip{border:1px solid var(--line);background:#fff;border-radius:9999px;padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--mut)}
+.chip:hover{border-color:var(--blue);color:var(--blue)}
+.log{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.q{align-self:flex-end;background:#e8f0fa;border:1px solid #c9dbf0;border-radius:10px 10px 2px 10px;padding:7px 12px;max-width:80%}
+.ans{background:#fff;border:1px solid var(--line);border-radius:10px 10px 10px 2px;padding:10px 13px;max-width:94%}
+.ans .lead{font-size:14px;font-weight:700;margin:0 0 5px}
+.ans p{margin:0 0 5px}
+.ans ul{margin:3px 0 5px;padding-left:20px}
 .fade{opacity:0;transform:translateY(4px);transition:opacity .35s,transform .35s}
 .fade.in{opacity:1;transform:none}
-.from{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.from{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
 .from .tag{cursor:pointer}
 .dots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--soft);margin-right:4px;animation:bl 1s infinite}
 .dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
 @keyframes bl{0%,100%{opacity:.25}50%{opacity:1}}
-.ask{display:flex;gap:8px;margin-top:16px;position:sticky;bottom:12px}
-.ask input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 14px;color:var(--ink);font:inherit;outline:none}
-.ask input:focus{border-color:var(--brand)}
-/* attention */
-h1{font-size:21px;margin:0 0 2px}
-.lede{color:var(--soft);margin:0 0 14px;max-width:780px}
-.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
-.tile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.tile .k{font-size:26px;font-weight:700;line-height:1.1}
-.tile .l{font-size:13px;color:var(--soft)}
-.filt{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.filt button{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:5px 12px;font-size:13px;cursor:pointer;color:var(--soft)}
-.filt button.on{border-color:var(--brand);color:var(--brand)}
+.ask{display:flex;gap:8px;margin-top:4px}
+.ask input{flex:1;background:#fff;border:1px solid var(--line);border-radius:7px;padding:10px 12px;color:var(--ink);font:inherit;outline:none;box-shadow:0 2px 8px rgba(31,42,55,.06)}
+.ask input:focus{border-color:var(--blue)}
+.ask button{background:var(--blue);color:#fff;border:0;border-radius:7px;padding:0 16px;font-size:15px;cursor:pointer}
+h1{font-size:18px;font-weight:800;margin:0 0 2px}
+.lede{color:var(--mut);margin:0 0 12px;max-width:780px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.tile{background:var(--bg2);border:1px solid var(--line2);border-radius:7px;padding:10px 12px}
+.tile .kk{font-size:22px;font-weight:800;line-height:1.1}
+.tile .l{color:var(--mut)}
+.filt{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.filt button{border:1px solid var(--line);background:#fff;border-radius:9999px;padding:4px 12px;cursor:pointer;color:var(--mut)}
+.filt button.on{border-color:var(--blue);color:var(--blue);background:#e8f0fa}
 tr.g{cursor:pointer}
-tr.g:hover td{background:var(--panel2)}
+tr.g:hover td{background:var(--bg2)}
 #atab td:first-child{white-space:nowrap}
-#drawer{position:fixed;right:16px;bottom:16px;width:370px;max-width:calc(100% - 32px);background:#0d1630;border:1px solid var(--brand);border-radius:12px;padding:14px 16px;display:none;z-index:30;box-shadow:0 10px 40px rgba(0,0,0,.55)}
+#drawer{position:fixed;right:16px;bottom:16px;width:360px;max-width:calc(100% - 32px);background:#fff;border:1px solid var(--blue);border-radius:7px;padding:12px 14px;display:none;z-index:30;box-shadow:0 10px 30px rgba(31,42,55,.18)}
 #drawer.on{display:block}
-#drawer h5{margin:0 0 6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
-#drawer .x{position:absolute;top:8px;right:10px;background:none;border:0;color:var(--soft);cursor:pointer;font-size:18px}
-#drawer .w{font-weight:600;margin-bottom:4px;padding-right:14px}
-#drawer .o{font-size:13px;color:var(--soft)}
-.foot{font-size:12px;color:var(--soft);margin-top:22px}
-@media(max-width:1000px){
+#drawer h5{margin:0 0 5px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
+#drawer .x{position:absolute;top:6px;right:9px;background:none;border:0;color:var(--soft);cursor:pointer;font-size:18px}
+#drawer .w{font-weight:600;margin-bottom:3px;padding-right:14px}
+#drawer .o{font-size:12.5px;color:var(--mut)}
+.foot{font-size:11.5px;color:var(--soft);margin-top:16px}
+@media(max-width:1100px){
   #chart{grid-template-columns:1fr}
-  .side{border-right:0;border-bottom:1px solid var(--line)}
+  .twin,.secs,.tj,.fd{grid-template-columns:1fr}
   .box,.box.s4{grid-column:span 12}
   .tiles{grid-template-columns:repeat(2,1fr)}
-  .tj{grid-template-columns:1fr}
 }
-
-/* ===== matched to the March app screenshots ===== */
-:root{--bg:#0b1320;--panel:#18222f;--panel2:#1f2b3b;--deep:#111a26;--line:#2c3a4e;--brand:#2dd4bf;--gold:#e3b341;--goldbg:#2f2a12}
-body{background:var(--bg)}
-.top,.side{background:#0d1622}
-.tabrow{display:flex;gap:10px;align-items:flex-start;margin-bottom:14px}
-.tabs{border-bottom:0;flex-wrap:wrap;gap:6px;margin-bottom:0;flex:1;overflow:visible}
-.tabs button{border:1px solid transparent;border-radius:22px;padding:7px 15px;font-weight:600;color:#c3cede}
-.tabs button.on{background:#0e1622;border-color:#3d4d66;color:#fff}
-.tools{display:flex;gap:8px;flex:0 0 auto}
-.tools button{background:#0e1622;border:1px solid #3d4d66;border-radius:10px;padding:7px 12px;font-weight:600;cursor:pointer;font-size:13.5px}
-.box{border-radius:14px;border-color:#2c3a4e}
-.box h3{font-size:15.5px;letter-spacing:0;text-transform:none;color:var(--ink);font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.box.tw h3::before{content:"\2726";color:var(--brand);font-size:15px}
-.lab{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#aab6c9;font-weight:700;margin:12px 0 6px}
-.vb,.fb{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;border-radius:20px;padding:2px 10px;border:1px solid var(--brand);color:var(--brand);background:rgba(45,212,191,.08);white-space:nowrap}
-.vb::before{content:"\2713"}
-.fb{border-color:var(--gold);color:var(--gold);background:var(--goldbg)}
-.fb::before{content:"!"}
-.built{font-size:12.5px;color:var(--soft);font-weight:500}
-.flag{margin-left:auto;font-size:13px;color:#c3cede;font-weight:500;cursor:pointer;white-space:nowrap}
-.flag::before{content:"\2691  "}
-.narr{border-left:3px solid var(--brand);padding:2px 0 2px 14px;font-size:15px;line-height:1.6;font-weight:500}
-.narr p{margin:0 0 8px}
-details.how{background:var(--deep);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-top:12px;font-size:13px}
-details.how summary{cursor:pointer;font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:11.5px;color:#c3cede}
-details.how summary span{letter-spacing:0;text-transform:none;font-weight:600;margin-left:8px}
-details.how ul{margin:8px 0 2px;padding-left:18px;color:#c9d4ea}
-.gold{margin:14px 2px 0;background:var(--goldbg);border:1px solid var(--gold);border-radius:12px;padding:12px}
-.gold .h4{color:var(--gold);margin:0 0 8px}
-.gold .o{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:5px 0;border-top:1px solid rgba(227,179,65,.25);font-size:13.5px}
-.gold .o:first-of-type{border-top:0}
-.gold .sc0{font-weight:700;font-variant-numeric:tabular-nums}
-.trend td{vertical-align:middle}
-.trend svg{display:block}
-.up{color:var(--high);font-weight:700}.dn{color:var(--high);font-weight:700}.ok{color:var(--low);font-weight:700}
-.tlv div{padding:7px 0 7px 14px;border-left:3px solid var(--line);font-size:14px}
-.tlv div b{display:inline-block;min-width:104px;color:#aab6c9;font-weight:600;font-variant-numeric:tabular-nums}
-.tlv .yr{border-left-color:var(--brand);font-weight:700;color:var(--brand);padding-top:12px}
-.kvs{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:14px}
-.kvs span:nth-child(odd){color:var(--soft)}
-.ct2{background:var(--goldbg);color:var(--gold);border:1px solid var(--gold);border-radius:10px;padding:0 7px;font-size:11.5px;margin-left:7px}
-.fd{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:6px 22px;margin-top:6px}
-.fd ul{margin:0;padding-left:18px;font-size:13.5px;color:#c9d4ea}
-.fd li{margin-bottom:2px}
-.fd .lab{margin:6px 0 4px}
-.fitem{padding:14px 0;border-top:1px solid var(--line)}
-.fitem:first-of-type{border-top:0;padding-top:4px}
-.fitem .ft{font-size:15px;font-weight:700;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-@media(max-width:1000px){.fd{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="ehr"><b>Your EHR</b><span>Schedule</span><span>Chart</span><span>Orders</span><span>Results</span><span>Messages</span><span class="on">March Twin</span></div>
+<div class="ehr"><b>Your EHR</b><span>Chart Review</span><span>Results Review</span><span>Notes</span><span>Problem List</span><span>Medications</span><span>Orders</span><span class="on">March AI</span></div>
 <div class="top">
-  <div class="logo">
-    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="7" fill="#35d0ba"/><path d="M4 14h4l2-6 3 11 2.5-8 1.5 3h5" fill="none" stroke="#04201c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    March <small>Twin</small>
-  </div>
-  <span class="pill">Demo. Synthetic patients and data.</span>
+  <div class="logo"><svg width="22" height="22" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="#1a5aa6"/><path d="M5 14h4l2-6 3 11 2.5-8 1.5 3h4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>March</div>
+  <span class="pill">Full history</span>
+  <span class="pill ok">Digital twin ready · built 23:06 last night</span>
+  <span class="pill bl">Demo EHR · FHIR R4 · SMART EHR launch</span>
+  <span class="pill">Demo data</span>
   <div class="sp"></div>
   <div class="seg" id="pages"><button class="on" data-p="chart">Patient</button><button data-p="attn">Patients needing attention<span class="ct">38</span></button></div>
   <button class="play" id="play" onclick="tour()">Play guided demo</button>
 </div>
 
-<!-- ================= PATIENT ================= -->
 <div class="page on" id="chart">
-  <aside class="side">
-    <div class="h4">Clinic schedule, 11/16/2026</div>
-    <div class="pt on"><div class="n">Mr. A, 62 M <span class="tag high">3 to decide</span></div><div class="d">08:00 Follow up. eGFR falling.</div></div>
-    <div class="pt" onclick="other()"><div class="n">Mrs. B, 84 F <span class="tag mid">1 to decide</span></div><div class="d">08:20 Aortic stenosis. TTE 14 months old.</div></div>
-    <div class="pt" onclick="other()"><div class="n">Mr. C, 71 M <span class="tag low">No change</span></div><div class="d">08:40 Atrial fibrillation. Stable since 06/2026.</div></div>
-    <div class="pt" onclick="other()"><div class="n">Ms. D, 58 F <span class="tag info">New</span></div><div class="d">09:00 Chest pain. Records from 2 hospitals.</div></div>
-    <div class="gold num" id="gold">
-      <div class="h4">Organ health, 11/16/2026</div>
-      <div class="o"><span>Kidney</span><span class="tag high">High, worsening</span></div>
-      <div class="o"><span>Heart</span><span class="tag high">High, stable</span></div>
-      <div class="o"><span>Metabolic</span><span class="tag mid">Intermediate</span></div>
-      <div class="o"><span>Liver, lung, brain</span><span class="tag low">Low</span></div>
+  <aside>
+    <div class="card snap">
+      <div class="name">Mr. A</div>
+      <div class="sub">Male · 62 years · DOB 03/22/1964</div>
+      <div class="mono">MRN DEMO-004829</div>
+      <div class="sub" style="margin-top:4px">Today 8:00 AM, cardiology follow up. Last visit 08/12/2026.</div>
+      <h4 style="margin-top:10px">Latest body measurements</h4>
+      <div class="bms num"><div class="bm"><div class="k">Height</div><b>178 cm</b></div><div class="bm"><div class="k">Weight</div><b>94.3 kg</b></div><div class="bm"><div class="k">BMI</div><b>29.8</b></div></div>
+      <h4 style="margin-top:10px">Vitals, 11/16/2026 07:52</h4>
+      <div class="bms num"><div class="bm"><div class="k">BP mmHg</div><b>148/86</b></div><div class="bm"><div class="k">HR bpm</div><b>64</b></div><div class="bm"><div class="k">SpO2</div><b>98%</b></div></div>
     </div>
-    <div class="cov">
-      <div class="h4" style="margin:0 0 2px">Twin data completeness</div>
+    <div class="two2"><button class="nav2" id="nb-twin" onclick="stopTour();view('narr')"><b>Digital twin</b><span>Explore virtual patient model</span></button><button class="nav2" id="nb-tr" onclick="stopTour();view('traj')"><b>Trends</b><span>View longitudinal trends</span></button></div>
+    <div class="card num">
+      <h4>Organ health</h4>
+      <div class="organ-row"><i class="dot b-mod"></i><span class="name">Kidney</span><span class="lbl c-mod">Moderate</span><span class="sco">52</span></div>
+      <div class="organ-row"><i class="dot b-mild"></i><span class="name">Heart</span><span class="lbl c-mild">Mild</span><span class="sco">68</span></div>
+      <div class="organ-row"><i class="dot b-mild"></i><span class="name">Pancreas</span><span class="lbl c-mild">Mild</span><span class="sco">72</span></div>
+      <div class="organ-row"><i class="dot b-healthy"></i><span class="name">Brain</span><span class="lbl c-healthy">Healthy</span><span class="sco">88</span></div>
+      <div class="organ-row"><i class="dot b-healthy"></i><span class="name">Liver</span><span class="lbl c-healthy">Healthy</span><span class="sco">90</span></div>
+      <div class="organ-row"><i class="dot b-healthy"></i><span class="name">Lung</span><span class="lbl c-healthy">Healthy</span><span class="sco">92</span></div>
+      <div class="note">4 not scored: Thyroid, Adrenal, Pituitary, Gonad (no results on file)</div>
+    </div>
+    <div class="card">
+      <h4>Active conditions · 6</h4>
+      <div class="li">Atherosclerotic heart disease of native coronary artery<small class="mono">I25.10 · 2019</small></div>
+      <div class="li">Old myocardial infarction<small class="mono">I25.2 · 2019</small></div>
+      <div class="li">Type 2 diabetes mellitus with diabetic chronic kidney disease<small class="mono">E11.22 · 2016</small></div>
+      <div class="li">Chronic kidney disease, stage 3b<small class="mono">N18.32 · 2026</small></div>
+      <div class="li">Essential (primary) hypertension<small class="mono">I10 · 2016</small></div>
+      <div class="li">Hyperlipidemia, unspecified<small class="mono">E78.5 · 2019</small></div>
+    </div>
+    <div class="card">
+      <h4>Active medications · 7</h4>
+      <div class="li">aspirin 81 mg tablet<small>2019</small></div>
+      <div class="li">atorvastatin 40 mg tablet<small>2019</small></div>
+      <div class="li">metoprolol succinate 50 mg tablet<small>2019</small></div>
+      <div class="li">lisinopril 20 mg tablet<small>2016</small></div>
+      <div class="li">amlodipine 5 mg tablet<small>2025</small></div>
+      <div class="li">metformin 1,000 mg tablet<small>2016</small></div>
+      <div class="li">naproxen 500 mg tablet <span class="tag info">Outside</span><small>10/20/2026</small></div>
+    </div>
+    <div class="card"><h4>Allergies · 0</h4><div class="li">No known drug allergies</div></div>
+    <div class="card">
+      <h4>Twin data completeness</h4>
       <div class="bar"><i></i></div>
       <div class="s">82%. Missing: UACR within 12 months, TTE within 24 months.</div>
-      <div style="margin-top:8px">
-        <div class="srcl"><b>This health system</b><span>2015 to 2026</span></div>
-        <div class="srcl"><b>Outside health systems</b><span>2</span></div>
-        <div class="srcl"><b>Pharmacy fill history</b><span>All pharmacies</span></div>
-        <div class="srcl"><b>Home BP device</b><span>22 readings</span></div>
-      </div>
+      <div class="note">Sources: this health system 2015 to 2026, 2 outside health systems, pharmacy fills, home BP device.</div>
     </div>
   </aside>
 
   <main class="main">
-    <div class="ban" id="ban">
-      <div class="r1"><span class="nm">Mr. A</span><span><b>62 y M</b></span><span>DOB <b>03/22/1964</b></span><span>MRN <b>DEMO-004829</b></span><span>Visit <b>11/16/2026 08:00</b>, cardiology follow up</span><span>Last visit <b>08/12/2026</b></span><span>Allergies <b>NKDA</b></span></div>
-      <div class="r2 num"><span>Vitals 11/16/2026 07:52</span><span>BP <b>148/86 mmHg</b></span><span>HR <b>64 bpm</b></span><span>SpO2 <b>98% RA</b></span><span>Temp <b>36.7 °C</b></span><span>Wt <b>94.3 kg</b></span><span>BMI <b>29.8 kg/m²</b></span></div>
-    </div>
-    <div class="tabrow">
-    <div class="tabs" id="tabs">
-      <button class="on" data-v="first">What to know first</button>
-      <button data-v="found">Findings and care gaps<span class="ct2">11</span></button>
-      <button data-v="narr">Trajectory narrative</button>
-      <button data-v="traj">Condition trajectories</button>
-      <button data-v="since">Since last visit</button>
-      <button data-v="risk">Risk scores</button>
-      <button data-v="labs">Labs</button>
-      <button data-v="tline">Timeline</button>
-      <button data-v="fam">Family history</button>
-      <button data-v="soc">Social context</button>
-      <button data-v="vnote">Visit note</button>
-      <button data-v="ord">Orders and follow up</button>
-      <button data-v="ask">Ask the Twin</button>
-    </div>
-    <div class="tools"><button type="button">&#8681; Download</button><button type="button">&#8635; Refresh</button></div>
+    <div class="wshead"><div><div class="tiny" id="wst">CLINICAL WORKSPACE</div><h2 id="wsh">Primary output and reasoning</h2></div><div class="sw" id="sw"><button class="on" data-w="chat">Chat</button><button data-w="twin">Digital twin</button></div></div>
+
+    <div class="ws on" id="w-chat">
+      <div class="brief" id="brief">
+        <div class="bt">Pre-visit briefing for today's 8:00 AM follow up visit</div>
+        <div class="bs">&#10003; Reviewed chart over FHIR · 212 resources · built 23:06 last night</div>
+        <div class="secs num">
+          <div class="sec"><div class="k">Diagnosis</div>Chronic kidney disease G3b A2 with <span class="ref" data-s="egfr">eGFR 38 mL/min/1.73 m²</span> (was 44 on 08/12/2026) and <span class="ref" data-s="uacr">UACR 68 mg/g</span>. Coronary artery disease after anterior STEMI (03/04/2019) with DES to LAD and RCA, <span class="ref" data-s="echo">LVEF 50%</span>, no angina. Type 2 diabetes mellitus with HbA1c 7.4%. Essential hypertension above goal at 148/86 mmHg. <span class="ref" data-s="ldl">LDL-C 92 mg/dL</span> on atorvastatin 40 mg.</div>
+          <div class="sec"><div class="k">Reasoning</div>eGFR fell at every draw for 4 years (62, 55, 49, 48, 47, 46, 44, 38): about 5 per year until 08/2026, then 6 points in 11 weeks. <span class="ref" data-s="naproxen">Naproxen 500 mg BID</span> was started at an outside urgent care on 10/20/2026 while on lisinopril 20 mg. <span class="ref" data-s="bp">Home BP mean</span> rose 138/82 to 146/86 mmHg over the same weeks. Potassium 4.5 → 4.8 mmol/L and <span class="ref" data-s="hgb">hemoglobin</span> 13.1 → 12.9 g/dL moved with it. The timing fits an NSAID effect on top of diabetic and hypertensive kidney disease.</div>
+          <div class="sec"><div class="k">Medications</div>Aspirin 81 mg, atorvastatin 40 mg, metoprolol succinate 50 mg, lisinopril 20 mg, amlodipine 5 mg (since 03/2025), all filled 10/02/2026. <span class="ref" data-s="metformin">Metformin 1,000 mg BID</span>, above the 1,000 mg/day limit for eGFR 30 to 44. Naproxen 500 mg BID, outside prescription, filled 10/20/2026. <span class="ref" data-s="sglt2">No SGLT2 inhibitor</span> prescribed or filled, 2015 to 2026. No known drug allergies.</div>
+          <div class="sec"><div class="k">Monitoring</div>BMP 1 to 2 weeks after any change to NSAID, ACE inhibitor, or SGLT2 inhibitor. UACR yearly, last 09/15/2025. Lipid panel 6 to 8 weeks after a statin change. HbA1c every 3 to 6 months, last 10/28/2026. TTE last 10/09/2024.</div>
+          <div class="sec gap" id="sec-gaps"><div class="k">Care gaps</div>SGLT2 inhibitor indicated (T2DM, CKD, ASCVD), none on record. LDL-C 92 mg/dL, above the 70 mg/dL threshold on 6 of 6 results since 2022. UACR 14 months old. No nephrology evaluation with eGFR slope −5.8 per year. No retinal exam on record since 06/2024. <span class="ref" onclick="stopTour();view('found')">Open findings and care gaps</span></div>
+          <div class="sec saf"><div class="k">Safety</div>NSAID with eGFR 38 on an ACE inhibitor. Metformin dose above the renal limit; contraindicated below eGFR 30, projected about 03/2028 at the current slope. Potassium 4.8 mmol/L and rising. Hemoglobin 12.9 g/dL and falling, no iron studies on record.</div>
+        </div>
+        <p class="chk">&#10003; Every value above was read from the chart's lab, medication, imaging and note records. Any rate of change quoted is the difference between two recorded values.</p>
+        <p class="lnk">&#128279; 38 values and 14 items link to the chart record they came from</p>
+        <div class="meta">&#9201; pre-built · Clinical analysis <span class="c">Labs</span><span class="c">Medications</span><span class="c">Problem list</span><span class="c">Encounters</span><span class="c">Notes</span><span class="c">Outside records</span></div>
+      </div>
+      <div class="log" id="log"></div>
+      <div class="chips" id="chips"></div>
+      <form class="ask" onsubmit="return send()">
+        <input id="inp" placeholder="Clinical question or command (e.g. /summary)" autocomplete="off">
+        <button type="submit" aria-label="Ask">&#10148;</button>
+      </form>
     </div>
 
+    <div class="ws" id="w-twin">
+      <div class="twin">
+        <div>
+          <div class="card"><h4>Overall</h4><div class="ov">Kidney function falling faster after an outside <span class="ref" data-s="naproxen">NSAID</span>, in a man with stable coronary disease, diabetes, and blood pressure above goal</div></div>
+          <div class="card"><h4>Organ status</h4><div class="ochips">
+            <span class="ochip"><i class="b-mod"></i>Kidney <b class="c-mod">moderate</b></span><span class="ochip"><i class="b-mild"></i>Heart <b class="c-mild">mild</b></span><span class="ochip"><i class="b-mild"></i>Pancreas <b class="c-mild">mild</b></span><span class="ochip"><i class="b-healthy"></i>Brain <b class="c-healthy">healthy</b></span><span class="ochip"><i class="b-healthy"></i>Liver <b class="c-healthy">healthy</b></span><span class="ochip"><i class="b-healthy"></i>Lung <b class="c-healthy">healthy</b></span></div></div>
+          <div class="card num"><h4>Organ alerts</h4>
+            <div class="alert mod"><b>Kidney · moderate</b>eGFR <span class="ref" data-s="egfr">62→55→49→44→38</span> mL/min/1.73 m² over 4 years; UACR 68 mg/g; naproxen since 10/20/2026 on lisinopril 20 mg</div>
+            <div class="alert"><b>Heart · mild</b><span class="ref" data-s="ldl">LDL-C 92 mg/dL</span> on atorvastatin 40 mg after MI (threshold 70); BP 148/86 mmHg; LVEF 50% on 10/09/2024</div>
+            <div class="alert"><b>Pancreas · mild</b>HbA1c 7.4%, range 6.9 to 7.5% since 2022; metformin above the renal dose limit</div>
+            <p class="lnk">&#128279; 17 values and 5 items link to the chart record they came from</p>
+          </div>
+        </div>
+        <div class="tright">
+          <div class="tabs" id="tabs">
+            <button data-v="narr">Trajectory narrative</button>
+            <button data-v="traj">Condition trajectories</button>
+            <button class="on" data-v="first">What to know first</button>
+            <button data-v="found">Findings and care gaps<span class="ct2">11</span></button>
+            <button data-v="risk">Risk scores</button>
+            <button data-v="since">Since last visit</button>
+            <button data-v="labs">Labs</button>
+            <button data-v="tline">Timeline</button>
+            <button data-v="fam">Family history</button>
+            <button data-v="soc">Social context</button>
+            <button data-v="vnote">Visit note</button>
+            <button data-v="ord">Orders and follow up</button>
+          </div>
     <!-- WHAT TO KNOW FIRST -->
     <section class="view on" id="first">
       <div class="grid">
         <div class="box w tw">
-          <h3>What to know first <span class="vb">Passed clinical audit</span><span class="built">Built 11/16/2026 07:00</span><span class="flag">Flag an inaccuracy</span></h3>
+          <h3>Summary <span class="vb">Passed clinical audit</span><span class="built">Built 23:06 last night</span><span class="flag">Flag an inaccuracy</span></h3>
           <div class="story narr">
             <p>62 y M with CAD (anterior STEMI 03/2019, PCI to LAD; PCI to RCA 03/2021), T2DM, HTN, and CKD here for 3 month follow up. No angina and no admissions since the <span class="ref" data-s="cath">2021 PCI</span>.</p>
             <p>Kidney function is the issue today. <span class="ref" data-s="egfr">eGFR 62 to 38 mL/min/1.73 m² since 09/2022</span>, with the fastest drop in the last 11 weeks. Three items need a decision before he leaves.</p>
           </div>
-          <details class="how"><summary>How this was produced <span class="vb">4 stages passed</span></summary><ul><li>Record assembled from this health system, 2 outside health systems, pharmacy fills, and home BP</li><li>Summary drafted from the assembled record</li><li>Every value and date checked against its source: 14 values, 9 dates</li><li>Clinical audit: no contradictions with the problem list, medication list, or results</li></ul></details>
+          <p class="chk">&#10003; Every value above was read from the chart. Rates of change are the difference between two recorded values.</p><p class="lnk">&#128279; 14 values and 9 items link to the chart record they came from</p>
         </div>
 
         <div class="box w tw" id="bdecide">
@@ -354,7 +401,7 @@ details.how ul{margin:8px 0 2px;padding-left:18px;color:#c9d4ea}
     <section class="view" id="found">
       <div class="grid">
         <div class="box w tw" id="bfound">
-          <h3>Found trajectories, not on the problem list <span class="vb">3 of 3 validated</span><span class="built">Built 11/16/2026 07:00</span><span class="flag">Flag an inaccuracy</span></h3>
+          <h3>Found trajectories, not on the problem list <span class="vb">3 of 3 validated</span><span class="built">Built 23:06 last night</span><span class="flag">Flag an inaccuracy</span></h3>
           <p class="s" style="margin:0 0 4px">Patterns in the record that point to a condition no one has named yet. Each one states how sure the Twin is, the evidence, and what would confirm it.</p>
 
           <div class="fitem"><div class="ft">Anemia, likely related to chronic kidney disease <span class="tag mid">Likely</span></div>
@@ -407,7 +454,7 @@ details.how ul{margin:8px 0 2px;padding-left:18px;color:#c9d4ea}
     <section class="view" id="narr">
       <div class="grid">
         <div class="box w tw" id="bnarr">
-          <h3>Trajectory narrative <span class="vb">Passed clinical audit</span><span class="built">Built 11/16/2026 07:00</span><span class="flag">Flag an inaccuracy</span></h3>
+          <h3>Trajectory narrative <span class="vb">Passed clinical audit</span><span class="built">Built 23:06 last night</span><span class="flag">Flag an inaccuracy</span></h3>
           <div class="lab">Patient overview</div>
           <div class="narr">
             <p>62 year old man, never smoker, with coronary artery disease, type 2 diabetes mellitus, essential hypertension, chronic kidney disease, dyslipidemia, and right knee osteoarthritis.</p>
@@ -415,7 +462,7 @@ details.how ul{margin:8px 0 2px;padding-left:18px;color:#c9d4ea}
             <p>Kidney function has declined from <span class="ref" data-s="egfr">eGFR 62 mL/min/1.73 m² (09/14/2022) to 38 (10/28/2026)</span>, now CKD G3b A2, with <span class="ref" data-s="uacr">UACR rising from 18 to 68 mg/g</span>. <span class="ref" data-s="naproxen">Naproxen 500 mg BID was started at an outside urgent care on 10/20/2026</span>. He has not seen nephrology and has no SGLT2 inhibitor on record.</p>
             <p>Diabetes and hypertension were diagnosed in 2016. HbA1c has ranged 6.9 to 7.5% since 2022. Blood pressure is above goal in clinic and at home. LDL-C is 92 mg/dL on atorvastatin 40 mg.</p>
           </div>
-          <details class="how"><summary>How this was produced <span class="vb">4 stages passed</span></summary><ul><li>41 cited values and 23 dates verified against the record</li><li>6 condition trajectories validated before the narrative was written</li><li>Clinical audit passed on the first attempt</li></ul></details>
+          <p class="chk">&#10003; Every number in this narrative is read from the chart.</p><p class="lnk">&#128279; 41 values and 23 items link to the chart record they came from</p>
         </div>
         <div class="box w">
           <h3>Longitudinal trends</h3>
@@ -501,7 +548,7 @@ details.how ul{margin:8px 0 2px;padding-left:18px;color:#c9d4ea}
 
     <!-- TRAJECTORY -->
     <section class="view" id="traj">
-      <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap"><span class="vb">6 of 6 validated</span><span class="built">Built 11/16/2026 07:00</span></div>
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap"><span class="vb">6 of 6 validated</span><span class="built">Built 23:06 last night</span></div>
       <div class="grid" id="tjgrid"></div>
     </section>
 
@@ -573,18 +620,10 @@ details.how ul{margin:8px 0 2px;padding-left:18px;color:#c9d4ea}
       </div>
     </section>
 
-    <!-- ASK -->
-    <section class="view" id="ask">
-      <div class="chat">
-        <div class="chips" id="chips"></div>
-        <div class="log" id="log"></div>
-        <form class="ask" onsubmit="return send()">
-          <input id="inp" placeholder="Ask about this patient" autocomplete="off">
-          <button class="btn pri" type="submit">Ask</button>
-        </form>
-      </div>
-    </section>
 
+        </div>
+      </div>
+    </div>
     <div class="foot">Demo only. Synthetic patient and data. Nothing is ordered or sent without a clinician signature.</div>
   </main>
 </div>
@@ -594,10 +633,10 @@ details.how ul{margin:8px 0 2px;padding-left:18px;color:#c9d4ea}
   <h1>Patients needing attention</h1>
   <p class="lede">Panel of Dr. Holland, cardiology. The Twin reads every patient every night and lists the ones who need action before their next visit.</p>
   <div class="tiles num">
-    <div class="tile"><div class="k">1,240</div><div class="l">patients on the panel</div></div>
-    <div class="tile"><div class="k" style="color:var(--high)">38</div><div class="l">need attention this month</div></div>
-    <div class="tile"><div class="k" style="color:var(--mid)">9</div><div class="l">need action today</div></div>
-    <div class="tile"><div class="k" style="color:var(--low)">1,202</div><div class="l">no new findings</div></div>
+    <div class="tile"><div class="kk">1,240</div><div class="l">patients on the panel</div></div>
+    <div class="tile"><div class="kk" style="color:var(--red)">38</div><div class="l">need attention this month</div></div>
+    <div class="tile"><div class="kk" style="color:var(--amber)">9</div><div class="l">need action today</div></div>
+    <div class="tile"><div class="kk" style="color:var(--green)">1,202</div><div class="l">no new findings</div></div>
   </div>
   <div class="box w" style="grid-column:auto">
     <div class="filt" id="afilt">
@@ -613,7 +652,8 @@ details.how ul{margin:8px 0 2px;padding-left:18px;color:#c9d4ea}
   <div class="foot">Demo only. Synthetic patients and data.</div>
 </div>
 
-<div id="drawer"><button class="x" onclick="closeD()" aria-label="Close">&times;</button><h5>Source</h5><div class="w" id="dw"></div><div class="o" id="do"></div></div>
+
+<div id="drawer"><button class="x" onclick="closeD()" aria-label="Close">&times;</button><h5>Chart record</h5><div class="w" id="dw"></div><div class="o" id="do"></div></div>
 
 <script>
 var $=function(id){return document.getElementById(id)};
@@ -646,8 +686,10 @@ function page(p){
   window.scrollTo(0,0);
 }
 document.querySelectorAll('#pages button').forEach(function(b){b.onclick=function(){stopTour();page(b.dataset.p)}});
+function ws(w){document.querySelectorAll('.ws').forEach(function(x){x.classList.toggle('on',x.id==='w-'+w)});document.querySelectorAll('#sw button').forEach(function(b){b.classList.toggle('on',b.dataset.w===w)});$('wst').textContent=w==='chat'?'CLINICAL WORKSPACE':'DIGITAL TWIN';$('wsh').textContent=w==='chat'?'Primary output and reasoning':'Mr. A';window.scrollTo(0,0)}
+document.querySelectorAll('#sw button').forEach(function(b){b.onclick=function(){stopTour();closeD();ws(b.dataset.w)}});
 function view(v){
-  closeD();
+  closeD();ws('twin');
   document.querySelectorAll('.view').forEach(function(x){x.classList.toggle('on',x.id===v)});
   document.querySelectorAll('#tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v)});
   window.scrollTo(0,0);
@@ -663,51 +705,51 @@ function chart(o){
   function X(x){return l+(x-x0)/(x1-x0)*(W-l-r)}function Y(y){return t+(y1-y)/(y1-y0)*(H-t-b)}
   var s='<svg class="ch" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+o.label+'">';
   (o.bands||[]).forEach(function(bd){s+='<rect x="'+l+'" y="'+Y(bd[1])+'" width="'+(W-l-r)+'" height="'+(Y(bd[0])-Y(bd[1]))+'" fill="'+bd[2]+'" opacity=".10"/><text x="'+(W-r-2)+'" y="'+(Y(bd[1])+11)+'" text-anchor="end">'+bd[3]+'</text>'});
-  o.ticks.forEach(function(v){s+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#1b2743"/><text x="'+(l-5)+'" y="'+(Y(v)+3.5)+'" text-anchor="end">'+v+'</text>'});
-  for(var y=Math.ceil(x0);y<=x1;y++){s+='<text x="'+X(y)+'" y="'+(H-8)+'" text-anchor="middle">'+y+'</text><line x1="'+X(y)+'" x2="'+X(y)+'" y1="'+(H-b)+'" y2="'+(H-b+4)+'" stroke="#24314f"/>'}
-  if(o.goal!==undefined){s+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(o.goal)+'" y2="'+Y(o.goal)+'" stroke="'+(o.goalColor||'#4cd98a')+'" stroke-dasharray="4 4"/><text x="'+(o.goalLeft?l+4:W-r-2)+'" y="'+(Y(o.goal)-4)+'" text-anchor="'+(o.goalLeft?'start':'end')+'" style="fill:'+(o.goalColor||'#4cd98a')+'">'+o.goalLabel+'</text>'}
+  o.ticks.forEach(function(v){s+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#e6eaf0"/><text x="'+(l-5)+'" y="'+(Y(v)+3.5)+'" text-anchor="end">'+v+'</text>'});
+  for(var y=Math.ceil(x0);y<=x1;y++){s+='<text x="'+X(y)+'" y="'+(H-8)+'" text-anchor="middle">'+y+'</text><line x1="'+X(y)+'" x2="'+X(y)+'" y1="'+(H-b)+'" y2="'+(H-b+4)+'" stroke="#d5dbe3"/>'}
+  if(o.goal!==undefined){s+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(o.goal)+'" y2="'+Y(o.goal)+'" stroke="'+(o.goalColor||'#2e7d32')+'" stroke-dasharray="4 4"/><text x="'+(o.goalLeft?l+4:W-r-2)+'" y="'+(Y(o.goal)-4)+'" text-anchor="'+(o.goalLeft?'start':'end')+'" style="fill:'+(o.goalColor||'#2e7d32')+'">'+o.goalLabel+'</text>'}
   if(o.proj){var lp=pts[pts.length-1];s+='<line x1="'+X(lp[0])+'" y1="'+Y(lp[1])+'" x2="'+X(o.proj[0])+'" y2="'+Y(o.proj[1])+'" stroke="'+o.color+'" stroke-width="2" stroke-dasharray="5 5" opacity=".7"/><text x="'+X(o.proj[0])+'" y="'+(Y(o.proj[1])+14)+'" text-anchor="end">'+o.proj[2]+'</text>'}
   s+='<polyline fill="none" stroke="'+o.color+'" stroke-width="2.5" points="'+pts.map(function(p){return X(p[0])+','+Y(p[1])}).join(' ')+'"/>';
-  pts.forEach(function(p,i){var out=p[2];s+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="'+(out?4.5:3.5)+'" fill="'+(out?'#0a1020':o.color)+'" stroke="'+o.color+'" stroke-width="2"/>';
+  pts.forEach(function(p,i){var out=p[2];s+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="'+(out?4.5:3.5)+'" fill="'+(out?'#fff':o.color)+'" stroke="'+o.color+'" stroke-width="2"/>';
     if(i===0||i===pts.length-1||o.all)s+='<text class="v" x="'+X(p[0])+'" y="'+(Y(p[1])+(o.lastBelow&&i===pts.length-1?17:-8))+'" text-anchor="'+(i===0?'start':i===pts.length-1?(o.lastBelow?'middle':'end'):'middle')+'">'+p[1]+'</text>'});
   return s+'</svg>';
 }
 var TJ=[
- {t:'Chronic kidney disease',cv:'12 cited values and 9 dates',tag:['high','Worsening, rapid'],src:'egfr',
+ {t:'Chronic kidney disease',lo:'eGFR · LOINC 98979-8',cv:'12 cited values and 9 dates',tag:['high','Worsening, rapid'],src:'egfr',
   kv:[['Measure','eGFR (CKD-EPI 2021), mL/min/1.73 m²'],['Latest','38 on 10/28/2026'],['Stage','G2 (2022) → G3a (2023) → G3b (08/2026)'],['Slope','−5.8 per year since 09/2022. Rapid progression is over 5 per year.'],['Projection','Reaches 30 about 03/2028 at the current slope']],
   p:'Steady decline of about 5 per year from 2022 to 08/2026, consistent with diabetic and hypertensive kidney disease. Then 6 points in 11 weeks after naproxen was started. Two of the eight values are from an outside health system; without them the 2023 and early 2026 points are missing.',
-  ch:{label:'eGFR 2022 to 2026 with projection',color:'#ff6b6b',ymin:20,ymax:70,ticks:[30,45,60],xmax:2028.4,goal:30,goalLabel:'30, metformin contraindicated',goalColor:'#ff6b6b',lastBelow:1,goalLeft:1,
+  ch:{label:'eGFR 2022 to 2026 with projection',color:'#c7451f',ymin:20,ymax:70,ticks:[30,45,60],xmax:2028.4,goal:30,goalLabel:'30, metformin contraindicated',goalColor:'#c7451f',lastBelow:1,goalLeft:1,
       pts:[[2022.70,62],[2023.70,55,1],[2024.69,49],[2025.19,48],[2025.71,47],[2026.11,46,1],[2026.61,44],[2026.82,38]],proj:[2028.2,30,'Projected 03/2028']},
   foot:'Open circles are outside results.'},
- {t:'Hypertension',cv:'9 cited values and 7 dates',tag:['mid','Above goal, rising'],src:'bp',
+ {t:'Hypertension',lo:'Systolic BP · LOINC 8480-6',cv:'9 cited values and 7 dates',tag:['mid','Above goal, rising'],src:'bp',
   kv:[['Measure','Clinic systolic BP, mmHg'],['Latest','148/86 mmHg on 11/16/2026'],['Home','Mean 146/86 mmHg, 22 readings, last 30 days'],['Therapy','Lisinopril 20 mg, amlodipine 5 mg (added 03/2025), metoprolol succinate 50 mg']],
   p:'Controlled after amlodipine was added in 03/2025. Rising again since 08/2026. The timing matches the NSAID start, and home readings confirm the clinic values.',
-  ch:{label:'Clinic systolic blood pressure 2024 to 2026',color:'#ffc24d',ymin:120,ymax:160,ticks:[130,140,150],goal:130,goalLabel:'Goal under 130',all:1,
+  ch:{label:'Clinic systolic blood pressure 2024 to 2026',color:'#b8770f',ymin:120,ymax:160,ticks:[130,140,150],goal:130,goalLabel:'Goal under 130',all:1,
       pts:[[2024.69,134],[2025.19,152],[2025.71,136],[2026.11,138],[2026.61,142],[2026.87,148]]}},
- {t:'Type 2 diabetes mellitus',cv:'8 cited values and 7 dates',tag:['low','Stable'],src:'a1c',
+ {t:'Type 2 diabetes mellitus',lo:'HbA1c · LOINC 4548-4',cv:'8 cited values and 7 dates',tag:['low','Stable'],src:'a1c',
   kv:[['Measure','HbA1c, %'],['Latest','7.4% on 10/28/2026'],['Range','6.9 to 7.5% since 09/2022'],['Therapy','Metformin 1,000 mg BID. Dose exceeds the limit for eGFR 38.']],
   p:'Glycemic control has been steady for four years. The change needed is the regimen, not the target: metformin must come down and an SGLT2 inhibitor is indicated for kidney and heart protection.',
-  ch:{label:'HbA1c 2022 to 2026',color:'#8db8ff',ymin:6,ymax:8.5,ticks:[6.5,7,7.5,8],goal:7,goalLabel:'7.0',
+  ch:{label:'HbA1c 2022 to 2026',color:'#1a5aa6',ymin:6,ymax:8.5,ticks:[6.5,7,7.5,8],goal:7,goalLabel:'7.0',
       pts:[[2022.70,6.9],[2023.70,7.0],[2024.69,7.1],[2025.19,7.2],[2025.71,7.5],[2026.11,7.3],[2026.82,7.4]]}},
- {t:'Dyslipidemia, secondary prevention',cv:'7 cited values and 6 dates',tag:['mid','Above threshold, drifting up'],src:'ldl',
+ {t:'Dyslipidemia, secondary prevention',lo:'LDL-C · LOINC 13457-7',cv:'7 cited values and 6 dates',tag:['mid','Above threshold, drifting up'],src:'ldl',
   kv:[['Measure','LDL-C, mg/dL'],['Latest','92 mg/dL on 10/28/2026'],['Threshold','70 mg/dL, very high risk ASCVD'],['Therapy','Atorvastatin 40 mg nightly, unchanged since 2019']],
   p:'LDL-C has risen from 76 to 92 mg/dL over four years on the same statin dose. Fill history shows no gaps, so this is not an adherence problem. Intensification is indicated.',
-  ch:{label:'LDL cholesterol 2022 to 2026',color:'#ffc24d',ymin:50,ymax:110,ticks:[60,80,100],goal:70,goalLabel:'70',
+  ch:{label:'LDL cholesterol 2022 to 2026',color:'#b8770f',ymin:50,ymax:110,ticks:[60,80,100],goal:70,goalLabel:'70',
       pts:[[2022.70,76],[2023.70,79],[2024.69,84],[2025.71,88],[2026.11,94],[2026.82,92]]}},
- {t:'Coronary artery disease',cv:'6 cited values and 5 dates',tag:['low','Stable'],src:'echo',
+ {t:'Coronary artery disease',lo:'LVEF · LOINC 10230-1',cv:'6 cited values and 5 dates',tag:['low','Stable'],src:'echo',
   kv:[['Measure','LVEF, %'],['Latest','50% on 10/09/2024 (TTE)'],['Events','STEMI 03/2019, PCI to LAD. PCI to RCA 03/2021.'],['Since 2021','No angina, no admissions, no change in exercise tolerance']],
   p:'LV function recovered from 40 to 45% after the 2019 infarct to 50% by 2024. No events for 5 years. The last echo is 25 months old; new ankle edema would be a reason to repeat it.',
-  ch:{label:'Left ventricular ejection fraction 2019 to 2024',color:'#4cd98a',ymin:30,ymax:65,ticks:[40,50,60],all:1,xmax:2026.9,
+  ch:{label:'Left ventricular ejection fraction 2019 to 2024',color:'#2e7d32',ymin:30,ymax:65,ticks:[40,50,60],all:1,xmax:2026.9,
       pts:[[2019.18,42],[2021.21,48],[2024.77,50]]}},
- {t:'Hemoglobin',cv:'6 cited values and 6 dates',tag:['mid','Watch'],src:'hgb',
+ {t:'Hemoglobin',lo:'Hemoglobin · LOINC 718-7',cv:'6 cited values and 6 dates',tag:['mid','Watch'],src:'hgb',
   kv:[['Measure','Hemoglobin, g/dL'],['Latest','12.9 g/dL on 10/28/2026'],['Reference','13.5 to 17.5 g/dL'],['Workup','No iron studies on record']],
   p:'Not on the problem list. Hemoglobin has fallen 1.7 g/dL over four years in step with kidney function. Daily NSAID and aspirin use adds a possible GI source. Iron studies are a reasonable addition to today\'s labs.',
-  ch:{label:'Hemoglobin 2022 to 2026',color:'#ffc24d',ymin:11.5,ymax:15.5,ticks:[12,13,14,15],goal:13.5,goalLabel:'Lower limit 13.5',goalColor:'#93a3c2',goalLeft:1,
+  ch:{label:'Hemoglobin 2022 to 2026',color:'#b8770f',ymin:11.5,ymax:15.5,ticks:[12,13,14,15],goal:13.5,goalLabel:'Lower limit 13.5',goalColor:'#7b8794',goalLeft:1,
       pts:[[2022.70,14.6],[2023.70,14.2],[2024.69,13.8],[2025.71,13.4],[2026.11,13.1],[2026.82,12.9]]}}
 ];
 (function(){var g=$('tjgrid');TJ.forEach(function(c,i){
   var d=document.createElement('div');d.className='box w';d.id='tj'+i;
-  d.innerHTML='<h3 style="margin-bottom:12px">'+c.t+' <span class="vb">Validated</span><span class="tag '+c.tag[0]+'">'+c.tag[1]+'</span><span class="built">Built 2 h ago</span><span class="flag">Flag an inaccuracy</span></h3><div class="tj"><div><div class="kv num">'+c.kv.map(function(k){return '<span>'+k[0]+'</span><span>'+k[1]+'</span>'}).join('')+'</div><div class="lab">Condition trajectory story</div><div class="narr"><p>'+c.p+'</p></div><details class="how"><summary>'+c.cv+' verified against the record</summary><ul><li><span class="ref" data-s="'+c.src+'">Open source values</span>'+(c.foot?'. '+c.foot:'')+'</li></ul></details></div><div>'+chart(c.ch)+'</div></div>';
+  d.innerHTML='<h3 style="margin-bottom:10px">'+c.t+' <span class="loinc">'+c.lo+'</span><span class="vb">Validated</span><span class="tag '+c.tag[0]+'">'+c.tag[1]+'</span><span class="built">Built 2 h ago</span><span class="flag">Flag an inaccuracy</span></h3><div class="tj"><div><div class="kv num">'+c.kv.map(function(k){return '<span>'+k[0]+'</span><span>'+k[1]+'</span>'}).join('')+'</div><div class="lab">Condition trajectory story</div><div class="narr"><p>'+c.p+'</p></div><p class="lnk">&#128279; '+c.cv+' link to the chart record they came from. <span class="ref" data-s="'+c.src+'">Source values</span>'+(c.foot?'. '+c.foot:'')+'</p></div><div>'+chart(c.ch)+'</div></div>';
   g.appendChild(d)})})();
 
 
@@ -717,14 +759,14 @@ function spark(v,col){var W=120,H=28,mn=Math.min.apply(null,v),mx=Math.max.apply
   var l=pts[pts.length-1].split(',');
   return '<svg width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'"><polyline fill="none" stroke="'+col+'" stroke-width="2" points="'+pts.join(' ')+'"/><circle cx="'+l[0]+'" cy="'+l[1]+'" r="3" fill="'+col+'"/></svg>'}
 var TR=[
- ['eGFR (CKD-EPI 2021)','09/14/2022 to 10/28/2026',[62,55,49,48,47,46,44,38],'38 mL/min/1.73 m²','−24 (−39%)','dn','#ff6b6b'],
- ['Creatinine','09/14/2022 to 10/28/2026',[1.33,1.46,1.60,1.62,1.65,1.67,1.73,1.96],'1.96 mg/dL','+0.63 (+47%)','up','#ff6b6b'],
- ['Urine albumin/creatinine','09/14/2022 to 09/15/2025',[18,24,41,68],'68 mg/g','+50','up','#ff6b6b'],
- ['Systolic BP, clinic','09/09/2024 to 11/16/2026',[134,152,136,138,142,148],'148 mmHg','+14','up','#ffc24d'],
- ['LDL-C','09/14/2022 to 10/28/2026',[76,79,84,88,94,92],'92 mg/dL','+16 (+21%)','up','#ffc24d'],
- ['Hemoglobin','09/14/2022 to 10/28/2026',[14.6,14.2,13.8,13.4,13.1,12.9],'12.9 g/dL','−1.7 (−12%)','dn','#ffc24d'],
- ['Hemoglobin A1c','09/14/2022 to 10/28/2026',[6.9,7.0,7.1,7.2,7.5,7.3,7.4],'7.4%','+0.5','','#8db8ff'],
- ['LVEF','03/06/2019 to 10/09/2024',[42,48,50],'50%','+8','ok','#4cd98a']
+ ['eGFR (CKD-EPI 2021)','09/14/2022 to 10/28/2026',[62,55,49,48,47,46,44,38],'38 mL/min/1.73 m²','−24 (−39%)','dn','#c7451f'],
+ ['Creatinine','09/14/2022 to 10/28/2026',[1.33,1.46,1.60,1.62,1.65,1.67,1.73,1.96],'1.96 mg/dL','+0.63 (+47%)','up','#c7451f'],
+ ['Urine albumin/creatinine','09/14/2022 to 09/15/2025',[18,24,41,68],'68 mg/g','+50','up','#c7451f'],
+ ['Systolic BP, clinic','09/09/2024 to 11/16/2026',[134,152,136,138,142,148],'148 mmHg','+14','up','#b8770f'],
+ ['LDL-C','09/14/2022 to 10/28/2026',[76,79,84,88,94,92],'92 mg/dL','+16 (+21%)','up','#b8770f'],
+ ['Hemoglobin','09/14/2022 to 10/28/2026',[14.6,14.2,13.8,13.4,13.1,12.9],'12.9 g/dL','−1.7 (−12%)','dn','#b8770f'],
+ ['Hemoglobin A1c','09/14/2022 to 10/28/2026',[6.9,7.0,7.1,7.2,7.5,7.3,7.4],'7.4%','+0.5','','#1a5aa6'],
+ ['LVEF','03/06/2019 to 10/09/2024',[42,48,50],'50%','+8','ok','#2e7d32']
 ];
 (function(){var t=$('ttab');TR.forEach(function(r){var tr=document.createElement('tr');
   tr.innerHTML='<td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+spark(r[2],r[6])+'</td><td>'+r[3]+'</td><td class="'+r[5]+'">'+r[4]+'</td>';t.appendChild(tr)})})();
@@ -820,7 +862,7 @@ function say(q,html,srcs){
     kids.forEach(function(k,i){setTimeout(function(){k.classList.add('in');ad.scrollIntoView({block:'end',behavior:'smooth'})},170*i)});
   },850);
 }
-function ask(i){var x=QA[i];say(x.q,x.a,x.s)}
+function ask(i){ws('chat');var x=QA[i];say(x.q,x.a,x.s)}
 function send(){
   stopTour();
   var el=$('inp'),t=el.value.trim();if(!t)return false;el.value='';
@@ -848,7 +890,7 @@ var FN={med:'Medication safety',gap:'Care gap',dc:'Post discharge',trend:'Worsen
   tr.innerHTML='<td><b>'+r[0]+'</b></td><td>'+r[3]+'<br><span class="tag '+r[2]+'">'+FN[r[1]]+'</span></td><td>'+r[4]+'</td><td>'+r[5]+'</td><td>'+r[6]+'</td><td>'+r[7]+'</td>';
   if(r[8])tr.onclick=function(){stopTour();page('chart');view('first')};else tr.onclick=function(){stopTour();pickRow(tr)};
   t.appendChild(tr)})})();
-function pickRow(tr){var on=tr.style.outline;document.querySelectorAll('#atab tr.g').forEach(function(x){x.style.outline=''});if(!on)tr.style.outline='1px solid #35d0ba'}
+function pickRow(tr){var on=tr.style.outline;document.querySelectorAll('#atab tr.g').forEach(function(x){x.style.outline=''});if(!on)tr.style.outline='2px solid #1a5aa6'}
 document.querySelectorAll('#afilt button').forEach(function(b){b.onclick=function(){stopTour();
   document.querySelectorAll('#afilt button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
   document.querySelectorAll('#atab tr.g').forEach(function(tr){tr.style.display=(b.dataset.f==='all'||tr.dataset.f===b.dataset.f)?'':'none'})}});
@@ -862,20 +904,20 @@ function stopTour(){if(!touring)return;T.forEach(clearTimeout);T=[];touring=fals
 function tour(){
   if(touring){stopTour();return}
   touring=true;var p=$('play');p.textContent='Stop';p.classList.add('stop');
-  log.innerHTML='';closeD();$('rsel').value='all';riskFilter('all');page('chart');view('first');
-  later(function(){glow('ban')},500);
-  later(function(){glow('bdecide')},3500);
-  later(function(){showD('naproxen')},5500);
-  later(function(){unglow();view('found');glow('bfound')},8500);
-  later(function(){unglow();view('traj');glow('tj0')},12000);
-  later(function(){glow('tj5')},15500);
-  later(function(){unglow();view('risk');glow('rs1')},19000);
-  later(function(){glow('rs4')},22500);
-  later(function(){unglow();view('ask');ask(0)},25500);
-  later(function(){ask(5)},31500);
-  later(function(){var b=log.querySelector('.ans:last-child .btn.pri');if(b)sign(b)},36000);
-  later(function(){page('attn')},40000);
-  later(function(){stopTour()},43000);
+  log.innerHTML='';closeD();$('rsel').value='all';riskFilter('all');page('chart');ws('chat');
+  later(function(){glow('brief')},500);
+  later(function(){glow('sec-gaps')},4000);
+  later(function(){unglow();view('first');glow('bdecide')},7500);
+  later(function(){showD('naproxen')},9500);
+  later(function(){closeD();unglow();view('found');glow('bfound')},12500);
+  later(function(){unglow();view('traj');glow('tj0')},17000);
+  later(function(){unglow();view('risk');glow('rs1')},21500);
+  later(function(){glow('rs4')},24500);
+  later(function(){unglow();ask(0)},27500);
+  later(function(){ask(5)},33000);
+  later(function(){var b=log.querySelector('.ans:last-child .btn.pri');if(b)sign(b)},37500);
+  later(function(){page('attn')},41500);
+  later(function(){stopTour()},44500);
 }
 </script>
 </body>
