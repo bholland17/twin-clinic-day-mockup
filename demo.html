@@ -898,24 +898,25 @@ function later(fn,ms){T.push(setTimeout(fn,ms))}
 function unglow(){document.querySelectorAll('.glow').forEach(function(x){x.classList.remove('glow')})}
 function glow(id){unglow();if(id){var e=$(id);e.classList.add('glow');e.scrollIntoView({block:'center',behavior:'smooth'})}}
 function stopTour(){if(!touring)return;T.forEach(clearTimeout);T=[];touring=false;unglow();var p=$('play');p.textContent='Play guided demo';p.classList.remove('stop')}
+var TT=[0.4, 20.15, 33.76, 46.04, 58.64, 79.04, 94.76, 100.65, 106.58, 115.31, 129.07, 137.01, 169.88];
 function tour(){
   if(touring){stopTour();return}
   touring=true;var p=$('play');p.textContent='Stop';p.classList.add('stop');
   log.innerHTML='';closeD();$('rsel').value='all';riskFilter('all');page('chart');ws('chat');
-  var S=1000;
-  later(function(){glow('brief')},1*S);
-  later(function(){glow('sec-gaps')},18*S);
-  later(function(){unglow();view('first');glow('bdecide')},30*S);
-  later(function(){showD('naproxen')},42*S);
-  later(function(){closeD();unglow();view('found');glow('bfound')},52*S);
-  later(function(){unglow();view('traj');glow('tj0')},72*S);
-  later(function(){unglow();view('risk');glow('rs1')},88*S);
-  later(function(){glow('rs4')},95*S);
-  later(function(){unglow();ask(0)},102*S);
-  later(function(){ask(5)},116*S);
-  later(function(){var b=log.querySelector('.ans:last-child .btn.pri');if(b)sign(b)},125*S);
-  later(function(){page('attn')},134*S);
-  later(function(){stopTour()},172*S);
+  var S=1000,t=window.TT||TT;
+  later(function(){unglow();$('brief').classList.add('glow');window.scrollTo(0,0)},t[0]*S);
+  later(function(){glow('sec-gaps')},t[1]*S);
+  later(function(){unglow();view('first');glow('bdecide')},t[2]*S);
+  later(function(){showD('naproxen')},t[3]*S);
+  later(function(){closeD();unglow();view('found');glow('bfound')},t[4]*S);
+  later(function(){unglow();view('traj');glow('tj0')},t[5]*S);
+  later(function(){unglow();view('risk');glow('rs1')},t[6]*S);
+  later(function(){glow('rs4')},t[7]*S);
+  later(function(){unglow();ask(0)},t[8]*S);
+  later(function(){ask(5)},t[9]*S);
+  later(function(){var b=log.querySelector('.ans:last-child .btn.pri');if(b)sign(b)},t[10]*S);
+  later(function(){page('attn')},t[11]*S);
+  later(function(){stopTour()},t[12]*S);
 }
 </script>
 </body>
