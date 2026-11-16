@@ -333,7 +333,7 @@ tr.g:hover td{background:var(--bg2)}
     <!-- WHAT TO KNOW FIRST -->
     <section class="view on" id="first">
       <div class="grid">
-        <div class="box w tw">
+        <div class="box w tw" id="bsum">
           <h3>Summary <span class="vb">Passed clinical audit</span><span class="built">Built 23:06 last night</span><span class="flag">Flag an inaccuracy</span></h3>
           <div class="story narr">
             <p>62 y M with CAD (anterior STEMI 03/2019, PCI to LAD; PCI to RCA 03/2021), T2DM, HTN, and CKD here for 3 month follow up. No angina and no admissions since the <span class="ref" data-s="cath">2021 PCI</span>.</p>
@@ -906,8 +906,9 @@ function tour(){
   var S=1000,t=window.TT||TT;
   later(function(){unglow();$('brief').classList.add('glow');window.scrollTo(0,0)},t[0]*S);
   later(function(){glow('sec-gaps')},t[1]*S);
-  later(function(){unglow();view('first');glow('bdecide')},t[2]*S);
-  later(function(){showD('naproxen')},t[3]*S);
+  later(function(){unglow();view('first');$('bsum').classList.add('glow')},t[2]*S);
+  later(function(){glow('bdecide')},t[3]*S);
+  later(function(){showD('naproxen')},(t[3]+4)*S);
   later(function(){closeD();unglow();view('found');glow('bfound')},t[4]*S);
   later(function(){unglow();view('traj');glow('tj0')},t[5]*S);
   later(function(){unglow();view('risk');glow('rs1')},t[6]*S);
