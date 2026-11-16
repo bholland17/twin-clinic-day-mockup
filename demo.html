@@ -898,7 +898,7 @@ function later(fn,ms){T.push(setTimeout(fn,ms))}
 function unglow(){document.querySelectorAll('.glow').forEach(function(x){x.classList.remove('glow')})}
 function glow(id){unglow();if(id){var e=$(id);e.classList.add('glow');e.scrollIntoView({block:'center',behavior:'smooth'})}}
 function stopTour(){if(!touring)return;T.forEach(clearTimeout);T=[];touring=false;unglow();var p=$('play');p.textContent='Play guided demo';p.classList.remove('stop')}
-var TT=[0.4, 20.15, 33.76, 46.04, 58.64, 79.04, 94.76, 100.65, 106.58, 115.31, 129.07, 137.01, 169.88];
+var TT=[0.4, 18.68, 30.4, 41.55, 52.36, 70.19, 84.94, 90.2, 95.56, 102.64, 114.71, 121.1, 150.17];
 function tour(){
   if(touring){stopTour();return}
   touring=true;var p=$('play');p.textContent='Stop';p.classList.add('stop');
